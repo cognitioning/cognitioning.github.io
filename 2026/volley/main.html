@@ -1,1677 +1,8075 @@
 <!DOCTYPE html>
+
 <html lang="pl">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Badanie Dynamiki Zespołowej 360° — Siatkówka</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background-color: #f1f5f9;
-      color: #0f172a;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .scale-btn {
-      transition: all 0.12s ease;
-    }
-    .scale-btn:active {
-      transform: scale(0.95);
-    }
-    .scale-selected {
-      background-color: #1d4ed8 !important;
-      color: #ffffff !important;
-      border-color: #1e40af !important;
-      box-shadow: 0 2px 6px rgba(29, 78, 216, 0.35);
-    }
-    .x-selected {
-      background-color: #475569 !important;
-      color: #ffffff !important;
-      border-color: #334155 !important;
-      box-shadow: 0 2px 6px rgba(71, 85, 105, 0.35);
-    }
-  </style>
+
+<meta charset="UTF-8" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<title>Badanie Dynamiki Zespołowej 360° — Siatkówka</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+
+body {
+
+font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+background-color: #f1f5f9;
+
+color: #0f172a;
+
+-webkit-tap-highlight-color: transparent;
+
+}
+
+.scale-btn {
+
+transition: all 0.12s ease;
+
+}
+
+.scale-btn:active {
+
+transform: scale(0.95);
+
+}
+
+.scale-selected {
+
+background-color: #1d4ed8 !important;
+
+color: #ffffff !important;
+
+border-color: #1e40af !important;
+
+box-shadow: 0 2px 6px rgba(29, 78, 216, 0.35);
+
+}
+
+.x-selected {
+
+background-color: #475569 !important;
+
+color: #ffffff !important;
+
+border-color: #334155 !important;
+
+box-shadow: 0 2px 6px rgba(71, 85, 105, 0.35);
+
+}
+
+</style>
+
 </head>
+
 <body class="min-h-screen flex flex-col justify-between">
 
-  <!-- Górny pasek nawigacji -->
-  <header class="bg-slate-900 text-white shadow-md sticky top-0 z-30">
-    <div class="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
-      <div>
-        <span class="text-[11px] uppercase tracking-wider text-sky-400 font-bold block">Badanie 360° • 4 Zespoły</span>
-        <h1 class="text-base sm:text-lg font-bold leading-tight">Dynamika Zespołowa w Siatkówce</h1>
-      </div>
-      <div id="header-badge" class="hidden bg-slate-800 border border-slate-700 px-3 py-1 rounded-full text-xs font-mono text-sky-300"></div>
-    </div>
-  </header>
 
-  <main class="max-w-2xl w-full mx-auto px-4 py-6 flex-grow">
 
-    <!-- EKRAN 1: LOGOWANIE UNIKALNYM HASŁEM WEJŚCIA -->
-    <section id="screen-login" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8 space-y-6">
-      <div class="space-y-2">
-        <h2 class="text-xl font-bold text-slate-900">Logowanie do badania</h2>
-        <p class="text-sm text-slate-600 leading-relaxed">
-          Wpisz swoje indywidualne, 5-cyfrowe <strong>hasło wejścia</strong> zapisane na samej górze otrzymanej kartki. Bez poprawnego hasła system nie uruchomi formularza.
-        </p>
-      </div>
+<!-- Górny pasek nawigacji -->
 
-      <div class="space-y-4">
-        <div>
-          <label for="input-kod" class="block text-sm font-semibold text-slate-700 mb-1">Twoje hasło wejścia (5 cyfr)</label>
-          <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="5" id="input-kod" placeholder="np. 12345" autocomplete="off"
-                 onkeydown="if(event.key==='Enter') zaloguj()"
-                 class="w-full rounded-xl border border-slate-300 px-4 py-3.5 text-2xl font-mono text-center tracking-[0.25em] font-bold focus:border-blue-600 focus:outline-none" />
-          <p id="login-error" class="hidden bg-red-50 border border-red-200 text-red-700 rounded-xl p-3 text-sm font-medium mt-3"></p>
-        </div>
-      </div>
+<header class="bg-slate-900 text-white shadow-md sticky top-0 z-30">
 
-      <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 text-xs text-blue-900 space-y-1.5">
-        <p class="font-bold">Zasada poufności i pseudonimizacji:</p>
-        <p>W formularzu nie podajesz imienia ani nazwiska. Twoje hasło odblokowuje wyłącznie przypisaną Tobie listę losowych pseudokodów z kartki.</p>
-      </div>
+<div class="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
 
-      <button onclick="zaloguj()" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-3.5 px-6 rounded-xl shadow-sm transition text-base">
-        Odblokuj i rozpocznij badanie &rarr;
-      </button>
-    </section>
+<div>
 
-    <!-- EKRAN 2: SAMOOCENA ZAWODNIKA -->
-    <section id="screen-self" class="hidden space-y-6">
-      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-6 space-y-3">
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-bold uppercase tracking-wider text-blue-700 bg-blue-50 px-2.5 py-1 rounded-md">Krok 1 z 2 • Samoocena</span>
-          <span id="self-team-label" class="text-xs font-semibold text-slate-500"></span>
-        </div>
-        <h2 class="text-lg sm:text-xl font-bold text-slate-900">Oceń swoje własne zachowania podczas ostatnich gier</h2>
-        <p class="text-sm text-slate-600">
-          Zastanów się, jak często Ty sam(a) przejawiałeś(aś) poniższe zachowania w trakcie ostatnich meczów i gier treningowych.
-        </p>
+<span class="text-[11px] uppercase tracking-wider text-sky-400 font-bold block">Badanie 360° • 4 Zespoły</span>
 
-        <div class="grid grid-cols-5 gap-1.5 pt-2 text-center text-[11px] sm:text-xs">
-          <div class="bg-slate-100 p-2 rounded-lg"><strong class="block text-sm text-slate-900">0</strong>Nigdy</div>
-          <div class="bg-slate-100 p-2 rounded-lg"><strong class="block text-sm text-slate-900">1</strong>Rzadko</div>
-          <div class="bg-slate-100 p-2 rounded-lg"><strong class="block text-sm text-slate-900">2</strong>Czasami</div>
-          <div class="bg-slate-100 p-2 rounded-lg"><strong class="block text-sm text-slate-900">3</strong>Często</div>
-          <div class="bg-slate-100 p-2 rounded-lg"><strong class="block text-sm text-slate-900">4</strong>Bardzo często</div>
-        </div>
-      </div>
+<h1 class="text-base sm:text-lg font-bold leading-tight">Dynamika Zespołowa w Siatkówce</h1>
 
-      <div id="self-questions-container" class="space-y-4"></div>
+</div>
 
-      <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-900">
-        <strong>Uwaga:</strong> Po zatwierdzeniu samooceny i przejściu do oceny zespołu powrót do edycji własnych odpowiedzi nie będzie możliwy.
-      </div>
+<div id="header-badge" class="hidden bg-slate-800 border border-slate-700 px-3 py-1 rounded-full text-xs font-mono text-sky-300"></div>
 
-      <button onclick="zatwierdzSamoocene()" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-3.5 px-6 rounded-xl shadow-sm transition text-base">
-        Zatwierdź samoocenę i przejdź do oceny zespołu &rarr;
-      </button>
-    </section>
+</div>
 
-    <!-- EKRAN 3: OCENA ZESPOŁU (MATRYCA 360°) -->
-    <section id="screen-team" class="hidden space-y-5">
-      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-6 space-y-3">
-        <div class="flex items-center justify-between">
-          <span id="team-step-badge" class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-md">Krok 2 z 2 • Ocena Zespołu</span>
-          <span id="team-progress-text" class="text-xs font-bold text-slate-600">Pytanie 1 z 4</span>
-        </div>
+</header>
 
-        <h2 id="q-title" class="text-base sm:text-lg font-bold text-slate-900 leading-snug"></h2>
 
-        <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs text-slate-700 space-y-1.5">
-          <div class="grid grid-cols-5 gap-1 text-center font-medium">
-            <div><strong class="text-slate-900">0</strong> = Nigdy<br><span class="text-[10px] text-slate-500">(grał, lecz 0 razy)</span></div>
-            <div><strong class="text-slate-900">1</strong> = Rzadko</div>
-            <div><strong class="text-slate-900">2</strong> = Czasami</div>
-            <div><strong class="text-slate-900">3</strong> = Często</div>
-            <div><strong class="text-slate-900">4</strong> = Bardzo często</div>
-          </div>
-          <div class="border-t border-slate-200 pt-1.5 text-center text-slate-600">
-            <span class="inline-block bg-slate-200 text-slate-800 font-bold px-2 py-0.5 rounded mr-1">X</span>
-            = nie grał(a) ze mną / siedział(a) na ławce / brak możliwości obserwacji
-          </div>
-        </div>
-      </div>
 
-      <div id="team-cards-container" class="space-y-3"></div>
+<main class="max-w-2xl w-full mx-auto px-4 py-6 flex-grow">
 
-      <div class="flex gap-3 pt-2">
-        <button id="btn-prev-q" onclick="zmienPytanie(-1)" class="hidden w-1/3 bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold py-3.5 px-4 rounded-xl transition text-sm">
-          &larr; Poprzednie
-        </button>
-        <button id="btn-next-q" onclick="zmienPytanie(1)" class="flex-1 bg-blue-700 hover:bg-blue-800 text-white font-bold py-3.5 px-6 rounded-xl shadow-sm transition text-base">
-          Następne pytanie &rarr;
-        </button>
-      </div>
-    </section>
 
-    <!-- EKRAN 4: PODSUMOWANIE I WYSYŁKA -->
-    <section id="screen-done" class="hidden bg-white rounded-2xl shadow-sm border border-slate-200 p-8 text-center space-y-4">
-      <div id="done-spinner" class="space-y-3">
-        <div class="w-12 h-12 border-4 border-blue-200 border-t-blue-700 rounded-full animate-spin mx-auto"></div>
-        <h2 class="text-lg font-bold text-slate-900">Zapisywanie odpowiedzi w bazie...</h2>
-        <p class="text-sm text-slate-500">Proszę nie zamykać okna przeglądarki.</p>
-      </div>
 
-      <div id="done-success" class="hidden space-y-4">
-        <div class="w-14 h-14 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mx-auto text-2xl font-bold">&#10003;</div>
-        <h2 class="text-xl font-bold text-slate-900">Dziękujemy za udział w badaniu!</h2>
-        <p class="text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
-          Twoje odpowiedzi zostały bezpiecznie zapisane pod postacią zanonimizowanych kodów. Możesz teraz zamknąć kartę przeglądarki i schować swoją kartkę z legendą.
-        </p>
-      </div>
+<!-- EKRAN 1: LOGOWANIE UNIKALNYM HASŁEM WEJŚCIA -->
 
-      <div id="done-error" class="hidden space-y-4">
-        <div class="w-14 h-14 bg-red-100 text-red-700 rounded-full flex items-center justify-center mx-auto text-2xl font-bold">!</div>
-        <h2 class="text-lg font-bold text-red-700">Błąd połączenia z bazą danych</h2>
-        <p id="done-error-msg" class="text-sm text-slate-600"></p>
-        <button onclick="wyslijDane()" class="bg-blue-700 text-white font-bold py-2.5 px-6 rounded-xl text-sm">Spróbuj wysłać ponownie</button>
-      </div>
-    </section>
+<section id="screen-login" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8 space-y-6">
 
-  </main>
+<div class="space-y-2">
 
-  <footer class="text-center text-xs text-slate-400 py-4">
-    Narzędzie badawcze
-  </footer>
+<h2 class="text-xl font-bold text-slate-900">Logowanie do badania</h2>
 
-  <script>
-    // =========================================================================
-    // 1. KONFIGURACJA POŁĄCZENIA Z ARKUSZEM GOOGLE (APPS SCRIPT)
-    // =========================================================================
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyWOmYPvATmDVAALb5EvUvz3WeJzXGVKdWXWK4w133zLjZLkNb5fzpRyn9-fDZIxQ/exec";
+<p class="text-sm text-slate-600 leading-relaxed">
 
-    // =========================================================================
-    // 2. BAZA UNIKALNYCH 5-CYFROWYCH HASEŁ WEJŚCIA (ZSYNCHRONIZOWANA Z EXCEL)
-    // =========================================================================
-    const BAZA_BADANIA = {
-  "27107": {
-    "staleId": "A_JM01",
-    "zespol": "Zespół A",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-336", "staleId": "A_JM02" },
-      { "pseudokod": "KOD-911", "staleId": "A_JM07" },
-      { "pseudokod": "KOD-699", "staleId": "A_JM09" },
-      { "pseudokod": "KOD-910", "staleId": "A_JM10" },
-      { "pseudokod": "KOD-595", "staleId": "A_JM08" },
-      { "pseudokod": "KOD-973", "staleId": "A_JM11" },
-      { "pseudokod": "KOD-602", "staleId": "A_JM12" },
-      { "pseudokod": "KOD-296", "staleId": "A_JM13" },
-      { "pseudokod": "KOD-211", "staleId": "A_JM05" },
-      { "pseudokod": "KOD-644", "staleId": "A_JM06" },
-      { "pseudokod": "KOD-758", "staleId": "A_JM04" },
-      { "pseudokod": "KOD-255", "staleId": "A_JM03" },
-      { "pseudokod": "KOD-161", "staleId": "A_JM14" }
-    ]
-  },
-  "21134": {
-    "staleId": "A_JM02",
-    "zespol": "Zespół A",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-852", "staleId": "A_JM13" },
-      { "pseudokod": "KOD-730", "staleId": "A_JM12" },
-      { "pseudokod": "KOD-286", "staleId": "A_JM10" },
-      { "pseudokod": "KOD-680", "staleId": "A_JM04" },
-      { "pseudokod": "KOD-240", "staleId": "A_JM06" },
-      { "pseudokod": "KOD-449", "staleId": "A_JM11" },
-      { "pseudokod": "KOD-359", "staleId": "A_JM09" },
-      { "pseudokod": "KOD-132", "staleId": "A_JM07" },
-      { "pseudokod": "KOD-174", "staleId": "A_JM01" },
-      { "pseudokod": "KOD-997", "staleId": "A_JM05" },
-      { "pseudokod": "KOD-891", "staleId": "A_JM08" },
-      { "pseudokod": "KOD-761", "staleId": "A_JM03" },
-      { "pseudokod": "KOD-428", "staleId": "A_JM14" }
-    ]
-  },
-  "96740": {
-    "staleId": "A_JM03",
-    "zespol": "Zespół A",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-245", "staleId": "A_JM10" },
-      { "pseudokod": "KOD-504", "staleId": "A_JM06" },
-      { "pseudokod": "KOD-857", "staleId": "A_JM02" },
-      { "pseudokod": "KOD-147", "staleId": "A_JM12" },
-      { "pseudokod": "KOD-557", "staleId": "A_JM05" },
-      { "pseudokod": "KOD-827", "staleId": "A_JM01" },
-      { "pseudokod": "KOD-512", "staleId": "A_JM07" },
-      { "pseudokod": "KOD-422", "staleId": "A_JM11" },
-      { "pseudokod": "KOD-902", "staleId": "A_JM14" },
-      { "pseudokod": "KOD-383", "staleId": "A_JM08" },
-      { "pseudokod": "KOD-850", "staleId": "A_JM04" },
-      { "pseudokod": "KOD-654", "staleId": "A_JM13" },
-      { "pseudokod": "KOD-597", "staleId": "A_JM09" }
-    ]
-  },
-  "60474": {
-    "staleId": "A_JM04",
-    "zespol": "Zespół A",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-172", "staleId": "A_JM10" },
-      { "pseudokod": "KOD-400", "staleId": "A_JM05" },
-      { "pseudokod": "KOD-613", "staleId": "A_JM03" },
-      { "pseudokod": "KOD-497", "staleId": "A_JM06" },
-      { "pseudokod": "KOD-156", "staleId": "A_JM14" },
-      { "pseudokod": "KOD-498", "staleId": "A_JM11" },
-      { "pseudokod": "KOD-580", "staleId": "A_JM13" },
-      { "pseudokod": "KOD-290", "staleId": "A_JM02" },
-      { "pseudokod": "KOD-289", "staleId": "A_JM09" },
-      { "pseudokod": "KOD-277", "staleId": "A_JM07" },
-      { "pseudokod": "KOD-299", "staleId": "A_JM12" },
-      { "pseudokod": "KOD-674", "staleId": "A_JM08" },
-      { "pseudokod": "KOD-750", "staleId": "A_JM01" }
-    ]
-  },
-  "46249": {
-    "staleId": "A_JM05",
-    "zespol": "Zespół A",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-698", "staleId": "A_JM12" },
-      { "pseudokod": "KOD-258", "staleId": "A_JM03" },
-      { "pseudokod": "KOD-514", "staleId": "A_JM06" },
-      { "pseudokod": "KOD-344", "staleId": "A_JM04" },
-      { "pseudokod": "KOD-131", "staleId": "A_JM09" },
-      { "pseudokod": "KOD-930", "staleId": "A_JM13" },
-      { "pseudokod": "KOD-908", "staleId": "A_JM14" },
-      { "pseudokod": "KOD-425", "staleId": "A_JM08" },
-      { "pseudokod": "KOD-177", "staleId": "A_JM07" },
-      { "pseudokod": "KOD-402", "staleId": "A_JM02" },
-      { "pseudokod": "KOD-837", "staleId": "A_JM10" },
-      { "pseudokod": "KOD-486", "staleId": "A_JM01" },
-      { "pseudokod": "KOD-214", "staleId": "A_JM11" }
-    ]
-  },
-  "59562": {
-    "staleId": "A_JM06",
-    "zespol": "Zespół A",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-562", "staleId": "A_JM11" },
-      { "pseudokod": "KOD-173", "staleId": "A_JM09" },
-      { "pseudokod": "KOD-667", "staleId": "A_JM14" },
-      { "pseudokod": "KOD-322", "staleId": "A_JM10" },
-      { "pseudokod": "KOD-257", "staleId": "A_JM08" },
-      { "pseudokod": "KOD-746", "staleId": "A_JM07" },
-      { "pseudokod": "KOD-627", "staleId": "A_JM03" },
-      { "pseudokod": "KOD-135", "staleId": "A_JM04" },
-      { "pseudokod": "KOD-205", "staleId": "A_JM05" },
-      { "pseudokod": "KOD-948", "staleId": "A_JM01" },
-      { "pseudokod": "KOD-767", "staleId": "A_JM02" },
-      { "pseudokod": "KOD-995", "staleId": "A_JM13" },
-      { "pseudokod": "KOD-614", "staleId": "A_JM12" }
-    ]
-  },
-  "35674": {
-    "staleId": "A_JM07",
-    "zespol": "Zespół A",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-209", "staleId": "A_JM08" },
-      { "pseudokod": "KOD-169", "staleId": "A_JM14" },
-      { "pseudokod": "KOD-482", "staleId": "A_JM11" },
-      { "pseudokod": "KOD-879", "staleId": "A_JM10" },
-      { "pseudokod": "KOD-574", "staleId": "A_JM12" },
-      { "pseudokod": "KOD-538", "staleId": "A_JM02" },
-      { "pseudokod": "KOD-544", "staleId": "A_JM13" },
-      { "pseudokod": "KOD-485", "staleId": "A_JM05" },
-      { "pseudokod": "KOD-988", "staleId": "A_JM09" },
-      { "pseudokod": "KOD-432", "staleId": "A_JM06" },
-      { "pseudokod": "KOD-204", "staleId": "A_JM01" },
-      { "pseudokod": "KOD-720", "staleId": "A_JM04" },
-      { "pseudokod": "KOD-814", "staleId": "A_JM03" }
-    ]
-  },
-  "20605": {
-    "staleId": "A_JM08",
-    "zespol": "Zespół A",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-266", "staleId": "A_JM03" },
-      { "pseudokod": "KOD-664", "staleId": "A_JM10" },
-      { "pseudokod": "KOD-739", "staleId": "A_JM13" },
-      { "pseudokod": "KOD-545", "staleId": "A_JM07" },
-      { "pseudokod": "KOD-122", "staleId": "A_JM12" },
-      { "pseudokod": "KOD-735", "staleId": "A_JM09" },
-      { "pseudokod": "KOD-585", "staleId": "A_JM06" },
-      { "pseudokod": "KOD-987", "staleId": "A_JM14" },
-      { "pseudokod": "KOD-776", "staleId": "A_JM11" },
-      { "pseudokod": "KOD-526", "staleId": "A_JM05" },
-      { "pseudokod": "KOD-909", "staleId": "A_JM04" },
-      { "pseudokod": "KOD-216", "staleId": "A_JM01" },
-      { "pseudokod": "KOD-906", "staleId": "A_JM02" }
-    ]
-  },
-  "49248": {
-    "staleId": "A_JM09",
-    "zespol": "Zespół A",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-591", "staleId": "A_JM08" },
-      { "pseudokod": "KOD-751", "staleId": "A_JM11" },
-      { "pseudokod": "KOD-195", "staleId": "A_JM02" },
-      { "pseudokod": "KOD-187", "staleId": "A_JM12" },
-      { "pseudokod": "KOD-782", "staleId": "A_JM01" },
-      { "pseudokod": "KOD-605", "staleId": "A_JM05" },
-      { "pseudokod": "KOD-830", "staleId": "A_JM03" },
-      { "pseudokod": "KOD-297", "staleId": "A_JM04" },
-      { "pseudokod": "KOD-734", "staleId": "A_JM06" },
-      { "pseudokod": "KOD-178", "staleId": "A_JM10" },
-      { "pseudokod": "KOD-521", "staleId": "A_JM07" },
-      { "pseudokod": "KOD-513", "staleId": "A_JM14" },
-      { "pseudokod": "KOD-651", "staleId": "A_JM13" }
-    ]
-  },
-  "38157": {
-    "staleId": "A_JM10",
-    "zespol": "Zespół A",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-744", "staleId": "A_JM02" },
-      { "pseudokod": "KOD-725", "staleId": "A_JM08" },
-      { "pseudokod": "KOD-881", "staleId": "A_JM07" },
-      { "pseudokod": "KOD-659", "staleId": "A_JM04" },
-      { "pseudokod": "KOD-222", "staleId": "A_JM13" },
-      { "pseudokod": "KOD-515", "staleId": "A_JM12" },
-      { "pseudokod": "KOD-710", "staleId": "A_JM01" },
-      { "pseudokod": "KOD-522", "staleId": "A_JM14" },
-      { "pseudokod": "KOD-895", "staleId": "A_JM11" },
-      { "pseudokod": "KOD-950", "staleId": "A_JM03" },
-      { "pseudokod": "KOD-616", "staleId": "A_JM09" },
-      { "pseudokod": "KOD-563", "staleId": "A_JM05" },
-      { "pseudokod": "KOD-928", "staleId": "A_JM06" }
-    ]
-  },
-  "33636": {
-    "staleId": "A_JM11",
-    "zespol": "Zespół A",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-848", "staleId": "A_JM05" },
-      { "pseudokod": "KOD-215", "staleId": "A_JM10" },
-      { "pseudokod": "KOD-263", "staleId": "A_JM01" },
-      { "pseudokod": "KOD-176", "staleId": "A_JM09" },
-      { "pseudokod": "KOD-490", "staleId": "A_JM07" },
-      { "pseudokod": "KOD-824", "staleId": "A_JM13" },
-      { "pseudokod": "KOD-119", "staleId": "A_JM04" },
-      { "pseudokod": "KOD-142", "staleId": "A_JM03" },
-      { "pseudokod": "KOD-924", "staleId": "A_JM02" },
-      { "pseudokod": "KOD-282", "staleId": "A_JM14" },
-      { "pseudokod": "KOD-766", "staleId": "A_JM12" },
-      { "pseudokod": "KOD-489", "staleId": "A_JM06" },
-      { "pseudokod": "KOD-265", "staleId": "A_JM08" }
-    ]
-  },
-  "36477": {
-    "staleId": "A_JM12",
-    "zespol": "Zespół A",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-162", "staleId": "A_JM11" },
-      { "pseudokod": "KOD-780", "staleId": "A_JM06" },
-      { "pseudokod": "KOD-865", "staleId": "A_JM01" },
-      { "pseudokod": "KOD-385", "staleId": "A_JM14" },
-      { "pseudokod": "KOD-109", "staleId": "A_JM02" },
-      { "pseudokod": "KOD-152", "staleId": "A_JM10" },
-      { "pseudokod": "KOD-704", "staleId": "A_JM03" },
-      { "pseudokod": "KOD-419", "staleId": "A_JM05" },
-      { "pseudokod": "KOD-492", "staleId": "A_JM07" },
-      { "pseudokod": "KOD-157", "staleId": "A_JM04" },
-      { "pseudokod": "KOD-706", "staleId": "A_JM08" },
-      { "pseudokod": "KOD-330", "staleId": "A_JM13" },
-      { "pseudokod": "KOD-870", "staleId": "A_JM09" }
-    ]
-  },
-  "51648": {
-    "staleId": "A_JM13",
-    "zespol": "Zespół A",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-138", "staleId": "A_JM07" },
-      { "pseudokod": "KOD-695", "staleId": "A_JM06" },
-      { "pseudokod": "KOD-811", "staleId": "A_JM01" },
-      { "pseudokod": "KOD-826", "staleId": "A_JM04" },
-      { "pseudokod": "KOD-361", "staleId": "A_JM12" },
-      { "pseudokod": "KOD-567", "staleId": "A_JM05" },
-      { "pseudokod": "KOD-303", "staleId": "A_JM11" },
-      { "pseudokod": "KOD-979", "staleId": "A_JM14" },
-      { "pseudokod": "KOD-134", "staleId": "A_JM08" },
-      { "pseudokod": "KOD-328", "staleId": "A_JM02" },
-      { "pseudokod": "KOD-509", "staleId": "A_JM09" },
-      { "pseudokod": "KOD-405", "staleId": "A_JM03" },
-      { "pseudokod": "KOD-810", "staleId": "A_JM10" }
-    ]
-  },
-  "34991": {
-    "staleId": "A_JM14",
-    "zespol": "Zespół A",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-738", "staleId": "A_JM08" },
-      { "pseudokod": "KOD-520", "staleId": "A_JM02" },
-      { "pseudokod": "KOD-443", "staleId": "A_JM09" },
-      { "pseudokod": "KOD-368", "staleId": "A_JM07" },
-      { "pseudokod": "KOD-624", "staleId": "A_JM10" },
-      { "pseudokod": "KOD-141", "staleId": "A_JM03" },
-      { "pseudokod": "KOD-819", "staleId": "A_JM04" },
-      { "pseudokod": "KOD-283", "staleId": "A_JM12" },
-      { "pseudokod": "KOD-712", "staleId": "A_JM13" },
-      { "pseudokod": "KOD-104", "staleId": "A_JM11" },
-      { "pseudokod": "KOD-246", "staleId": "A_JM01" },
-      { "pseudokod": "KOD-459", "staleId": "A_JM05" },
-      { "pseudokod": "KOD-232", "staleId": "A_JM06" }
-    ]
-  },
-  "24674": {
-    "staleId": "A_TR01",
-    "zespol": "Zespół A",
-    "rola": "trener",
-    "lista": [
-      { "pseudokod": "KOD-108", "staleId": "A_JM10" },
-      { "pseudokod": "KOD-679", "staleId": "A_JM05" },
-      { "pseudokod": "KOD-273", "staleId": "A_JM07" },
-      { "pseudokod": "KOD-524", "staleId": "A_JM09" },
-      { "pseudokod": "KOD-954", "staleId": "A_JM01" },
-      { "pseudokod": "KOD-559", "staleId": "A_JM03" },
-      { "pseudokod": "KOD-860", "staleId": "A_JM12" },
-      { "pseudokod": "KOD-598", "staleId": "A_JM11" },
-      { "pseudokod": "KOD-621", "staleId": "A_JM14" },
-      { "pseudokod": "KOD-970", "staleId": "A_JM08" },
-      { "pseudokod": "KOD-276", "staleId": "A_JM04" },
-      { "pseudokod": "KOD-431", "staleId": "A_JM13" },
-      { "pseudokod": "KOD-420", "staleId": "A_JM06" },
-      { "pseudokod": "KOD-441", "staleId": "A_JM02" }
-    ]
-  },
-  "34917": {
-    "staleId": "B_JM01",
-    "zespol": "Zespół B",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-813", "staleId": "B_JM05" },
-      { "pseudokod": "KOD-563", "staleId": "B_JM09" },
-      { "pseudokod": "KOD-605", "staleId": "B_JM04" },
-      { "pseudokod": "KOD-922", "staleId": "B_JM14" },
-      { "pseudokod": "KOD-710", "staleId": "B_JM08" },
-      { "pseudokod": "KOD-774", "staleId": "B_JM02" },
-      { "pseudokod": "KOD-540", "staleId": "B_JM13" },
-      { "pseudokod": "KOD-126", "staleId": "B_JM12" },
-      { "pseudokod": "KOD-295", "staleId": "B_JM06" },
-      { "pseudokod": "KOD-431", "staleId": "B_JM11" },
-      { "pseudokod": "KOD-417", "staleId": "B_JM07" },
-      { "pseudokod": "KOD-331", "staleId": "B_JM10" },
-      { "pseudokod": "KOD-249", "staleId": "B_JM03" }
-    ]
-  },
-  "21095": {
-    "staleId": "B_JM02",
-    "zespol": "Zespół B",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-430", "staleId": "B_JM05" },
-      { "pseudokod": "KOD-243", "staleId": "B_JM10" },
-      { "pseudokod": "KOD-247", "staleId": "B_JM09" },
-      { "pseudokod": "KOD-381", "staleId": "B_JM08" },
-      { "pseudokod": "KOD-481", "staleId": "B_JM14" },
-      { "pseudokod": "KOD-943", "staleId": "B_JM11" },
-      { "pseudokod": "KOD-297", "staleId": "B_JM07" },
-      { "pseudokod": "KOD-988", "staleId": "B_JM04" },
-      { "pseudokod": "KOD-310", "staleId": "B_JM03" },
-      { "pseudokod": "KOD-699", "staleId": "B_JM13" },
-      { "pseudokod": "KOD-187", "staleId": "B_JM06" },
-      { "pseudokod": "KOD-478", "staleId": "B_JM01" },
-      { "pseudokod": "KOD-766", "staleId": "B_JM12" }
-    ]
-  },
-  "83328": {
-    "staleId": "B_JM03",
-    "zespol": "Zespół B",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-998", "staleId": "B_JM05" },
-      { "pseudokod": "KOD-637", "staleId": "B_JM10" },
-      { "pseudokod": "KOD-851", "staleId": "B_JM12" },
-      { "pseudokod": "KOD-667", "staleId": "B_JM07" },
-      { "pseudokod": "KOD-632", "staleId": "B_JM02" },
-      { "pseudokod": "KOD-939", "staleId": "B_JM14" },
-      { "pseudokod": "KOD-814", "staleId": "B_JM11" },
-      { "pseudokod": "KOD-857", "staleId": "B_JM13" },
-      { "pseudokod": "KOD-756", "staleId": "B_JM09" },
-      { "pseudokod": "KOD-934", "staleId": "B_JM08" },
-      { "pseudokod": "KOD-686", "staleId": "B_JM04" },
-      { "pseudokod": "KOD-287", "staleId": "B_JM06" },
-      { "pseudokod": "KOD-276", "staleId": "B_JM01" }
-    ]
-  },
-  "65352": {
-    "staleId": "B_JM04",
-    "zespol": "Zespół B",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-513", "staleId": "B_JM05" },
-      { "pseudokod": "KOD-948", "staleId": "B_JM11" },
-      { "pseudokod": "KOD-447", "staleId": "B_JM10" },
-      { "pseudokod": "KOD-846", "staleId": "B_JM08" },
-      { "pseudokod": "KOD-186", "staleId": "B_JM14" },
-      { "pseudokod": "KOD-452", "staleId": "B_JM12" },
-      { "pseudokod": "KOD-545", "staleId": "B_JM09" },
-      { "pseudokod": "KOD-624", "staleId": "B_JM06" },
-      { "pseudokod": "KOD-319", "staleId": "B_JM02" },
-      { "pseudokod": "KOD-746", "staleId": "B_JM01" },
-      { "pseudokod": "KOD-622", "staleId": "B_JM07" },
-      { "pseudokod": "KOD-970", "staleId": "B_JM13" },
-      { "pseudokod": "KOD-435", "staleId": "B_JM03" }
-    ]
-  },
-  "23389": {
-    "staleId": "B_JM05",
-    "zespol": "Zespół B",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-300", "staleId": "B_JM14" },
-      { "pseudokod": "KOD-372", "staleId": "B_JM12" },
-      { "pseudokod": "KOD-254", "staleId": "B_JM04" },
-      { "pseudokod": "KOD-269", "staleId": "B_JM10" },
-      { "pseudokod": "KOD-899", "staleId": "B_JM11" },
-      { "pseudokod": "KOD-870", "staleId": "B_JM01" },
-      { "pseudokod": "KOD-413", "staleId": "B_JM08" },
-      { "pseudokod": "KOD-505", "staleId": "B_JM09" },
-      { "pseudokod": "KOD-556", "staleId": "B_JM13" },
-      { "pseudokod": "KOD-133", "staleId": "B_JM06" },
-      { "pseudokod": "KOD-311", "staleId": "B_JM02" },
-      { "pseudokod": "KOD-680", "staleId": "B_JM03" },
-      { "pseudokod": "KOD-811", "staleId": "B_JM07" }
-    ]
-  },
-  "79926": {
-    "staleId": "B_JM06",
-    "zespol": "Zespół B",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-457", "staleId": "B_JM10" },
-      { "pseudokod": "KOD-523", "staleId": "B_JM12" },
-      { "pseudokod": "KOD-576", "staleId": "B_JM09" },
-      { "pseudokod": "KOD-858", "staleId": "B_JM14" },
-      { "pseudokod": "KOD-757", "staleId": "B_JM05" },
-      { "pseudokod": "KOD-684", "staleId": "B_JM04" },
-      { "pseudokod": "KOD-854", "staleId": "B_JM08" },
-      { "pseudokod": "KOD-336", "staleId": "B_JM02" },
-      { "pseudokod": "KOD-214", "staleId": "B_JM13" },
-      { "pseudokod": "KOD-202", "staleId": "B_JM03" },
-      { "pseudokod": "KOD-681", "staleId": "B_JM07" },
-      { "pseudokod": "KOD-798", "staleId": "B_JM11" },
-      { "pseudokod": "KOD-656", "staleId": "B_JM01" }
-    ]
-  },
-  "52309": {
-    "staleId": "B_JM07",
-    "zespol": "Zespół B",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-926", "staleId": "B_JM14" },
-      { "pseudokod": "KOD-980", "staleId": "B_JM10" },
-      { "pseudokod": "KOD-732", "staleId": "B_JM02" },
-      { "pseudokod": "KOD-106", "staleId": "B_JM11" },
-      { "pseudokod": "KOD-395", "staleId": "B_JM08" },
-      { "pseudokod": "KOD-525", "staleId": "B_JM13" },
-      { "pseudokod": "KOD-603", "staleId": "B_JM09" },
-      { "pseudokod": "KOD-439", "staleId": "B_JM03" },
-      { "pseudokod": "KOD-539", "staleId": "B_JM06" },
-      { "pseudokod": "KOD-169", "staleId": "B_JM01" },
-      { "pseudokod": "KOD-633", "staleId": "B_JM04" },
-      { "pseudokod": "KOD-847", "staleId": "B_JM05" },
-      { "pseudokod": "KOD-108", "staleId": "B_JM12" }
-    ]
-  },
-  "96350": {
-    "staleId": "B_JM08",
-    "zespol": "Zespół B",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-320", "staleId": "B_JM09" },
-      { "pseudokod": "KOD-911", "staleId": "B_JM12" },
-      { "pseudokod": "KOD-561", "staleId": "B_JM03" },
-      { "pseudokod": "KOD-745", "staleId": "B_JM11" },
-      { "pseudokod": "KOD-729", "staleId": "B_JM07" },
-      { "pseudokod": "KOD-369", "staleId": "B_JM06" },
-      { "pseudokod": "KOD-353", "staleId": "B_JM05" },
-      { "pseudokod": "KOD-840", "staleId": "B_JM10" },
-      { "pseudokod": "KOD-392", "staleId": "B_JM01" },
-      { "pseudokod": "KOD-284", "staleId": "B_JM14" },
-      { "pseudokod": "KOD-460", "staleId": "B_JM02" },
-      { "pseudokod": "KOD-123", "staleId": "B_JM13" },
-      { "pseudokod": "KOD-419", "staleId": "B_JM04" }
-    ]
-  },
-  "61188": {
-    "staleId": "B_JM09",
-    "zespol": "Zespół B",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-810", "staleId": "B_JM07" },
-      { "pseudokod": "KOD-971", "staleId": "B_JM11" },
-      { "pseudokod": "KOD-966", "staleId": "B_JM12" },
-      { "pseudokod": "KOD-919", "staleId": "B_JM05" },
-      { "pseudokod": "KOD-908", "staleId": "B_JM14" },
-      { "pseudokod": "KOD-226", "staleId": "B_JM02" },
-      { "pseudokod": "KOD-869", "staleId": "B_JM13" },
-      { "pseudokod": "KOD-767", "staleId": "B_JM04" },
-      { "pseudokod": "KOD-495", "staleId": "B_JM06" },
-      { "pseudokod": "KOD-231", "staleId": "B_JM08" },
-      { "pseudokod": "KOD-421", "staleId": "B_JM10" },
-      { "pseudokod": "KOD-517", "staleId": "B_JM01" },
-      { "pseudokod": "KOD-312", "staleId": "B_JM03" }
-    ]
-  },
-  "37933": {
-    "staleId": "B_JM10",
-    "zespol": "Zespół B",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-364", "staleId": "B_JM11" },
-      { "pseudokod": "KOD-294", "staleId": "B_JM05" },
-      { "pseudokod": "KOD-617", "staleId": "B_JM09" },
-      { "pseudokod": "KOD-590", "staleId": "B_JM02" },
-      { "pseudokod": "KOD-924", "staleId": "B_JM01" },
-      { "pseudokod": "KOD-124", "staleId": "B_JM12" },
-      { "pseudokod": "KOD-572", "staleId": "B_JM04" },
-      { "pseudokod": "KOD-237", "staleId": "B_JM13" },
-      { "pseudokod": "KOD-789", "staleId": "B_JM08" },
-      { "pseudokod": "KOD-291", "staleId": "B_JM03" },
-      { "pseudokod": "KOD-770", "staleId": "B_JM07" },
-      { "pseudokod": "KOD-995", "staleId": "B_JM06" },
-      { "pseudokod": "KOD-424", "staleId": "B_JM14" }
-    ]
-  },
-  "92265": {
-    "staleId": "B_JM11",
-    "zespol": "Zespół B",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-987", "staleId": "B_JM12" },
-      { "pseudokod": "KOD-178", "staleId": "B_JM05" },
-      { "pseudokod": "KOD-429", "staleId": "B_JM02" },
-      { "pseudokod": "KOD-623", "staleId": "B_JM03" },
-      { "pseudokod": "KOD-573", "staleId": "B_JM07" },
-      { "pseudokod": "KOD-608", "staleId": "B_JM06" },
-      { "pseudokod": "KOD-385", "staleId": "B_JM09" },
-      { "pseudokod": "KOD-410", "staleId": "B_JM01" },
-      { "pseudokod": "KOD-742", "staleId": "B_JM04" },
-      { "pseudokod": "KOD-874", "staleId": "B_JM10" },
-      { "pseudokod": "KOD-876", "staleId": "B_JM14" },
-      { "pseudokod": "KOD-557", "staleId": "B_JM13" },
-      { "pseudokod": "KOD-997", "staleId": "B_JM08" }
-    ]
-  },
-  "90328": {
-    "staleId": "B_JM12",
-    "zespol": "Zespół B",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-379", "staleId": "B_JM02" },
-      { "pseudokod": "KOD-541", "staleId": "B_JM04" },
-      { "pseudokod": "KOD-458", "staleId": "B_JM14" },
-      { "pseudokod": "KOD-722", "staleId": "B_JM06" },
-      { "pseudokod": "KOD-638", "staleId": "B_JM08" },
-      { "pseudokod": "KOD-360", "staleId": "B_JM09" },
-      { "pseudokod": "KOD-928", "staleId": "B_JM13" },
-      { "pseudokod": "KOD-425", "staleId": "B_JM10" },
-      { "pseudokod": "KOD-945", "staleId": "B_JM05" },
-      { "pseudokod": "KOD-177", "staleId": "B_JM01" },
-      { "pseudokod": "KOD-488", "staleId": "B_JM03" },
-      { "pseudokod": "KOD-472", "staleId": "B_JM11" },
-      { "pseudokod": "KOD-529", "staleId": "B_JM07" }
-    ]
-  },
-  "94816": {
-    "staleId": "B_JM13",
-    "zespol": "Zespół B",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-604", "staleId": "B_JM11" },
-      { "pseudokod": "KOD-747", "staleId": "B_JM05" },
-      { "pseudokod": "KOD-675", "staleId": "B_JM06" },
-      { "pseudokod": "KOD-323", "staleId": "B_JM08" },
-      { "pseudokod": "KOD-903", "staleId": "B_JM12" },
-      { "pseudokod": "KOD-618", "staleId": "B_JM07" },
-      { "pseudokod": "KOD-543", "staleId": "B_JM01" },
-      { "pseudokod": "KOD-735", "staleId": "B_JM02" },
-      { "pseudokod": "KOD-199", "staleId": "B_JM03" },
-      { "pseudokod": "KOD-442", "staleId": "B_JM10" },
-      { "pseudokod": "KOD-267", "staleId": "B_JM14" },
-      { "pseudokod": "KOD-797", "staleId": "B_JM04" },
-      { "pseudokod": "KOD-553", "staleId": "B_JM09" }
-    ]
-  },
-  "17252": {
-    "staleId": "B_JM14",
-    "zespol": "Zespół B",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-738", "staleId": "B_JM06" },
-      { "pseudokod": "KOD-920", "staleId": "B_JM12" },
-      { "pseudokod": "KOD-443", "staleId": "B_JM08" },
-      { "pseudokod": "KOD-666", "staleId": "B_JM01" },
-      { "pseudokod": "KOD-273", "staleId": "B_JM03" },
-      { "pseudokod": "KOD-843", "staleId": "B_JM04" },
-      { "pseudokod": "KOD-826", "staleId": "B_JM07" },
-      { "pseudokod": "KOD-806", "staleId": "B_JM13" },
-      { "pseudokod": "KOD-304", "staleId": "B_JM09" },
-      { "pseudokod": "KOD-654", "staleId": "B_JM10" },
-      { "pseudokod": "KOD-720", "staleId": "B_JM11" },
-      { "pseudokod": "KOD-278", "staleId": "B_JM05" },
-      { "pseudokod": "KOD-279", "staleId": "B_JM02" }
-    ]
-  },
-  "83947": {
-    "staleId": "B_TR01",
-    "zespol": "Zespół B",
-    "rola": "trener",
-    "lista": [
-      { "pseudokod": "KOD-787", "staleId": "B_JM14" },
-      { "pseudokod": "KOD-148", "staleId": "B_JM10" },
-      { "pseudokod": "KOD-251", "staleId": "B_JM06" },
-      { "pseudokod": "KOD-490", "staleId": "B_JM05" },
-      { "pseudokod": "KOD-852", "staleId": "B_JM04" },
-      { "pseudokod": "KOD-693", "staleId": "B_JM02" },
-      { "pseudokod": "KOD-507", "staleId": "B_JM11" },
-      { "pseudokod": "KOD-602", "staleId": "B_JM12" },
-      { "pseudokod": "KOD-183", "staleId": "B_JM07" },
-      { "pseudokod": "KOD-983", "staleId": "B_JM08" },
-      { "pseudokod": "KOD-366", "staleId": "B_JM03" },
-      { "pseudokod": "KOD-639", "staleId": "B_JM13" },
-      { "pseudokod": "KOD-204", "staleId": "B_JM09" },
-      { "pseudokod": "KOD-241", "staleId": "B_JM01" }
-    ]
-  },
-  "68713": {
-    "staleId": "C_JM01",
-    "zespol": "Zespół C",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-854", "staleId": "C_JM09" },
-      { "pseudokod": "KOD-121", "staleId": "C_JM03" },
-      { "pseudokod": "KOD-572", "staleId": "C_JM02" },
-      { "pseudokod": "KOD-871", "staleId": "C_JM10" },
-      { "pseudokod": "KOD-494", "staleId": "C_JM14" },
-      { "pseudokod": "KOD-108", "staleId": "C_JM11" },
-      { "pseudokod": "KOD-288", "staleId": "C_JM05" },
-      { "pseudokod": "KOD-370", "staleId": "C_JM06" },
-      { "pseudokod": "KOD-240", "staleId": "C_JM04" },
-      { "pseudokod": "KOD-951", "staleId": "C_JM08" },
-      { "pseudokod": "KOD-961", "staleId": "C_JM07" },
-      { "pseudokod": "KOD-504", "staleId": "C_JM12" },
-      { "pseudokod": "KOD-221", "staleId": "C_JM13" }
-    ]
-  },
-  "14438": {
-    "staleId": "C_JM02",
-    "zespol": "Zespół C",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-619", "staleId": "C_JM01" },
-      { "pseudokod": "KOD-579", "staleId": "C_JM05" },
-      { "pseudokod": "KOD-146", "staleId": "C_JM11" },
-      { "pseudokod": "KOD-279", "staleId": "C_JM04" },
-      { "pseudokod": "KOD-935", "staleId": "C_JM06" },
-      { "pseudokod": "KOD-948", "staleId": "C_JM09" },
-      { "pseudokod": "KOD-265", "staleId": "C_JM03" },
-      { "pseudokod": "KOD-152", "staleId": "C_JM14" },
-      { "pseudokod": "KOD-565", "staleId": "C_JM07" },
-      { "pseudokod": "KOD-379", "staleId": "C_JM08" },
-      { "pseudokod": "KOD-328", "staleId": "C_JM13" },
-      { "pseudokod": "KOD-242", "staleId": "C_JM12" },
-      { "pseudokod": "KOD-487", "staleId": "C_JM10" }
-    ]
-  },
-  "55308": {
-    "staleId": "C_JM03",
-    "zespol": "Zespół C",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-672", "staleId": "C_JM11" },
-      { "pseudokod": "KOD-990", "staleId": "C_JM14" },
-      { "pseudokod": "KOD-163", "staleId": "C_JM12" },
-      { "pseudokod": "KOD-576", "staleId": "C_JM10" },
-      { "pseudokod": "KOD-281", "staleId": "C_JM08" },
-      { "pseudokod": "KOD-876", "staleId": "C_JM13" },
-      { "pseudokod": "KOD-744", "staleId": "C_JM07" },
-      { "pseudokod": "KOD-177", "staleId": "C_JM06" },
-      { "pseudokod": "KOD-492", "staleId": "C_JM04" },
-      { "pseudokod": "KOD-331", "staleId": "C_JM05" },
-      { "pseudokod": "KOD-837", "staleId": "C_JM02" },
-      { "pseudokod": "KOD-556", "staleId": "C_JM01" },
-      { "pseudokod": "KOD-186", "staleId": "C_JM09" }
-    ]
-  },
-  "53490": {
-    "staleId": "C_JM04",
-    "zespol": "Zespół C",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-715", "staleId": "C_JM02" },
-      { "pseudokod": "KOD-283", "staleId": "C_JM09" },
-      { "pseudokod": "KOD-695", "staleId": "C_JM08" },
-      { "pseudokod": "KOD-688", "staleId": "C_JM07" },
-      { "pseudokod": "KOD-131", "staleId": "C_JM13" },
-      { "pseudokod": "KOD-256", "staleId": "C_JM14" },
-      { "pseudokod": "KOD-747", "staleId": "C_JM11" },
-      { "pseudokod": "KOD-627", "staleId": "C_JM01" },
-      { "pseudokod": "KOD-828", "staleId": "C_JM12" },
-      { "pseudokod": "KOD-145", "staleId": "C_JM03" },
-      { "pseudokod": "KOD-282", "staleId": "C_JM10" },
-      { "pseudokod": "KOD-651", "staleId": "C_JM05" },
-      { "pseudokod": "KOD-277", "staleId": "C_JM06" }
-    ]
-  },
-  "95200": {
-    "staleId": "C_JM05",
-    "zespol": "Zespół C",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-321", "staleId": "C_JM08" },
-      { "pseudokod": "KOD-395", "staleId": "C_JM13" },
-      { "pseudokod": "KOD-115", "staleId": "C_JM12" },
-      { "pseudokod": "KOD-548", "staleId": "C_JM01" },
-      { "pseudokod": "KOD-452", "staleId": "C_JM14" },
-      { "pseudokod": "KOD-480", "staleId": "C_JM09" },
-      { "pseudokod": "KOD-259", "staleId": "C_JM07" },
-      { "pseudokod": "KOD-770", "staleId": "C_JM02" },
-      { "pseudokod": "KOD-254", "staleId": "C_JM04" },
-      { "pseudokod": "KOD-902", "staleId": "C_JM03" },
-      { "pseudokod": "KOD-213", "staleId": "C_JM06" },
-      { "pseudokod": "KOD-423", "staleId": "C_JM11" },
-      { "pseudokod": "KOD-847", "staleId": "C_JM10" }
-    ]
-  },
-  "41086": {
-    "staleId": "C_JM06",
-    "zespol": "Zespół C",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-187", "staleId": "C_JM08" },
-      { "pseudokod": "KOD-297", "staleId": "C_JM05" },
-      { "pseudokod": "KOD-859", "staleId": "C_JM02" },
-      { "pseudokod": "KOD-646", "staleId": "C_JM13" },
-      { "pseudokod": "KOD-539", "staleId": "C_JM01" },
-      { "pseudokod": "KOD-151", "staleId": "C_JM11" },
-      { "pseudokod": "KOD-503", "staleId": "C_JM07" },
-      { "pseudokod": "KOD-996", "staleId": "C_JM12" },
-      { "pseudokod": "KOD-773", "staleId": "C_JM10" },
-      { "pseudokod": "KOD-767", "staleId": "C_JM14" },
-      { "pseudokod": "KOD-865", "staleId": "C_JM03" },
-      { "pseudokod": "KOD-863", "staleId": "C_JM09" },
-      { "pseudokod": "KOD-880", "staleId": "C_JM04" }
-    ]
-  },
-  "36418": {
-    "staleId": "C_JM07",
-    "zespol": "Zespół C",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-696", "staleId": "C_JM02" },
-      { "pseudokod": "KOD-357", "staleId": "C_JM12" },
-      { "pseudokod": "KOD-654", "staleId": "C_JM03" },
-      { "pseudokod": "KOD-777", "staleId": "C_JM04" },
-      { "pseudokod": "KOD-793", "staleId": "C_JM10" },
-      { "pseudokod": "KOD-920", "staleId": "C_JM05" },
-      { "pseudokod": "KOD-866", "staleId": "C_JM08" },
-      { "pseudokod": "KOD-396", "staleId": "C_JM01" },
-      { "pseudokod": "KOD-222", "staleId": "C_JM09" },
-      { "pseudokod": "KOD-888", "staleId": "C_JM11" },
-      { "pseudokod": "KOD-105", "staleId": "C_JM14" },
-      { "pseudokod": "KOD-746", "staleId": "C_JM06" },
-      { "pseudokod": "KOD-925", "staleId": "C_JM13" }
-    ]
-  },
-  "77006": {
-    "staleId": "C_JM08",
-    "zespol": "Zespół C",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-596", "staleId": "C_JM14" },
-      { "pseudokod": "KOD-270", "staleId": "C_JM09" },
-      { "pseudokod": "KOD-149", "staleId": "C_JM01" },
-      { "pseudokod": "KOD-155", "staleId": "C_JM02" },
-      { "pseudokod": "KOD-864", "staleId": "C_JM13" },
-      { "pseudokod": "KOD-375", "staleId": "C_JM11" },
-      { "pseudokod": "KOD-794", "staleId": "C_JM05" },
-      { "pseudokod": "KOD-763", "staleId": "C_JM12" },
-      { "pseudokod": "KOD-153", "staleId": "C_JM04" },
-      { "pseudokod": "KOD-506", "staleId": "C_JM10" },
-      { "pseudokod": "KOD-468", "staleId": "C_JM06" },
-      { "pseudokod": "KOD-717", "staleId": "C_JM07" },
-      { "pseudokod": "KOD-624", "staleId": "C_JM03" }
-    ]
-  },
-  "74216": {
-    "staleId": "C_JM09",
-    "zespol": "Zespół C",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-389", "staleId": "C_JM04" },
-      { "pseudokod": "KOD-306", "staleId": "C_JM03" },
-      { "pseudokod": "KOD-528", "staleId": "C_JM10" },
-      { "pseudokod": "KOD-524", "staleId": "C_JM06" },
-      { "pseudokod": "KOD-973", "staleId": "C_JM08" },
-      { "pseudokod": "KOD-601", "staleId": "C_JM02" },
-      { "pseudokod": "KOD-440", "staleId": "C_JM05" },
-      { "pseudokod": "KOD-594", "staleId": "C_JM01" },
-      { "pseudokod": "KOD-843", "staleId": "C_JM13" },
-      { "pseudokod": "KOD-897", "staleId": "C_JM14" },
-      { "pseudokod": "KOD-400", "staleId": "C_JM07" },
-      { "pseudokod": "KOD-590", "staleId": "C_JM12" },
-      { "pseudokod": "KOD-926", "staleId": "C_JM11" }
-    ]
-  },
-  "38025": {
-    "staleId": "C_JM10",
-    "zespol": "Zespół C",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-814", "staleId": "C_JM03" },
-      { "pseudokod": "KOD-945", "staleId": "C_JM09" },
-      { "pseudokod": "KOD-698", "staleId": "C_JM14" },
-      { "pseudokod": "KOD-637", "staleId": "C_JM05" },
-      { "pseudokod": "KOD-787", "staleId": "C_JM02" },
-      { "pseudokod": "KOD-829", "staleId": "C_JM13" },
-      { "pseudokod": "KOD-257", "staleId": "C_JM07" },
-      { "pseudokod": "KOD-158", "staleId": "C_JM01" },
-      { "pseudokod": "KOD-167", "staleId": "C_JM11" },
-      { "pseudokod": "KOD-708", "staleId": "C_JM04" },
-      { "pseudokod": "KOD-981", "staleId": "C_JM06" },
-      { "pseudokod": "KOD-555", "staleId": "C_JM12" },
-      { "pseudokod": "KOD-988", "staleId": "C_JM08" }
-    ]
-  },
-  "13049": {
-    "staleId": "C_JM11",
-    "zespol": "Zespół C",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-261", "staleId": "C_JM07" },
-      { "pseudokod": "KOD-742", "staleId": "C_JM01" },
-      { "pseudokod": "KOD-205", "staleId": "C_JM04" },
-      { "pseudokod": "KOD-873", "staleId": "C_JM05" },
-      { "pseudokod": "KOD-312", "staleId": "C_JM13" },
-      { "pseudokod": "KOD-892", "staleId": "C_JM06" },
-      { "pseudokod": "KOD-849", "staleId": "C_JM14" },
-      { "pseudokod": "KOD-507", "staleId": "C_JM09" },
-      { "pseudokod": "KOD-655", "staleId": "C_JM12" },
-      { "pseudokod": "KOD-195", "staleId": "C_JM08" },
-      { "pseudokod": "KOD-497", "staleId": "C_JM03" },
-      { "pseudokod": "KOD-600", "staleId": "C_JM10" },
-      { "pseudokod": "KOD-631", "staleId": "C_JM02" }
-    ]
-  },
-  "19012": {
-    "staleId": "C_JM12",
-    "zespol": "Zespół C",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-570", "staleId": "C_JM14" },
-      { "pseudokod": "KOD-889", "staleId": "C_JM05" },
-      { "pseudokod": "KOD-430", "staleId": "C_JM07" },
-      { "pseudokod": "KOD-166", "staleId": "C_JM10" },
-      { "pseudokod": "KOD-493", "staleId": "C_JM03" },
-      { "pseudokod": "KOD-473", "staleId": "C_JM08" },
-      { "pseudokod": "KOD-907", "staleId": "C_JM04" },
-      { "pseudokod": "KOD-206", "staleId": "C_JM02" },
-      { "pseudokod": "KOD-931", "staleId": "C_JM09" },
-      { "pseudokod": "KOD-102", "staleId": "C_JM13" },
-      { "pseudokod": "KOD-461", "staleId": "C_JM06" },
-      { "pseudokod": "KOD-626", "staleId": "C_JM11" },
-      { "pseudokod": "KOD-584", "staleId": "C_JM01" }
-    ]
-  },
-  "73433": {
-    "staleId": "C_JM13",
-    "zespol": "Zespół C",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-838", "staleId": "C_JM04" },
-      { "pseudokod": "KOD-351", "staleId": "C_JM05" },
-      { "pseudokod": "KOD-960", "staleId": "C_JM11" },
-      { "pseudokod": "KOD-711", "staleId": "C_JM14" },
-      { "pseudokod": "KOD-545", "staleId": "C_JM02" },
-      { "pseudokod": "KOD-587", "staleId": "C_JM09" },
-      { "pseudokod": "KOD-244", "staleId": "C_JM03" },
-      { "pseudokod": "KOD-868", "staleId": "C_JM06" },
-      { "pseudokod": "KOD-245", "staleId": "C_JM08" },
-      { "pseudokod": "KOD-913", "staleId": "C_JM12" },
-      { "pseudokod": "KOD-914", "staleId": "C_JM10" },
-      { "pseudokod": "KOD-789", "staleId": "C_JM07" },
-      { "pseudokod": "KOD-367", "staleId": "C_JM01" }
-    ]
-  },
-  "83903": {
-    "staleId": "C_JM14",
-    "zespol": "Zespół C",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-709", "staleId": "C_JM02" },
-      { "pseudokod": "KOD-693", "staleId": "C_JM03" },
-      { "pseudokod": "KOD-622", "staleId": "C_JM06" },
-      { "pseudokod": "KOD-681", "staleId": "C_JM01" },
-      { "pseudokod": "KOD-502", "staleId": "C_JM10" },
-      { "pseudokod": "KOD-276", "staleId": "C_JM11" },
-      { "pseudokod": "KOD-442", "staleId": "C_JM05" },
-      { "pseudokod": "KOD-952", "staleId": "C_JM04" },
-      { "pseudokod": "KOD-552", "staleId": "C_JM09" },
-      { "pseudokod": "KOD-743", "staleId": "C_JM12" },
-      { "pseudokod": "KOD-170", "staleId": "C_JM07" },
-      { "pseudokod": "KOD-917", "staleId": "C_JM13" },
-      { "pseudokod": "KOD-813", "staleId": "C_JM08" }
-    ]
-  },
-  "24619": {
-    "staleId": "C_TR01",
-    "zespol": "Zespół C",
-    "rola": "trener",
-    "lista": [
-      { "pseudokod": "KOD-786", "staleId": "C_JM07" },
-      { "pseudokod": "KOD-989", "staleId": "C_JM13" },
-      { "pseudokod": "KOD-227", "staleId": "C_JM10" },
-      { "pseudokod": "KOD-172", "staleId": "C_JM06" },
-      { "pseudokod": "KOD-615", "staleId": "C_JM04" },
-      { "pseudokod": "KOD-605", "staleId": "C_JM11" },
-      { "pseudokod": "KOD-403", "staleId": "C_JM12" },
-      { "pseudokod": "KOD-425", "staleId": "C_JM01" },
-      { "pseudokod": "KOD-950", "staleId": "C_JM09" },
-      { "pseudokod": "KOD-335", "staleId": "C_JM14" },
-      { "pseudokod": "KOD-714", "staleId": "C_JM02" },
-      { "pseudokod": "KOD-341", "staleId": "C_JM03" },
-      { "pseudokod": "KOD-824", "staleId": "C_JM05" },
-      { "pseudokod": "KOD-916", "staleId": "C_JM08" }
-    ]
-  },
-  "63213": {
-    "staleId": "D_JM01",
-    "zespol": "Zespół D",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-168", "staleId": "D_JM09" },
-      { "pseudokod": "KOD-582", "staleId": "D_JM13" },
-      { "pseudokod": "KOD-497", "staleId": "D_JM07" },
-      { "pseudokod": "KOD-597", "staleId": "D_JM11" },
-      { "pseudokod": "KOD-383", "staleId": "D_JM04" },
-      { "pseudokod": "KOD-716", "staleId": "D_JM08" },
-      { "pseudokod": "KOD-637", "staleId": "D_JM06" },
-      { "pseudokod": "KOD-595", "staleId": "D_JM05" },
-      { "pseudokod": "KOD-933", "staleId": "D_JM03" },
-      { "pseudokod": "KOD-166", "staleId": "D_JM14" },
-      { "pseudokod": "KOD-523", "staleId": "D_JM02" },
-      { "pseudokod": "KOD-483", "staleId": "D_JM12" },
-      { "pseudokod": "KOD-773", "staleId": "D_JM10" }
-    ]
-  },
-  "34446": {
-    "staleId": "D_JM02",
-    "zespol": "Zespół D",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-971", "staleId": "D_JM09" },
-      { "pseudokod": "KOD-260", "staleId": "D_JM06" },
-      { "pseudokod": "KOD-583", "staleId": "D_JM01" },
-      { "pseudokod": "KOD-285", "staleId": "D_JM14" },
-      { "pseudokod": "KOD-769", "staleId": "D_JM05" },
-      { "pseudokod": "KOD-131", "staleId": "D_JM13" },
-      { "pseudokod": "KOD-432", "staleId": "D_JM10" },
-      { "pseudokod": "KOD-805", "staleId": "D_JM12" },
-      { "pseudokod": "KOD-719", "staleId": "D_JM11" },
-      { "pseudokod": "KOD-938", "staleId": "D_JM04" },
-      { "pseudokod": "KOD-181", "staleId": "D_JM03" },
-      { "pseudokod": "KOD-268", "staleId": "D_JM08" },
-      { "pseudokod": "KOD-415", "staleId": "D_JM07" }
-    ]
-  },
-  "54454": {
-    "staleId": "D_JM03",
-    "zespol": "Zespół D",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-804", "staleId": "D_JM05" },
-      { "pseudokod": "KOD-403", "staleId": "D_JM12" },
-      { "pseudokod": "KOD-407", "staleId": "D_JM13" },
-      { "pseudokod": "KOD-633", "staleId": "D_JM10" },
-      { "pseudokod": "KOD-220", "staleId": "D_JM06" },
-      { "pseudokod": "KOD-661", "staleId": "D_JM07" },
-      { "pseudokod": "KOD-326", "staleId": "D_JM01" },
-      { "pseudokod": "KOD-666", "staleId": "D_JM14" },
-      { "pseudokod": "KOD-213", "staleId": "D_JM11" },
-      { "pseudokod": "KOD-292", "staleId": "D_JM02" },
-      { "pseudokod": "KOD-520", "staleId": "D_JM04" },
-      { "pseudokod": "KOD-511", "staleId": "D_JM09" },
-      { "pseudokod": "KOD-133", "staleId": "D_JM08" }
-    ]
-  },
-  "40759": {
-    "staleId": "D_JM04",
-    "zespol": "Zespół D",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-878", "staleId": "D_JM10" },
-      { "pseudokod": "KOD-833", "staleId": "D_JM13" },
-      { "pseudokod": "KOD-321", "staleId": "D_JM09" },
-      { "pseudokod": "KOD-896", "staleId": "D_JM06" },
-      { "pseudokod": "KOD-366", "staleId": "D_JM07" },
-      { "pseudokod": "KOD-115", "staleId": "D_JM03" },
-      { "pseudokod": "KOD-653", "staleId": "D_JM05" },
-      { "pseudokod": "KOD-259", "staleId": "D_JM11" },
-      { "pseudokod": "KOD-274", "staleId": "D_JM12" },
-      { "pseudokod": "KOD-363", "staleId": "D_JM08" },
-      { "pseudokod": "KOD-122", "staleId": "D_JM01" },
-      { "pseudokod": "KOD-563", "staleId": "D_JM14" },
-      { "pseudokod": "KOD-631", "staleId": "D_JM02" }
-    ]
-  },
-  "67507": {
-    "staleId": "D_JM05",
-    "zespol": "Zespół D",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-368", "staleId": "D_JM01" },
-      { "pseudokod": "KOD-311", "staleId": "D_JM11" },
-      { "pseudokod": "KOD-879", "staleId": "D_JM02" },
-      { "pseudokod": "KOD-489", "staleId": "D_JM09" },
-      { "pseudokod": "KOD-419", "staleId": "D_JM12" },
-      { "pseudokod": "KOD-921", "staleId": "D_JM04" },
-      { "pseudokod": "KOD-256", "staleId": "D_JM03" },
-      { "pseudokod": "KOD-481", "staleId": "D_JM10" },
-      { "pseudokod": "KOD-271", "staleId": "D_JM06" },
-      { "pseudokod": "KOD-180", "staleId": "D_JM14" },
-      { "pseudokod": "KOD-216", "staleId": "D_JM13" },
-      { "pseudokod": "KOD-372", "staleId": "D_JM08" },
-      { "pseudokod": "KOD-641", "staleId": "D_JM07" }
-    ]
-  },
-  "92447": {
-    "staleId": "D_JM06",
-    "zespol": "Zespół D",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-422", "staleId": "D_JM05" },
-      { "pseudokod": "KOD-579", "staleId": "D_JM12" },
-      { "pseudokod": "KOD-764", "staleId": "D_JM14" },
-      { "pseudokod": "KOD-977", "staleId": "D_JM02" },
-      { "pseudokod": "KOD-740", "staleId": "D_JM10" },
-      { "pseudokod": "KOD-799", "staleId": "D_JM09" },
-      { "pseudokod": "KOD-247", "staleId": "D_JM04" },
-      { "pseudokod": "KOD-614", "staleId": "D_JM13" },
-      { "pseudokod": "KOD-538", "staleId": "D_JM03" },
-      { "pseudokod": "KOD-774", "staleId": "D_JM08" },
-      { "pseudokod": "KOD-873", "staleId": "D_JM07" },
-      { "pseudokod": "KOD-405", "staleId": "D_JM01" },
-      { "pseudokod": "KOD-682", "staleId": "D_JM11" }
-    ]
-  },
-  "11382": {
-    "staleId": "D_JM07",
-    "zespol": "Zespół D",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-909", "staleId": "D_JM04" },
-      { "pseudokod": "KOD-331", "staleId": "D_JM10" },
-      { "pseudokod": "KOD-695", "staleId": "D_JM11" },
-      { "pseudokod": "KOD-412", "staleId": "D_JM02" },
-      { "pseudokod": "KOD-809", "staleId": "D_JM14" },
-      { "pseudokod": "KOD-690", "staleId": "D_JM09" },
-      { "pseudokod": "KOD-808", "staleId": "D_JM05" },
-      { "pseudokod": "KOD-714", "staleId": "D_JM06" },
-      { "pseudokod": "KOD-837", "staleId": "D_JM01" },
-      { "pseudokod": "KOD-649", "staleId": "D_JM03" },
-      { "pseudokod": "KOD-244", "staleId": "D_JM12" },
-      { "pseudokod": "KOD-165", "staleId": "D_JM08" },
-      { "pseudokod": "KOD-328", "staleId": "D_JM13" }
-    ]
-  },
-  "56217": {
-    "staleId": "D_JM08",
-    "zespol": "Zespół D",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-539", "staleId": "D_JM10" },
-      { "pseudokod": "KOD-937", "staleId": "D_JM12" },
-      { "pseudokod": "KOD-465", "staleId": "D_JM09" },
-      { "pseudokod": "KOD-802", "staleId": "D_JM04" },
-      { "pseudokod": "KOD-758", "staleId": "D_JM13" },
-      { "pseudokod": "KOD-123", "staleId": "D_JM03" },
-      { "pseudokod": "KOD-850", "staleId": "D_JM14" },
-      { "pseudokod": "KOD-310", "staleId": "D_JM06" },
-      { "pseudokod": "KOD-521", "staleId": "D_JM05" },
-      { "pseudokod": "KOD-546", "staleId": "D_JM02" },
-      { "pseudokod": "KOD-289", "staleId": "D_JM07" },
-      { "pseudokod": "KOD-607", "staleId": "D_JM11" },
-      { "pseudokod": "KOD-312", "staleId": "D_JM01" }
-    ]
-  },
-  "33909": {
-    "staleId": "D_JM09",
-    "zespol": "Zespół D",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-603", "staleId": "D_JM02" },
-      { "pseudokod": "KOD-304", "staleId": "D_JM14" },
-      { "pseudokod": "KOD-233", "staleId": "D_JM10" },
-      { "pseudokod": "KOD-811", "staleId": "D_JM13" },
-      { "pseudokod": "KOD-953", "staleId": "D_JM12" },
-      { "pseudokod": "KOD-138", "staleId": "D_JM06" },
-      { "pseudokod": "KOD-353", "staleId": "D_JM03" },
-      { "pseudokod": "KOD-439", "staleId": "D_JM04" },
-      { "pseudokod": "KOD-286", "staleId": "D_JM05" },
-      { "pseudokod": "KOD-466", "staleId": "D_JM01" },
-      { "pseudokod": "KOD-200", "staleId": "D_JM08" },
-      { "pseudokod": "KOD-894", "staleId": "D_JM11" },
-      { "pseudokod": "KOD-476", "staleId": "D_JM07" }
-    ]
-  },
-  "39862": {
-    "staleId": "D_JM10",
-    "zespol": "Zespół D",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-316", "staleId": "D_JM07" },
-      { "pseudokod": "KOD-318", "staleId": "D_JM04" },
-      { "pseudokod": "KOD-139", "staleId": "D_JM09" },
-      { "pseudokod": "KOD-737", "staleId": "D_JM05" },
-      { "pseudokod": "KOD-282", "staleId": "D_JM06" },
-      { "pseudokod": "KOD-955", "staleId": "D_JM02" },
-      { "pseudokod": "KOD-475", "staleId": "D_JM12" },
-      { "pseudokod": "KOD-755", "staleId": "D_JM14" },
-      { "pseudokod": "KOD-499", "staleId": "D_JM11" },
-      { "pseudokod": "KOD-783", "staleId": "D_JM13" },
-      { "pseudokod": "KOD-544", "staleId": "D_JM01" },
-      { "pseudokod": "KOD-375", "staleId": "D_JM03" },
-      { "pseudokod": "KOD-963", "staleId": "D_JM08" }
-    ]
-  },
-  "88337": {
-    "staleId": "D_JM11",
-    "zespol": "Zespół D",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-972", "staleId": "D_JM07" },
-      { "pseudokod": "KOD-776", "staleId": "D_JM05" },
-      { "pseudokod": "KOD-126", "staleId": "D_JM09" },
-      { "pseudokod": "KOD-993", "staleId": "D_JM01" },
-      { "pseudokod": "KOD-394", "staleId": "D_JM13" },
-      { "pseudokod": "KOD-791", "staleId": "D_JM04" },
-      { "pseudokod": "KOD-365", "staleId": "D_JM06" },
-      { "pseudokod": "KOD-249", "staleId": "D_JM10" },
-      { "pseudokod": "KOD-553", "staleId": "D_JM03" },
-      { "pseudokod": "KOD-657", "staleId": "D_JM12" },
-      { "pseudokod": "KOD-503", "staleId": "D_JM08" },
-      { "pseudokod": "KOD-934", "staleId": "D_JM02" },
-      { "pseudokod": "KOD-105", "staleId": "D_JM14" }
-    ]
-  },
-  "57553": {
-    "staleId": "D_JM12",
-    "zespol": "Zespół D",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-564", "staleId": "D_JM04" },
-      { "pseudokod": "KOD-722", "staleId": "D_JM13" },
-      { "pseudokod": "KOD-891", "staleId": "D_JM10" },
-      { "pseudokod": "KOD-567", "staleId": "D_JM06" },
-      { "pseudokod": "KOD-700", "staleId": "D_JM05" },
-      { "pseudokod": "KOD-454", "staleId": "D_JM09" },
-      { "pseudokod": "KOD-261", "staleId": "D_JM14" },
-      { "pseudokod": "KOD-505", "staleId": "D_JM07" },
-      { "pseudokod": "KOD-392", "staleId": "D_JM11" },
-      { "pseudokod": "KOD-360", "staleId": "D_JM02" },
-      { "pseudokod": "KOD-512", "staleId": "D_JM01" },
-      { "pseudokod": "KOD-738", "staleId": "D_JM08" },
-      { "pseudokod": "KOD-744", "staleId": "D_JM03" }
-    ]
-  },
-  "82317": {
-    "staleId": "D_JM13",
-    "zespol": "Zespół D",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-717", "staleId": "D_JM05" },
-      { "pseudokod": "KOD-946", "staleId": "D_JM07" },
-      { "pseudokod": "KOD-925", "staleId": "D_JM01" },
-      { "pseudokod": "KOD-533", "staleId": "D_JM14" },
-      { "pseudokod": "KOD-442", "staleId": "D_JM04" },
-      { "pseudokod": "KOD-617", "staleId": "D_JM02" },
-      { "pseudokod": "KOD-167", "staleId": "D_JM03" },
-      { "pseudokod": "KOD-434", "staleId": "D_JM10" },
-      { "pseudokod": "KOD-705", "staleId": "D_JM06" },
-      { "pseudokod": "KOD-154", "staleId": "D_JM08" },
-      { "pseudokod": "KOD-551", "staleId": "D_JM11" },
-      { "pseudokod": "KOD-616", "staleId": "D_JM09" },
-      { "pseudokod": "KOD-147", "staleId": "D_JM12" }
-    ]
-  },
-  "33428": {
-    "staleId": "D_JM14",
-    "zespol": "Zespół D",
-    "rola": "zawodnik",
-    "lista": [
-      { "pseudokod": "KOD-872", "staleId": "D_JM12" },
-      { "pseudokod": "KOD-939", "staleId": "D_JM01" },
-      { "pseudokod": "KOD-565", "staleId": "D_JM02" },
-      { "pseudokod": "KOD-436", "staleId": "D_JM04" },
-      { "pseudokod": "KOD-198", "staleId": "D_JM08" },
-      { "pseudokod": "KOD-895", "staleId": "D_JM10" },
-      { "pseudokod": "KOD-306", "staleId": "D_JM07" },
-      { "pseudokod": "KOD-524", "staleId": "D_JM13" },
-      { "pseudokod": "KOD-882", "staleId": "D_JM09" },
-      { "pseudokod": "KOD-866", "staleId": "D_JM06" },
-      { "pseudokod": "KOD-371", "staleId": "D_JM11" },
-      { "pseudokod": "KOD-258", "staleId": "D_JM05" },
-      { "pseudokod": "KOD-182", "staleId": "D_JM03" }
-    ]
-  },
-  "13549": {
-    "staleId": "D_TR01",
-    "zespol": "Zespół D",
-    "rola": "trener",
-    "lista": [
-      { "pseudokod": "KOD-691", "staleId": "D_JM12" },
-      { "pseudokod": "KOD-202", "staleId": "D_JM08" },
-      { "pseudokod": "KOD-958", "staleId": "D_JM14" },
-      { "pseudokod": "KOD-389", "staleId": "D_JM07" },
-      { "pseudokod": "KOD-459", "staleId": "D_JM03" },
-      { "pseudokod": "KOD-104", "staleId": "D_JM10" },
-      { "pseudokod": "KOD-728", "staleId": "D_JM05" },
-      { "pseudokod": "KOD-648", "staleId": "D_JM04" },
-      { "pseudokod": "KOD-364", "staleId": "D_JM09" },
-      { "pseudokod": "KOD-225", "staleId": "D_JM11" },
-      { "pseudokod": "KOD-861", "staleId": "D_JM01" },
-      { "pseudokod": "KOD-477", "staleId": "D_JM06" },
-      { "pseudokod": "KOD-893", "staleId": "D_JM13" },
-      { "pseudokod": "KOD-156", "staleId": "D_JM02" }
-    ]
-  }
+Wpisz swoje indywidualne, 5-cyfrowe <strong>hasło wejścia</strong> zapisane na samej górze otrzymanej kartki. Bez poprawnego hasła system nie uruchomi formularza.
+
+</p>
+
+</div>
+
+
+
+<div class="space-y-4">
+
+<div>
+
+<label for="input-kod" class="block text-sm font-semibold text-slate-700 mb-1">Twoje hasło wejścia (5 cyfr)</label>
+
+<input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="5" id="input-kod" placeholder="np. 12345" autocomplete="off"
+
+onkeydown="if(event.key==='Enter') zaloguj()"
+
+class="w-full rounded-xl border border-slate-300 px-4 py-3.5 text-2xl font-mono text-center tracking-[0.25em] font-bold focus:border-blue-600 focus:outline-none" />
+
+<p id="login-error" class="hidden bg-red-50 border border-red-200 text-red-700 rounded-xl p-3 text-sm font-medium mt-3"></p>
+
+</div>
+
+</div>
+
+
+
+<div class="bg-blue-50 border border-blue-200 rounded-xl p-4 text-xs text-blue-900 space-y-1.5">
+
+<p class="font-bold">Zasada poufności i pseudonimizacji:</p>
+
+<p>W formularzu nie podajesz imienia ani nazwiska. Twoje hasło odblokowuje wyłącznie przypisaną Tobie listę losowych pseudokodów z kartki.</p>
+
+</div>
+
+
+
+<button onclick="zaloguj()" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-3.5 px-6 rounded-xl shadow-sm transition text-base">
+
+Odblokuj i rozpocznij badanie &rarr;
+
+</button>
+
+</section>
+
+
+
+<!-- EKRAN 2: SAMOOCENA ZAWODNIKA -->
+
+<section id="screen-self" class="hidden space-y-6">
+
+<div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-6 space-y-3">
+
+<div class="flex items-center justify-between">
+
+<span class="text-xs font-bold uppercase tracking-wider text-blue-700 bg-blue-50 px-2.5 py-1 rounded-md">Krok 1 z 2 • Samoocena</span>
+
+<span id="self-team-label" class="text-xs font-semibold text-slate-500"></span>
+
+</div>
+
+<h2 class="text-lg sm:text-xl font-bold text-slate-900">Oceń swoje własne zachowania podczas ostatnich gier</h2>
+
+<p class="text-sm text-slate-600">
+
+Zastanów się, jak często Ty sam(a) przejawiałeś(aś) poniższe zachowania w trakcie ostatnich meczów i gier treningowych.
+
+</p>
+
+
+
+<div class="grid grid-cols-5 gap-1.5 pt-2 text-center text-[11px] sm:text-xs">
+
+<div class="bg-slate-100 p-2 rounded-lg"><strong class="block text-sm text-slate-900">0</strong>Nigdy</div>
+
+<div class="bg-slate-100 p-2 rounded-lg"><strong class="block text-sm text-slate-900">1</strong>Rzadko</div>
+
+<div class="bg-slate-100 p-2 rounded-lg"><strong class="block text-sm text-slate-900">2</strong>Czasami</div>
+
+<div class="bg-slate-100 p-2 rounded-lg"><strong class="block text-sm text-slate-900">3</strong>Często</div>
+
+<div class="bg-slate-100 p-2 rounded-lg"><strong class="block text-sm text-slate-900">4</strong>Bardzo często</div>
+
+</div>
+
+</div>
+
+
+
+<div id="self-questions-container" class="space-y-4"></div>
+
+
+
+<div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-900">
+
+<strong>Uwaga:</strong> Po zatwierdzeniu samooceny i przejściu do oceny zespołu powrót do edycji własnych odpowiedzi nie będzie możliwy.
+
+</div>
+
+
+
+<button onclick="zatwierdzSamoocene()" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-3.5 px-6 rounded-xl shadow-sm transition text-base">
+
+Zatwierdź samoocenę i przejdź do oceny zespołu &rarr;
+
+</button>
+
+</section>
+
+
+
+<!-- EKRAN 3: OCENA ZESPOŁU (MATRYCA 360°) -->
+
+<section id="screen-team" class="hidden space-y-5">
+
+<div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-6 space-y-3">
+
+<div class="flex items-center justify-between">
+
+<span id="team-step-badge" class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-md">Krok 2 z 2 • Ocena Zespołu</span>
+
+<span id="team-progress-text" class="text-xs font-bold text-slate-600">Pytanie 1 z 4</span>
+
+</div>
+
+
+
+<h2 id="q-title" class="text-base sm:text-lg font-bold text-slate-900 leading-snug"></h2>
+
+
+
+<div class="bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs text-slate-700 space-y-1.5">
+
+<div class="grid grid-cols-5 gap-1 text-center font-medium">
+
+<div><strong class="text-slate-900">0</strong> = Nigdy<br><span class="text-[10px] text-slate-500">(grał, lecz 0 razy)</span></div>
+
+<div><strong class="text-slate-900">1</strong> = Rzadko</div>
+
+<div><strong class="text-slate-900">2</strong> = Czasami</div>
+
+<div><strong class="text-slate-900">3</strong> = Często</div>
+
+<div><strong class="text-slate-900">4</strong> = Bardzo często</div>
+
+</div>
+
+<div class="border-t border-slate-200 pt-1.5 text-center text-slate-600">
+
+<span class="inline-block bg-slate-200 text-slate-800 font-bold px-2 py-0.5 rounded mr-1">X</span>
+
+= nie grał(a) ze mną / siedział(a) na ławce / brak możliwości obserwacji
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<div id="team-cards-container" class="space-y-3"></div>
+
+
+
+<div class="flex gap-3 pt-2">
+
+<button id="btn-prev-q" onclick="zmienPytanie(-1)" class="hidden w-1/3 bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold py-3.5 px-4 rounded-xl transition text-sm">
+
+&larr; Poprzednie
+
+</button>
+
+<button id="btn-next-q" onclick="zmienPytanie(1)" class="flex-1 bg-blue-700 hover:bg-blue-800 text-white font-bold py-3.5 px-6 rounded-xl shadow-sm transition text-base">
+
+Następne pytanie &rarr;
+
+</button>
+
+</div>
+
+</section>
+
+
+
+<!-- EKRAN 4: PODSUMOWANIE I WYSYŁKA -->
+
+<section id="screen-done" class="hidden bg-white rounded-2xl shadow-sm border border-slate-200 p-8 text-center space-y-4">
+
+<div id="done-spinner" class="space-y-3">
+
+<div class="w-12 h-12 border-4 border-blue-200 border-t-blue-700 rounded-full animate-spin mx-auto"></div>
+
+<h2 class="text-lg font-bold text-slate-900">Zapisywanie odpowiedzi w bazie...</h2>
+
+<p class="text-sm text-slate-500">Proszę nie zamykać okna przeglądarki.</p>
+
+</div>
+
+
+
+<div id="done-success" class="hidden space-y-4">
+
+<div class="w-14 h-14 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mx-auto text-2xl font-bold">&#10003;</div>
+
+<h2 class="text-xl font-bold text-slate-900">Dziękujemy za udział w badaniu!</h2>
+
+<p class="text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
+
+Twoje odpowiedzi zostały bezpiecznie zapisane pod postacią zanonimizowanych kodów. Możesz teraz zamknąć kartę przeglądarki i schować swoją kartkę z legendą.
+
+</p>
+
+</div>
+
+
+
+<div id="done-error" class="hidden space-y-4">
+
+<div class="w-14 h-14 bg-red-100 text-red-700 rounded-full flex items-center justify-center mx-auto text-2xl font-bold">!</div>
+
+<h2 class="text-lg font-bold text-red-700">Błąd połączenia z bazą danych</h2>
+
+<p id="done-error-msg" class="text-sm text-slate-600"></p>
+
+<button onclick="wyslijDane()" class="bg-blue-700 text-white font-bold py-2.5 px-6 rounded-xl text-sm">Spróbuj wysłać ponownie</button>
+
+</div>
+
+</section>
+
+
+
+</main>
+
+
+
+<footer class="text-center text-xs text-slate-400 py-4">
+
+Narzędzie badawcze
+
+</footer>
+
+
+
+<script>
+
+// =========================================================================
+
+// 1. KONFIGURACJA POŁĄCZENIA Z ARKUSZEM GOOGLE (APPS SCRIPT)
+
+// =========================================================================
+
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyWOmYPvATmDVAALb5EvUvz3WeJzXGVKdWXWK4w133zLjZLkNb5fzpRyn9-fDZIxQ/exec";
+
+
+
+// =========================================================================
+
+// 2. BAZA UNIKALNYCH 5-CYFROWYCH HASEŁ WEJŚCIA (ZSYNCHRONIZOWANA Z EXCEL)
+
+// =========================================================================
+
+const BAZA_BADANIA = {
+
+"27107": {
+
+"staleId": "A_JM01",
+
+"zespol": "Zespół A",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-336",
+
+"staleId": "A_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-911",
+
+"staleId": "A_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-699",
+
+"staleId": "A_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-910",
+
+"staleId": "A_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-595",
+
+"staleId": "A_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-973",
+
+"staleId": "A_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-602",
+
+"staleId": "A_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-296",
+
+"staleId": "A_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-211",
+
+"staleId": "A_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-644",
+
+"staleId": "A_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-758",
+
+"staleId": "A_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-255",
+
+"staleId": "A_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-161",
+
+"staleId": "A_JM14"
+
+}
+
+]
+
+},
+
+"21134": {
+
+"staleId": "A_JM02",
+
+"zespol": "Zespół A",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-852",
+
+"staleId": "A_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-730",
+
+"staleId": "A_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-286",
+
+"staleId": "A_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-680",
+
+"staleId": "A_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-240",
+
+"staleId": "A_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-449",
+
+"staleId": "A_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-359",
+
+"staleId": "A_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-132",
+
+"staleId": "A_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-174",
+
+"staleId": "A_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-997",
+
+"staleId": "A_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-891",
+
+"staleId": "A_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-761",
+
+"staleId": "A_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-428",
+
+"staleId": "A_JM14"
+
+}
+
+]
+
+},
+
+"96740": {
+
+"staleId": "A_JM03",
+
+"zespol": "Zespół A",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-245",
+
+"staleId": "A_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-504",
+
+"staleId": "A_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-857",
+
+"staleId": "A_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-147",
+
+"staleId": "A_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-557",
+
+"staleId": "A_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-827",
+
+"staleId": "A_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-512",
+
+"staleId": "A_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-422",
+
+"staleId": "A_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-902",
+
+"staleId": "A_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-383",
+
+"staleId": "A_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-850",
+
+"staleId": "A_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-654",
+
+"staleId": "A_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-597",
+
+"staleId": "A_JM09"
+
+}
+
+]
+
+},
+
+"60474": {
+
+"staleId": "A_JM04",
+
+"zespol": "Zespół A",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-172",
+
+"staleId": "A_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-400",
+
+"staleId": "A_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-613",
+
+"staleId": "A_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-497",
+
+"staleId": "A_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-156",
+
+"staleId": "A_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-498",
+
+"staleId": "A_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-580",
+
+"staleId": "A_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-290",
+
+"staleId": "A_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-289",
+
+"staleId": "A_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-277",
+
+"staleId": "A_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-299",
+
+"staleId": "A_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-674",
+
+"staleId": "A_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-750",
+
+"staleId": "A_JM01"
+
+}
+
+]
+
+},
+
+"46249": {
+
+"staleId": "A_JM05",
+
+"zespol": "Zespół A",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-698",
+
+"staleId": "A_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-258",
+
+"staleId": "A_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-514",
+
+"staleId": "A_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-344",
+
+"staleId": "A_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-131",
+
+"staleId": "A_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-930",
+
+"staleId": "A_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-908",
+
+"staleId": "A_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-425",
+
+"staleId": "A_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-177",
+
+"staleId": "A_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-402",
+
+"staleId": "A_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-837",
+
+"staleId": "A_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-486",
+
+"staleId": "A_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-214",
+
+"staleId": "A_JM11"
+
+}
+
+]
+
+},
+
+"59562": {
+
+"staleId": "A_JM06",
+
+"zespol": "Zespół A",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-562",
+
+"staleId": "A_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-173",
+
+"staleId": "A_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-667",
+
+"staleId": "A_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-322",
+
+"staleId": "A_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-257",
+
+"staleId": "A_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-746",
+
+"staleId": "A_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-627",
+
+"staleId": "A_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-135",
+
+"staleId": "A_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-205",
+
+"staleId": "A_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-948",
+
+"staleId": "A_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-767",
+
+"staleId": "A_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-995",
+
+"staleId": "A_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-614",
+
+"staleId": "A_JM12"
+
+}
+
+]
+
+},
+
+"35674": {
+
+"staleId": "A_JM07",
+
+"zespol": "Zespół A",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-209",
+
+"staleId": "A_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-169",
+
+"staleId": "A_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-482",
+
+"staleId": "A_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-879",
+
+"staleId": "A_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-574",
+
+"staleId": "A_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-538",
+
+"staleId": "A_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-544",
+
+"staleId": "A_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-485",
+
+"staleId": "A_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-988",
+
+"staleId": "A_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-432",
+
+"staleId": "A_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-204",
+
+"staleId": "A_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-720",
+
+"staleId": "A_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-814",
+
+"staleId": "A_JM03"
+
+}
+
+]
+
+},
+
+"20605": {
+
+"staleId": "A_JM08",
+
+"zespol": "Zespół A",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-266",
+
+"staleId": "A_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-664",
+
+"staleId": "A_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-739",
+
+"staleId": "A_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-545",
+
+"staleId": "A_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-122",
+
+"staleId": "A_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-735",
+
+"staleId": "A_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-585",
+
+"staleId": "A_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-987",
+
+"staleId": "A_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-776",
+
+"staleId": "A_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-526",
+
+"staleId": "A_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-909",
+
+"staleId": "A_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-216",
+
+"staleId": "A_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-906",
+
+"staleId": "A_JM02"
+
+}
+
+]
+
+},
+
+"49248": {
+
+"staleId": "A_JM09",
+
+"zespol": "Zespół A",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-591",
+
+"staleId": "A_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-751",
+
+"staleId": "A_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-195",
+
+"staleId": "A_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-187",
+
+"staleId": "A_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-782",
+
+"staleId": "A_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-605",
+
+"staleId": "A_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-830",
+
+"staleId": "A_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-297",
+
+"staleId": "A_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-734",
+
+"staleId": "A_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-178",
+
+"staleId": "A_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-521",
+
+"staleId": "A_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-513",
+
+"staleId": "A_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-651",
+
+"staleId": "A_JM13"
+
+}
+
+]
+
+},
+
+"38157": {
+
+"staleId": "A_JM10",
+
+"zespol": "Zespół A",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-744",
+
+"staleId": "A_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-725",
+
+"staleId": "A_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-881",
+
+"staleId": "A_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-659",
+
+"staleId": "A_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-222",
+
+"staleId": "A_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-515",
+
+"staleId": "A_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-710",
+
+"staleId": "A_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-522",
+
+"staleId": "A_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-895",
+
+"staleId": "A_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-950",
+
+"staleId": "A_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-616",
+
+"staleId": "A_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-563",
+
+"staleId": "A_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-928",
+
+"staleId": "A_JM06"
+
+}
+
+]
+
+},
+
+"33636": {
+
+"staleId": "A_JM11",
+
+"zespol": "Zespół A",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-848",
+
+"staleId": "A_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-215",
+
+"staleId": "A_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-263",
+
+"staleId": "A_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-176",
+
+"staleId": "A_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-490",
+
+"staleId": "A_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-824",
+
+"staleId": "A_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-119",
+
+"staleId": "A_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-142",
+
+"staleId": "A_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-924",
+
+"staleId": "A_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-282",
+
+"staleId": "A_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-766",
+
+"staleId": "A_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-489",
+
+"staleId": "A_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-265",
+
+"staleId": "A_JM08"
+
+}
+
+]
+
+},
+
+"36477": {
+
+"staleId": "A_JM12",
+
+"zespol": "Zespół A",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-162",
+
+"staleId": "A_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-780",
+
+"staleId": "A_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-865",
+
+"staleId": "A_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-385",
+
+"staleId": "A_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-109",
+
+"staleId": "A_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-152",
+
+"staleId": "A_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-704",
+
+"staleId": "A_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-419",
+
+"staleId": "A_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-492",
+
+"staleId": "A_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-157",
+
+"staleId": "A_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-706",
+
+"staleId": "A_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-330",
+
+"staleId": "A_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-870",
+
+"staleId": "A_JM09"
+
+}
+
+]
+
+},
+
+"51648": {
+
+"staleId": "A_JM13",
+
+"zespol": "Zespół A",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-138",
+
+"staleId": "A_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-695",
+
+"staleId": "A_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-811",
+
+"staleId": "A_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-826",
+
+"staleId": "A_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-361",
+
+"staleId": "A_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-567",
+
+"staleId": "A_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-303",
+
+"staleId": "A_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-979",
+
+"staleId": "A_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-134",
+
+"staleId": "A_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-328",
+
+"staleId": "A_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-509",
+
+"staleId": "A_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-405",
+
+"staleId": "A_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-810",
+
+"staleId": "A_JM10"
+
+}
+
+]
+
+},
+
+"34991": {
+
+"staleId": "A_JM14",
+
+"zespol": "Zespół A",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-738",
+
+"staleId": "A_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-520",
+
+"staleId": "A_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-443",
+
+"staleId": "A_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-368",
+
+"staleId": "A_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-624",
+
+"staleId": "A_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-141",
+
+"staleId": "A_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-819",
+
+"staleId": "A_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-283",
+
+"staleId": "A_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-712",
+
+"staleId": "A_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-104",
+
+"staleId": "A_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-246",
+
+"staleId": "A_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-459",
+
+"staleId": "A_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-232",
+
+"staleId": "A_JM06"
+
+}
+
+]
+
+},
+
+"24674": {
+
+"staleId": "A_TR01",
+
+"zespol": "Zespół A",
+
+"rola": "trener",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-108",
+
+"staleId": "A_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-679",
+
+"staleId": "A_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-273",
+
+"staleId": "A_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-524",
+
+"staleId": "A_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-954",
+
+"staleId": "A_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-559",
+
+"staleId": "A_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-860",
+
+"staleId": "A_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-598",
+
+"staleId": "A_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-621",
+
+"staleId": "A_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-970",
+
+"staleId": "A_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-276",
+
+"staleId": "A_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-431",
+
+"staleId": "A_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-420",
+
+"staleId": "A_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-441",
+
+"staleId": "A_JM02"
+
+}
+
+]
+
+},
+
+"34917": {
+
+"staleId": "B_JM01",
+
+"zespol": "Zespół B",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-813",
+
+"staleId": "B_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-563",
+
+"staleId": "B_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-605",
+
+"staleId": "B_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-922",
+
+"staleId": "B_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-710",
+
+"staleId": "B_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-774",
+
+"staleId": "B_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-540",
+
+"staleId": "B_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-126",
+
+"staleId": "B_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-295",
+
+"staleId": "B_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-431",
+
+"staleId": "B_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-417",
+
+"staleId": "B_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-331",
+
+"staleId": "B_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-249",
+
+"staleId": "B_JM03"
+
+}
+
+]
+
+},
+
+"21095": {
+
+"staleId": "B_JM02",
+
+"zespol": "Zespół B",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-430",
+
+"staleId": "B_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-243",
+
+"staleId": "B_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-247",
+
+"staleId": "B_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-381",
+
+"staleId": "B_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-481",
+
+"staleId": "B_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-943",
+
+"staleId": "B_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-297",
+
+"staleId": "B_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-988",
+
+"staleId": "B_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-310",
+
+"staleId": "B_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-699",
+
+"staleId": "B_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-187",
+
+"staleId": "B_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-478",
+
+"staleId": "B_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-766",
+
+"staleId": "B_JM12"
+
+}
+
+]
+
+},
+
+"83328": {
+
+"staleId": "B_JM03",
+
+"zespol": "Zespół B",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-998",
+
+"staleId": "B_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-637",
+
+"staleId": "B_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-851",
+
+"staleId": "B_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-667",
+
+"staleId": "B_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-632",
+
+"staleId": "B_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-939",
+
+"staleId": "B_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-814",
+
+"staleId": "B_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-857",
+
+"staleId": "B_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-756",
+
+"staleId": "B_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-934",
+
+"staleId": "B_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-686",
+
+"staleId": "B_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-287",
+
+"staleId": "B_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-276",
+
+"staleId": "B_JM01"
+
+}
+
+]
+
+},
+
+"65352": {
+
+"staleId": "B_JM04",
+
+"zespol": "Zespół B",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-513",
+
+"staleId": "B_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-948",
+
+"staleId": "B_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-447",
+
+"staleId": "B_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-846",
+
+"staleId": "B_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-186",
+
+"staleId": "B_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-452",
+
+"staleId": "B_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-545",
+
+"staleId": "B_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-624",
+
+"staleId": "B_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-319",
+
+"staleId": "B_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-746",
+
+"staleId": "B_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-622",
+
+"staleId": "B_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-970",
+
+"staleId": "B_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-435",
+
+"staleId": "B_JM03"
+
+}
+
+]
+
+},
+
+"23389": {
+
+"staleId": "B_JM05",
+
+"zespol": "Zespół B",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-300",
+
+"staleId": "B_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-372",
+
+"staleId": "B_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-254",
+
+"staleId": "B_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-269",
+
+"staleId": "B_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-899",
+
+"staleId": "B_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-870",
+
+"staleId": "B_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-413",
+
+"staleId": "B_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-505",
+
+"staleId": "B_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-556",
+
+"staleId": "B_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-133",
+
+"staleId": "B_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-311",
+
+"staleId": "B_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-680",
+
+"staleId": "B_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-811",
+
+"staleId": "B_JM07"
+
+}
+
+]
+
+},
+
+"79926": {
+
+"staleId": "B_JM06",
+
+"zespol": "Zespół B",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-457",
+
+"staleId": "B_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-523",
+
+"staleId": "B_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-576",
+
+"staleId": "B_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-858",
+
+"staleId": "B_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-757",
+
+"staleId": "B_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-684",
+
+"staleId": "B_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-854",
+
+"staleId": "B_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-336",
+
+"staleId": "B_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-214",
+
+"staleId": "B_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-202",
+
+"staleId": "B_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-681",
+
+"staleId": "B_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-798",
+
+"staleId": "B_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-656",
+
+"staleId": "B_JM01"
+
+}
+
+]
+
+},
+
+"52309": {
+
+"staleId": "B_JM07",
+
+"zespol": "Zespół B",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-926",
+
+"staleId": "B_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-980",
+
+"staleId": "B_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-732",
+
+"staleId": "B_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-106",
+
+"staleId": "B_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-395",
+
+"staleId": "B_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-525",
+
+"staleId": "B_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-603",
+
+"staleId": "B_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-439",
+
+"staleId": "B_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-539",
+
+"staleId": "B_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-169",
+
+"staleId": "B_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-633",
+
+"staleId": "B_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-847",
+
+"staleId": "B_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-108",
+
+"staleId": "B_JM12"
+
+}
+
+]
+
+},
+
+"96350": {
+
+"staleId": "B_JM08",
+
+"zespol": "Zespół B",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-320",
+
+"staleId": "B_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-911",
+
+"staleId": "B_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-561",
+
+"staleId": "B_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-745",
+
+"staleId": "B_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-729",
+
+"staleId": "B_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-369",
+
+"staleId": "B_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-353",
+
+"staleId": "B_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-840",
+
+"staleId": "B_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-392",
+
+"staleId": "B_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-284",
+
+"staleId": "B_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-460",
+
+"staleId": "B_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-123",
+
+"staleId": "B_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-419",
+
+"staleId": "B_JM04"
+
+}
+
+]
+
+},
+
+"61188": {
+
+"staleId": "B_JM09",
+
+"zespol": "Zespół B",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-810",
+
+"staleId": "B_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-971",
+
+"staleId": "B_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-966",
+
+"staleId": "B_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-919",
+
+"staleId": "B_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-908",
+
+"staleId": "B_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-226",
+
+"staleId": "B_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-869",
+
+"staleId": "B_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-767",
+
+"staleId": "B_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-495",
+
+"staleId": "B_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-231",
+
+"staleId": "B_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-421",
+
+"staleId": "B_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-517",
+
+"staleId": "B_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-312",
+
+"staleId": "B_JM03"
+
+}
+
+]
+
+},
+
+"37933": {
+
+"staleId": "B_JM10",
+
+"zespol": "Zespół B",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-364",
+
+"staleId": "B_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-294",
+
+"staleId": "B_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-617",
+
+"staleId": "B_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-590",
+
+"staleId": "B_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-924",
+
+"staleId": "B_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-124",
+
+"staleId": "B_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-572",
+
+"staleId": "B_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-237",
+
+"staleId": "B_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-789",
+
+"staleId": "B_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-291",
+
+"staleId": "B_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-770",
+
+"staleId": "B_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-995",
+
+"staleId": "B_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-424",
+
+"staleId": "B_JM14"
+
+}
+
+]
+
+},
+
+"92265": {
+
+"staleId": "B_JM11",
+
+"zespol": "Zespół B",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-987",
+
+"staleId": "B_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-178",
+
+"staleId": "B_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-429",
+
+"staleId": "B_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-623",
+
+"staleId": "B_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-573",
+
+"staleId": "B_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-608",
+
+"staleId": "B_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-385",
+
+"staleId": "B_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-410",
+
+"staleId": "B_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-742",
+
+"staleId": "B_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-874",
+
+"staleId": "B_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-876",
+
+"staleId": "B_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-557",
+
+"staleId": "B_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-997",
+
+"staleId": "B_JM08"
+
+}
+
+]
+
+},
+
+"90328": {
+
+"staleId": "B_JM12",
+
+"zespol": "Zespół B",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-379",
+
+"staleId": "B_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-541",
+
+"staleId": "B_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-458",
+
+"staleId": "B_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-722",
+
+"staleId": "B_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-638",
+
+"staleId": "B_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-360",
+
+"staleId": "B_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-928",
+
+"staleId": "B_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-425",
+
+"staleId": "B_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-945",
+
+"staleId": "B_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-177",
+
+"staleId": "B_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-488",
+
+"staleId": "B_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-472",
+
+"staleId": "B_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-529",
+
+"staleId": "B_JM07"
+
+}
+
+]
+
+},
+
+"94816": {
+
+"staleId": "B_JM13",
+
+"zespol": "Zespół B",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-604",
+
+"staleId": "B_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-747",
+
+"staleId": "B_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-675",
+
+"staleId": "B_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-323",
+
+"staleId": "B_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-903",
+
+"staleId": "B_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-618",
+
+"staleId": "B_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-543",
+
+"staleId": "B_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-735",
+
+"staleId": "B_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-199",
+
+"staleId": "B_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-442",
+
+"staleId": "B_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-267",
+
+"staleId": "B_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-797",
+
+"staleId": "B_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-553",
+
+"staleId": "B_JM09"
+
+}
+
+]
+
+},
+
+"17252": {
+
+"staleId": "B_JM14",
+
+"zespol": "Zespół B",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-738",
+
+"staleId": "B_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-920",
+
+"staleId": "B_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-443",
+
+"staleId": "B_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-666",
+
+"staleId": "B_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-273",
+
+"staleId": "B_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-843",
+
+"staleId": "B_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-826",
+
+"staleId": "B_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-806",
+
+"staleId": "B_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-304",
+
+"staleId": "B_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-654",
+
+"staleId": "B_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-720",
+
+"staleId": "B_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-278",
+
+"staleId": "B_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-279",
+
+"staleId": "B_JM02"
+
+}
+
+]
+
+},
+
+"83947": {
+
+"staleId": "B_TR01",
+
+"zespol": "Zespół B",
+
+"rola": "trener",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-787",
+
+"staleId": "B_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-148",
+
+"staleId": "B_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-251",
+
+"staleId": "B_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-490",
+
+"staleId": "B_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-852",
+
+"staleId": "B_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-693",
+
+"staleId": "B_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-507",
+
+"staleId": "B_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-602",
+
+"staleId": "B_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-183",
+
+"staleId": "B_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-983",
+
+"staleId": "B_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-366",
+
+"staleId": "B_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-639",
+
+"staleId": "B_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-204",
+
+"staleId": "B_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-241",
+
+"staleId": "B_JM01"
+
+}
+
+]
+
+},
+
+"68713": {
+
+"staleId": "C_JM01",
+
+"zespol": "Zespół C",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-854",
+
+"staleId": "C_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-121",
+
+"staleId": "C_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-572",
+
+"staleId": "C_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-871",
+
+"staleId": "C_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-494",
+
+"staleId": "C_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-108",
+
+"staleId": "C_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-288",
+
+"staleId": "C_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-370",
+
+"staleId": "C_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-240",
+
+"staleId": "C_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-951",
+
+"staleId": "C_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-961",
+
+"staleId": "C_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-504",
+
+"staleId": "C_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-221",
+
+"staleId": "C_JM13"
+
+}
+
+]
+
+},
+
+"14438": {
+
+"staleId": "C_JM02",
+
+"zespol": "Zespół C",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-619",
+
+"staleId": "C_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-579",
+
+"staleId": "C_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-146",
+
+"staleId": "C_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-279",
+
+"staleId": "C_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-935",
+
+"staleId": "C_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-948",
+
+"staleId": "C_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-265",
+
+"staleId": "C_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-152",
+
+"staleId": "C_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-565",
+
+"staleId": "C_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-379",
+
+"staleId": "C_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-328",
+
+"staleId": "C_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-242",
+
+"staleId": "C_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-487",
+
+"staleId": "C_JM10"
+
+}
+
+]
+
+},
+
+"55308": {
+
+"staleId": "C_JM03",
+
+"zespol": "Zespół C",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-672",
+
+"staleId": "C_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-990",
+
+"staleId": "C_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-163",
+
+"staleId": "C_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-576",
+
+"staleId": "C_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-281",
+
+"staleId": "C_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-876",
+
+"staleId": "C_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-744",
+
+"staleId": "C_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-177",
+
+"staleId": "C_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-492",
+
+"staleId": "C_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-331",
+
+"staleId": "C_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-837",
+
+"staleId": "C_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-556",
+
+"staleId": "C_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-186",
+
+"staleId": "C_JM09"
+
+}
+
+]
+
+},
+
+"53490": {
+
+"staleId": "C_JM04",
+
+"zespol": "Zespół C",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-715",
+
+"staleId": "C_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-283",
+
+"staleId": "C_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-695",
+
+"staleId": "C_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-688",
+
+"staleId": "C_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-131",
+
+"staleId": "C_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-256",
+
+"staleId": "C_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-747",
+
+"staleId": "C_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-627",
+
+"staleId": "C_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-828",
+
+"staleId": "C_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-145",
+
+"staleId": "C_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-282",
+
+"staleId": "C_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-651",
+
+"staleId": "C_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-277",
+
+"staleId": "C_JM06"
+
+}
+
+]
+
+},
+
+"95200": {
+
+"staleId": "C_JM05",
+
+"zespol": "Zespół C",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-321",
+
+"staleId": "C_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-395",
+
+"staleId": "C_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-115",
+
+"staleId": "C_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-548",
+
+"staleId": "C_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-452",
+
+"staleId": "C_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-480",
+
+"staleId": "C_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-259",
+
+"staleId": "C_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-770",
+
+"staleId": "C_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-254",
+
+"staleId": "C_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-902",
+
+"staleId": "C_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-213",
+
+"staleId": "C_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-423",
+
+"staleId": "C_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-847",
+
+"staleId": "C_JM10"
+
+}
+
+]
+
+},
+
+"41086": {
+
+"staleId": "C_JM06",
+
+"zespol": "Zespół C",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-187",
+
+"staleId": "C_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-297",
+
+"staleId": "C_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-859",
+
+"staleId": "C_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-646",
+
+"staleId": "C_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-539",
+
+"staleId": "C_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-151",
+
+"staleId": "C_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-503",
+
+"staleId": "C_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-996",
+
+"staleId": "C_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-773",
+
+"staleId": "C_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-767",
+
+"staleId": "C_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-865",
+
+"staleId": "C_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-863",
+
+"staleId": "C_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-880",
+
+"staleId": "C_JM04"
+
+}
+
+]
+
+},
+
+"36418": {
+
+"staleId": "C_JM07",
+
+"zespol": "Zespół C",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-696",
+
+"staleId": "C_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-357",
+
+"staleId": "C_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-654",
+
+"staleId": "C_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-777",
+
+"staleId": "C_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-793",
+
+"staleId": "C_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-920",
+
+"staleId": "C_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-866",
+
+"staleId": "C_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-396",
+
+"staleId": "C_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-222",
+
+"staleId": "C_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-888",
+
+"staleId": "C_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-105",
+
+"staleId": "C_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-746",
+
+"staleId": "C_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-925",
+
+"staleId": "C_JM13"
+
+}
+
+]
+
+},
+
+"77006": {
+
+"staleId": "C_JM08",
+
+"zespol": "Zespół C",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-596",
+
+"staleId": "C_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-270",
+
+"staleId": "C_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-149",
+
+"staleId": "C_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-155",
+
+"staleId": "C_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-864",
+
+"staleId": "C_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-375",
+
+"staleId": "C_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-794",
+
+"staleId": "C_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-763",
+
+"staleId": "C_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-153",
+
+"staleId": "C_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-506",
+
+"staleId": "C_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-468",
+
+"staleId": "C_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-717",
+
+"staleId": "C_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-624",
+
+"staleId": "C_JM03"
+
+}
+
+]
+
+},
+
+"74216": {
+
+"staleId": "C_JM09",
+
+"zespol": "Zespół C",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-389",
+
+"staleId": "C_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-306",
+
+"staleId": "C_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-528",
+
+"staleId": "C_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-524",
+
+"staleId": "C_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-973",
+
+"staleId": "C_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-601",
+
+"staleId": "C_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-440",
+
+"staleId": "C_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-594",
+
+"staleId": "C_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-843",
+
+"staleId": "C_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-897",
+
+"staleId": "C_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-400",
+
+"staleId": "C_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-590",
+
+"staleId": "C_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-926",
+
+"staleId": "C_JM11"
+
+}
+
+]
+
+},
+
+"38025": {
+
+"staleId": "C_JM10",
+
+"zespol": "Zespół C",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-814",
+
+"staleId": "C_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-945",
+
+"staleId": "C_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-698",
+
+"staleId": "C_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-637",
+
+"staleId": "C_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-787",
+
+"staleId": "C_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-829",
+
+"staleId": "C_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-257",
+
+"staleId": "C_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-158",
+
+"staleId": "C_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-167",
+
+"staleId": "C_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-708",
+
+"staleId": "C_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-981",
+
+"staleId": "C_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-555",
+
+"staleId": "C_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-988",
+
+"staleId": "C_JM08"
+
+}
+
+]
+
+},
+
+"13049": {
+
+"staleId": "C_JM11",
+
+"zespol": "Zespół C",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-261",
+
+"staleId": "C_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-742",
+
+"staleId": "C_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-205",
+
+"staleId": "C_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-873",
+
+"staleId": "C_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-312",
+
+"staleId": "C_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-892",
+
+"staleId": "C_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-849",
+
+"staleId": "C_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-507",
+
+"staleId": "C_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-655",
+
+"staleId": "C_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-195",
+
+"staleId": "C_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-497",
+
+"staleId": "C_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-600",
+
+"staleId": "C_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-631",
+
+"staleId": "C_JM02"
+
+}
+
+]
+
+},
+
+"19012": {
+
+"staleId": "C_JM12",
+
+"zespol": "Zespół C",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-570",
+
+"staleId": "C_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-889",
+
+"staleId": "C_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-430",
+
+"staleId": "C_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-166",
+
+"staleId": "C_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-493",
+
+"staleId": "C_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-473",
+
+"staleId": "C_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-907",
+
+"staleId": "C_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-206",
+
+"staleId": "C_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-931",
+
+"staleId": "C_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-102",
+
+"staleId": "C_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-461",
+
+"staleId": "C_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-626",
+
+"staleId": "C_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-584",
+
+"staleId": "C_JM01"
+
+}
+
+]
+
+},
+
+"73433": {
+
+"staleId": "C_JM13",
+
+"zespol": "Zespół C",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-838",
+
+"staleId": "C_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-351",
+
+"staleId": "C_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-960",
+
+"staleId": "C_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-711",
+
+"staleId": "C_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-545",
+
+"staleId": "C_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-587",
+
+"staleId": "C_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-244",
+
+"staleId": "C_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-868",
+
+"staleId": "C_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-245",
+
+"staleId": "C_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-913",
+
+"staleId": "C_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-914",
+
+"staleId": "C_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-789",
+
+"staleId": "C_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-367",
+
+"staleId": "C_JM01"
+
+}
+
+]
+
+},
+
+"83903": {
+
+"staleId": "C_JM14",
+
+"zespol": "Zespół C",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-709",
+
+"staleId": "C_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-693",
+
+"staleId": "C_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-622",
+
+"staleId": "C_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-681",
+
+"staleId": "C_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-502",
+
+"staleId": "C_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-276",
+
+"staleId": "C_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-442",
+
+"staleId": "C_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-952",
+
+"staleId": "C_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-552",
+
+"staleId": "C_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-743",
+
+"staleId": "C_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-170",
+
+"staleId": "C_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-917",
+
+"staleId": "C_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-813",
+
+"staleId": "C_JM08"
+
+}
+
+]
+
+},
+
+"24619": {
+
+"staleId": "C_TR01",
+
+"zespol": "Zespół C",
+
+"rola": "trener",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-786",
+
+"staleId": "C_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-989",
+
+"staleId": "C_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-227",
+
+"staleId": "C_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-172",
+
+"staleId": "C_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-615",
+
+"staleId": "C_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-605",
+
+"staleId": "C_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-403",
+
+"staleId": "C_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-425",
+
+"staleId": "C_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-950",
+
+"staleId": "C_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-335",
+
+"staleId": "C_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-714",
+
+"staleId": "C_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-341",
+
+"staleId": "C_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-824",
+
+"staleId": "C_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-916",
+
+"staleId": "C_JM08"
+
+}
+
+]
+
+},
+
+"63213": {
+
+"staleId": "D_JM01",
+
+"zespol": "Zespół D",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-168",
+
+"staleId": "D_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-582",
+
+"staleId": "D_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-497",
+
+"staleId": "D_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-597",
+
+"staleId": "D_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-383",
+
+"staleId": "D_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-716",
+
+"staleId": "D_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-637",
+
+"staleId": "D_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-595",
+
+"staleId": "D_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-933",
+
+"staleId": "D_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-166",
+
+"staleId": "D_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-523",
+
+"staleId": "D_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-483",
+
+"staleId": "D_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-773",
+
+"staleId": "D_JM10"
+
+}
+
+]
+
+},
+
+"34446": {
+
+"staleId": "D_JM02",
+
+"zespol": "Zespół D",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-971",
+
+"staleId": "D_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-260",
+
+"staleId": "D_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-583",
+
+"staleId": "D_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-285",
+
+"staleId": "D_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-769",
+
+"staleId": "D_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-131",
+
+"staleId": "D_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-432",
+
+"staleId": "D_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-805",
+
+"staleId": "D_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-719",
+
+"staleId": "D_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-938",
+
+"staleId": "D_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-181",
+
+"staleId": "D_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-268",
+
+"staleId": "D_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-415",
+
+"staleId": "D_JM07"
+
+}
+
+]
+
+},
+
+"54454": {
+
+"staleId": "D_JM03",
+
+"zespol": "Zespół D",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-804",
+
+"staleId": "D_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-403",
+
+"staleId": "D_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-407",
+
+"staleId": "D_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-633",
+
+"staleId": "D_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-220",
+
+"staleId": "D_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-661",
+
+"staleId": "D_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-326",
+
+"staleId": "D_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-666",
+
+"staleId": "D_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-213",
+
+"staleId": "D_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-292",
+
+"staleId": "D_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-520",
+
+"staleId": "D_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-511",
+
+"staleId": "D_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-133",
+
+"staleId": "D_JM08"
+
+}
+
+]
+
+},
+
+"40759": {
+
+"staleId": "D_JM04",
+
+"zespol": "Zespół D",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-878",
+
+"staleId": "D_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-833",
+
+"staleId": "D_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-321",
+
+"staleId": "D_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-896",
+
+"staleId": "D_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-366",
+
+"staleId": "D_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-115",
+
+"staleId": "D_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-653",
+
+"staleId": "D_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-259",
+
+"staleId": "D_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-274",
+
+"staleId": "D_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-363",
+
+"staleId": "D_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-122",
+
+"staleId": "D_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-563",
+
+"staleId": "D_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-631",
+
+"staleId": "D_JM02"
+
+}
+
+]
+
+},
+
+"67507": {
+
+"staleId": "D_JM05",
+
+"zespol": "Zespół D",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-368",
+
+"staleId": "D_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-311",
+
+"staleId": "D_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-879",
+
+"staleId": "D_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-489",
+
+"staleId": "D_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-419",
+
+"staleId": "D_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-921",
+
+"staleId": "D_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-256",
+
+"staleId": "D_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-481",
+
+"staleId": "D_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-271",
+
+"staleId": "D_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-180",
+
+"staleId": "D_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-216",
+
+"staleId": "D_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-372",
+
+"staleId": "D_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-641",
+
+"staleId": "D_JM07"
+
+}
+
+]
+
+},
+
+"92447": {
+
+"staleId": "D_JM06",
+
+"zespol": "Zespół D",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-422",
+
+"staleId": "D_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-579",
+
+"staleId": "D_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-764",
+
+"staleId": "D_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-977",
+
+"staleId": "D_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-740",
+
+"staleId": "D_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-799",
+
+"staleId": "D_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-247",
+
+"staleId": "D_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-614",
+
+"staleId": "D_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-538",
+
+"staleId": "D_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-774",
+
+"staleId": "D_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-873",
+
+"staleId": "D_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-405",
+
+"staleId": "D_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-682",
+
+"staleId": "D_JM11"
+
+}
+
+]
+
+},
+
+"11382": {
+
+"staleId": "D_JM07",
+
+"zespol": "Zespół D",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-909",
+
+"staleId": "D_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-331",
+
+"staleId": "D_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-695",
+
+"staleId": "D_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-412",
+
+"staleId": "D_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-809",
+
+"staleId": "D_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-690",
+
+"staleId": "D_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-808",
+
+"staleId": "D_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-714",
+
+"staleId": "D_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-837",
+
+"staleId": "D_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-649",
+
+"staleId": "D_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-244",
+
+"staleId": "D_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-165",
+
+"staleId": "D_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-328",
+
+"staleId": "D_JM13"
+
+}
+
+]
+
+},
+
+"56217": {
+
+"staleId": "D_JM08",
+
+"zespol": "Zespół D",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-539",
+
+"staleId": "D_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-937",
+
+"staleId": "D_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-465",
+
+"staleId": "D_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-802",
+
+"staleId": "D_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-758",
+
+"staleId": "D_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-123",
+
+"staleId": "D_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-850",
+
+"staleId": "D_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-310",
+
+"staleId": "D_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-521",
+
+"staleId": "D_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-546",
+
+"staleId": "D_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-289",
+
+"staleId": "D_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-607",
+
+"staleId": "D_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-312",
+
+"staleId": "D_JM01"
+
+}
+
+]
+
+},
+
+"33909": {
+
+"staleId": "D_JM09",
+
+"zespol": "Zespół D",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-603",
+
+"staleId": "D_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-304",
+
+"staleId": "D_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-233",
+
+"staleId": "D_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-811",
+
+"staleId": "D_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-953",
+
+"staleId": "D_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-138",
+
+"staleId": "D_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-353",
+
+"staleId": "D_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-439",
+
+"staleId": "D_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-286",
+
+"staleId": "D_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-466",
+
+"staleId": "D_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-200",
+
+"staleId": "D_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-894",
+
+"staleId": "D_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-476",
+
+"staleId": "D_JM07"
+
+}
+
+]
+
+},
+
+"39862": {
+
+"staleId": "D_JM10",
+
+"zespol": "Zespół D",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-316",
+
+"staleId": "D_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-318",
+
+"staleId": "D_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-139",
+
+"staleId": "D_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-737",
+
+"staleId": "D_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-282",
+
+"staleId": "D_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-955",
+
+"staleId": "D_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-475",
+
+"staleId": "D_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-755",
+
+"staleId": "D_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-499",
+
+"staleId": "D_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-783",
+
+"staleId": "D_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-544",
+
+"staleId": "D_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-375",
+
+"staleId": "D_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-963",
+
+"staleId": "D_JM08"
+
+}
+
+]
+
+},
+
+"88337": {
+
+"staleId": "D_JM11",
+
+"zespol": "Zespół D",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-972",
+
+"staleId": "D_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-776",
+
+"staleId": "D_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-126",
+
+"staleId": "D_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-993",
+
+"staleId": "D_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-394",
+
+"staleId": "D_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-791",
+
+"staleId": "D_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-365",
+
+"staleId": "D_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-249",
+
+"staleId": "D_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-553",
+
+"staleId": "D_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-657",
+
+"staleId": "D_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-503",
+
+"staleId": "D_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-934",
+
+"staleId": "D_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-105",
+
+"staleId": "D_JM14"
+
+}
+
+]
+
+},
+
+"57553": {
+
+"staleId": "D_JM12",
+
+"zespol": "Zespół D",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-564",
+
+"staleId": "D_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-722",
+
+"staleId": "D_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-891",
+
+"staleId": "D_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-567",
+
+"staleId": "D_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-700",
+
+"staleId": "D_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-454",
+
+"staleId": "D_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-261",
+
+"staleId": "D_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-505",
+
+"staleId": "D_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-392",
+
+"staleId": "D_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-360",
+
+"staleId": "D_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-512",
+
+"staleId": "D_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-738",
+
+"staleId": "D_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-744",
+
+"staleId": "D_JM03"
+
+}
+
+]
+
+},
+
+"82317": {
+
+"staleId": "D_JM13",
+
+"zespol": "Zespół D",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-717",
+
+"staleId": "D_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-946",
+
+"staleId": "D_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-925",
+
+"staleId": "D_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-533",
+
+"staleId": "D_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-442",
+
+"staleId": "D_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-617",
+
+"staleId": "D_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-167",
+
+"staleId": "D_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-434",
+
+"staleId": "D_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-705",
+
+"staleId": "D_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-154",
+
+"staleId": "D_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-551",
+
+"staleId": "D_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-616",
+
+"staleId": "D_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-147",
+
+"staleId": "D_JM12"
+
+}
+
+]
+
+},
+
+"33428": {
+
+"staleId": "D_JM14",
+
+"zespol": "Zespół D",
+
+"rola": "zawodnik",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-872",
+
+"staleId": "D_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-939",
+
+"staleId": "D_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-565",
+
+"staleId": "D_JM02"
+
+},
+
+{
+
+"pseudokod": "KOD-436",
+
+"staleId": "D_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-198",
+
+"staleId": "D_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-895",
+
+"staleId": "D_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-306",
+
+"staleId": "D_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-524",
+
+"staleId": "D_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-882",
+
+"staleId": "D_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-866",
+
+"staleId": "D_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-371",
+
+"staleId": "D_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-258",
+
+"staleId": "D_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-182",
+
+"staleId": "D_JM03"
+
+}
+
+]
+
+},
+
+"13549": {
+
+"staleId": "D_TR01",
+
+"zespol": "Zespół D",
+
+"rola": "trener",
+
+"lista": [
+
+{
+
+"pseudokod": "KOD-691",
+
+"staleId": "D_JM12"
+
+},
+
+{
+
+"pseudokod": "KOD-202",
+
+"staleId": "D_JM08"
+
+},
+
+{
+
+"pseudokod": "KOD-958",
+
+"staleId": "D_JM14"
+
+},
+
+{
+
+"pseudokod": "KOD-389",
+
+"staleId": "D_JM07"
+
+},
+
+{
+
+"pseudokod": "KOD-459",
+
+"staleId": "D_JM03"
+
+},
+
+{
+
+"pseudokod": "KOD-104",
+
+"staleId": "D_JM10"
+
+},
+
+{
+
+"pseudokod": "KOD-728",
+
+"staleId": "D_JM05"
+
+},
+
+{
+
+"pseudokod": "KOD-648",
+
+"staleId": "D_JM04"
+
+},
+
+{
+
+"pseudokod": "KOD-364",
+
+"staleId": "D_JM09"
+
+},
+
+{
+
+"pseudokod": "KOD-225",
+
+"staleId": "D_JM11"
+
+},
+
+{
+
+"pseudokod": "KOD-861",
+
+"staleId": "D_JM01"
+
+},
+
+{
+
+"pseudokod": "KOD-477",
+
+"staleId": "D_JM06"
+
+},
+
+{
+
+"pseudokod": "KOD-893",
+
+"staleId": "D_JM13"
+
+},
+
+{
+
+"pseudokod": "KOD-156",
+
+"staleId": "D_JM02"
+
+}
+
+]
+
+}
+
 };
 
-    // =========================================================================
-    // 3. TREŚĆ 4 PYTAŃ BEHAWIORALNYCH
-    // =========================================================================
-    const PYTANIA_SAMOOCENA = [
-      { id: "P1", wymiar: "Z", tekst: "P1. Jak często przekazywałeś(aś) kolegom/koleżankom informacje, które pomagały skuteczniej rozegrać akcję?" },
-      { id: "P2", wymiar: "Z", tekst: "P2. Jak często podejmowałeś(aś) inicjatywę, biorąc na siebie większą odpowiedzialność za grę?" },
-      { id: "P3", wymiar: "S", tekst: "P3. Jak często po nieudanej akcji wspierałeś(aś) innych w sposób, który pomagał im wrócić do gry?" },
-      { id: "P4", wymiar: "S", tekst: "P4. Jak często w momentach, gdy w zespole pojawiało się zdenerwowanie lub spadek koncentracji, pomagałeś(aś) zespołowi skupić się na kolejnej akcji?" }
-    ];
 
-    const PYTANIA_ZESPOL = [
-      { id: "P1", wymiar: "Z", tekst: "Pytanie 1/4 (Zadaniowe): Jak często poniżsi zawodnicy przekazywali kolegom informacje, które pomagały skuteczniej rozegrać akcję?" },
-      { id: "P2", wymiar: "Z", tekst: "Pytanie 2/4 (Zadaniowe): Jak często poniżsi zawodnicy podejmowali inicjatywę, biorąc na siebie większą odpowiedzialność za grę?" },
-      { id: "P3", wymiar: "S", tekst: "Pytanie 3/4 (Społeczne): Jak często po nieudanej akcji wspierali innych w sposób, który pomagał im wrócić do gry?" },
-      { id: "P4", wymiar: "S", tekst: "Pytanie 4/4 (Społeczne): Jak często w momentach, gdy w zespole pojawiało się zdenerwowanie lub spadek koncentracji, pomagali zespołowi skupić się na kolejnej akcji?" }
-    ];
 
-    // =========================================================================
-    // 4. STAN APLIKACJI I LOGIKA
-    // =========================================================================
-    let state = {
-      hasloWejscia: "",
-      profil: null,
-      samoocena: { P1: null, P2: null, P3: null, P4: null },
-      samoocenaZatwierdzona: false,
-      ocenyZespolu: {},
-      aktualnePytanieIdx: 0
-    };
+// =========================================================================
 
-    function zaloguj() {
-      const pinInput = document.getElementById("input-kod").value.trim();
-      const errEl = document.getElementById("login-error");
+// 3. TREŚĆ 4 PYTAŃ BEHAWIORALNYCH
 
-      if (!pinInput) {
-        errEl.textContent = "Wpisz swoje 5-cyfrowe hasło wejścia z kartki.";
-        errEl.classList.remove("hidden");
-        return;
-      }
+// =========================================================================
 
-      if (!BAZA_BADANIA[pinInput]) {
-        errEl.textContent = "Błędne hasło wejścia. Sprawdź dokładnie 5 cyfr zapisanych u góry Twojej kartki.";
-        errEl.classList.remove("hidden");
-        document.getElementById("input-kod").focus();
-        return;
-      }
+const PYTANIA_SAMOOCENA = [
 
-      errEl.classList.add("hidden");
-      state.hasloWejscia = pinInput;
-      state.profil = BAZA_BADANIA[pinInput];
-      state.ocenyZespolu = {};
+{ id: "P1", wymiar: "Z", tekst: "P1. Jak często przekazywałeś(aś) kolegom/koleżankom informacje, które pomagały skuteczniej rozegrać akcję?" },
 
-      state.profil.lista.forEach(item => {
-        state.ocenyZespolu[item.staleId] = { P1: null, P2: null, P3: null, P4: null };
-      });
+{ id: "P2", wymiar: "Z", tekst: "P2. Jak często podejmowałeś(aś) inicjatywę, biorąc na siebie większą odpowiedzialność za grę?" },
 
-      const badge = document.getElementById("header-badge");
-      badge.textContent = `${state.profil.zespol} • PIN: ${state.hasloWejscia}`;
-      badge.classList.remove("hidden");
+{ id: "P3", wymiar: "S", tekst: "P3. Jak często po nieudanej akcji wspierałeś(aś) innych w sposób, który pomagał im wrócić do gry?" },
 
-      document.getElementById("screen-login").classList.add("hidden");
+{ id: "P4", wymiar: "S", tekst: "P4. Jak często w momentach, gdy w zespole pojawiało się zdenerwowanie lub spadek koncentracji, pomagałeś(aś) zespołowi skupić się na kolejnej akcji?" }
 
-      if (state.profil.rola === "trener") {
-        state.samoocenaZatwierdzona = true;
-        document.getElementById("team-step-badge").textContent = "Ocena Zespołu (Trener)";
-        otworzEkranZespolu();
-      } else {
-        document.getElementById("self-team-label").textContent = state.profil.zespol;
-        renderujSamoocene();
-        document.getElementById("screen-self").classList.remove("hidden");
-      }
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+];
 
-    function renderujSamoocene() {
-      const container = document.getElementById("self-questions-container");
-      container.innerHTML = "";
 
-      PYTANIA_SAMOOCENA.forEach(q => {
-        const card = document.createElement("div");
-        card.className = "bg-white rounded-2xl shadow-sm border border-slate-200 p-5 space-y-3";
-        card.innerHTML = `
-          <p class="text-sm sm:text-base font-semibold text-slate-900 leading-snug">${q.tekst}</p>
-          <div class="grid grid-cols-5 gap-2">
-            ${[0, 1, 2, 3, 4].map(val => `
-              <button type="button" onclick="ustawSamoocene('${q.id}', ${val}, this)"
-                class="scale-btn py-3 rounded-xl border border-slate-300 font-bold text-base text-slate-700 hover:bg-slate-50">
-                ${val}
-              </button>
-            `).join("")}
-          </div>
-        `;
-        container.appendChild(card);
-      });
-    }
 
-    function ustawSamoocene(qId, val, btnEl) {
-      if (state.samoocenaZatwierdzona) return;
-      state.samoocena[qId] = val;
-      const parent = btnEl.parentElement;
-      Array.from(parent.children).forEach(b => b.classList.remove("scale-selected"));
-      btnEl.classList.add("scale-selected");
-    }
+const PYTANIA_ZESPOL = [
 
-    function zatwierdzSamoocene() {
-      const brakujace = PYTANIA_SAMOOCENA.filter(q => state.samoocena[q.id] === null);
-      if (brakujace.length > 0) {
-        alert("Odpowiedz na wszystkie 4 pytania samooceny przed przejściem dalej.");
-        return;
-      }
-      state.samoocenaZatwierdzona = true;
-      document.getElementById("screen-self").classList.add("hidden");
-      otworzEkranZespolu();
-    }
+{ id: "P1", wymiar: "Z", tekst: "Pytanie 1/4 (Zadaniowe): Jak często poniżsi zawodnicy przekazywali kolegom informacje, które pomagały skuteczniej rozegrać akcję?" },
 
-    function otworzEkranZespolu() {
-      state.aktualnePytanieIdx = 0;
-      document.getElementById("screen-team").classList.remove("hidden");
-      renderujPytanieZespolu();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+{ id: "P2", wymiar: "Z", tekst: "Pytanie 2/4 (Zadaniowe): Jak często poniżsi zawodnicy podejmowali inicjatywę, biorąc na siebie większą odpowiedzialność za grę?" },
 
-    function renderujPytanieZespolu() {
-      const qObj = PYTANIA_ZESPOL[state.aktualnePytanieIdx];
-      document.getElementById("team-progress-text").textContent = `Pytanie ${state.aktualnePytanieIdx + 1} z 4`;
-      document.getElementById("q-title").textContent = qObj.tekst;
+{ id: "P3", wymiar: "S", tekst: "Pytanie 3/4 (Społeczne): Jak często po nieudanej akcji wspierali innych w sposób, który pomagał im wrócić do gry?" },
 
-      const btnPrev = document.getElementById("btn-prev-q");
-      const btnNext = document.getElementById("btn-next-q");
+{ id: "P4", wymiar: "S", tekst: "Pytanie 4/4 (Społeczne): Jak często w momentach, gdy w zespole pojawiało się zdenerwowanie lub spadek koncentracji, pomagali zespołowi skupić się na kolejnej akcji?" }
 
-      if (state.aktualnePytanieIdx === 0) {
-        btnPrev.classList.add("hidden");
-      } else {
-        btnPrev.classList.remove("hidden");
-      }
+];
 
-      if (state.aktualnePytanieIdx === 3) {
-        btnNext.textContent = "Zakończ i wyślij odpowiedzi ✓";
-        btnNext.classList.remove("bg-blue-700", "hover:bg-blue-800");
-        btnNext.classList.add("bg-emerald-700", "hover:bg-emerald-800");
-      } else {
-        btnNext.textContent = "Następne pytanie →";
-        btnNext.classList.remove("bg-emerald-700", "hover:bg-emerald-800");
-        btnNext.classList.add("bg-blue-700", "hover:bg-blue-800");
-      }
 
-      const container = document.getElementById("team-cards-container");
-      container.innerHTML = "";
 
-      state.profil.lista.forEach(person => {
-        const currentVal = state.ocenyZespolu[person.staleId][qObj.id];
-        const card = document.createElement("div");
-        card.className = "bg-white rounded-xl shadow-sm border border-slate-200 p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3";
+// =========================================================================
 
-        const btnsHtml = [0, 1, 2, 3, 4].map(val => {
-          const selClass = currentVal === val ? "scale-selected" : "";
-          return `<button type="button" onclick="ustawOceneZespolu('${person.staleId}', '${qObj.id}', ${val}, this)"
-            class="scale-btn w-11 h-11 rounded-lg border border-slate-300 font-bold text-sm text-slate-800 hover:bg-slate-50 ${selClass}">
-            ${val}
-          </button>`;
-        }).join("");
+// 4. STAN APLIKACJI I LOGIKA
 
-        const xSelClass = currentVal === "X" ? "x-selected" : "";
-        const xBtnHtml = `<button type="button" onclick="ustawOceneZespolu('${person.staleId}', '${qObj.id}', 'X', this)"
-          class="scale-btn w-11 h-11 ml-2 rounded-lg border-2 border-dashed border-slate-400 bg-slate-100 font-bold text-sm text-slate-700 hover:bg-slate-200 ${xSelClass}">
-          X
-        </button>`;
+// =========================================================================
 
-        card.innerHTML = `
-          <div class="flex items-center justify-between sm:block">
-            <span class="font-mono font-bold text-base text-slate-900 bg-slate-100 px-3 py-1 rounded-lg border border-slate-200">
-              ${person.pseudokod}
-            </span>
-          </div>
-          <div class="flex items-center justify-between sm:justify-end gap-1.5">
-            ${btnsHtml}
-            ${xBtnHtml}
-          </div>
-        `;
-        container.appendChild(card);
-      });
-    }
+let state = {
 
-    function ustawOceneZespolu(staleId, qId, val, btnEl) {
-      state.ocenyZespolu[staleId][qId] = val;
-      const parent = btnEl.parentElement;
-      Array.from(parent.children).forEach(b => b.classList.remove("scale-selected", "x-selected"));
-      if (val === "X") {
-        btnEl.classList.add("x-selected");
-      } else {
-        btnEl.classList.add("scale-selected");
-      }
-    }
+hasloWejscia: "",
 
-    function zmienPytanie(delta) {
-      const qObj = PYTANIA_ZESPOL[state.aktualnePytanieIdx];
-      if (delta > 0) {
-        const nieocenieni = state.profil.lista.filter(p => state.ocenyZespolu[p.staleId][qObj.id] === null);
-        if (nieocenieni.length > 0) {
-          alert(`Uzupełnij ocenę dla wszystkich kodów (pozostało: ${nieocenieni.length}). Jeśli ktoś nie grał, wybierz X.`);
-          return;
-        }
-      }
+profil: null,
 
-      if (state.aktualnePytanieIdx + delta > 3) {
-        document.getElementById("screen-team").classList.add("hidden");
-        document.getElementById("screen-done").classList.remove("hidden");
-        wyslijDane();
-        return;
-      }
+samoocena: { P1: null, P2: null, P3: null, P4: null },
 
-      state.aktualnePytanieIdx += delta;
-      renderujPytanieZespolu();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+samoocenaZatwierdzona: false,
 
-    function obliczSrednia(a, b) {
-      const nums = [a, b].filter(v => typeof v === "number");
-      if (nums.length === 0) return "";
-      const avg = nums.reduce((acc, v) => acc + v, 0) / nums.length;
-      return Number(avg.toFixed(2));
-    }
+ocenyZespolu: {},
 
-    async function wyslijDane() {
-      document.getElementById("done-spinner").classList.remove("hidden");
-      document.getElementById("done-success").classList.add("hidden");
-      document.getElementById("done-error").classList.add("hidden");
+aktualnePytanieIdx: 0
 
-      const timestamp = new Date().toISOString();
-      const staleIdOceniajacego = state.profil.staleId;
-      const rows = [];
+};
 
-      if (state.profil.rola === "zawodnik") {
-        rows.push({
-          timestamp,
-          kod_oceniajacego: staleIdOceniajacego,
-          rola_oceniajacego: "zawodnik",
-          typ_oceny: "samoocena",
-          pseudokod_wyswietlany: "SELF",
-          stale_id_ocenianego: staleIdOceniajacego,
-          P1: state.samoocena.P1,
-          P2: state.samoocena.P2,
-          P3: state.samoocena.P3,
-          P4: state.samoocena.P4,
-          srednia_Z: obliczSrednia(state.samoocena.P1, state.samoocena.P2),
-          srednia_S: obliczSrednia(state.samoocena.P3, state.samoocena.P4)
-        });
-      }
 
-      state.profil.lista.forEach(item => {
-        const oc = state.ocenyZespolu[item.staleId];
-        rows.push({
-          timestamp,
-          kod_oceniajacego: staleIdOceniajacego,
-          rola_oceniajacego: state.profil.rola,
-          typ_oceny: state.profil.rola === "trener" ? "ocena_trenera" : "ocena_kolezenska",
-          pseudokod_wyswietlany: item.pseudokod,
-          stale_id_ocenianego: item.staleId,
-          P1: oc.P1,
-          P2: oc.P2,
-          P3: oc.P3,
-          P4: oc.P4,
-          srednia_Z: obliczSrednia(oc.P1, oc.P2),
-          srednia_S: obliczSrednia(oc.P3, oc.P4)
-        });
-      });
 
-      try {
-        await fetch(GOOGLE_SCRIPT_URL, {
-          method: "POST",
-          mode: "no-cors",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({ rows })
-        });
-        document.getElementById("done-spinner").classList.add("hidden");
-        document.getElementById("done-success").classList.remove("hidden");
-      } catch (err) {
-        document.getElementById("done-spinner").classList.add("hidden");
-        document.getElementById("done-error-msg").textContent = err.message;
-        document.getElementById("done-error").classList.remove("hidden");
-      }
-    }
-  </script>
+function zaloguj() {
+
+const pinInput = document.getElementById("input-kod").value.trim();
+
+const errEl = document.getElementById("login-error");
+
+
+
+if (!pinInput) {
+
+errEl.textContent = "Wpisz swoje 5-cyfrowe hasło wejścia z kartki.";
+
+errEl.classList.remove("hidden");
+
+return;
+
+}
+
+
+
+if (!BAZA_BADANIA[pinInput]) {
+
+errEl.textContent = "Błędne hasło wejścia. Sprawdź dokładnie 5 cyfr zapisanych u góry Twojej kartki.";
+
+errEl.classList.remove("hidden");
+
+document.getElementById("input-kod").focus();
+
+return;
+
+}
+
+
+
+errEl.classList.add("hidden");
+
+state.hasloWejscia = pinInput;
+
+state.profil = BAZA_BADANIA[pinInput];
+
+state.ocenyZespolu = {};
+
+
+
+state.profil.lista.forEach(item => {
+
+state.ocenyZespolu[item.staleId] = { P1: null, P2: null, P3: null, P4: null };
+
+});
+
+
+
+const badge = document.getElementById("header-badge");
+
+badge.textContent = `${state.profil.zespol} • PIN: ${state.hasloWejscia}`;
+
+badge.classList.remove("hidden");
+
+
+
+document.getElementById("screen-login").classList.add("hidden");
+
+
+
+if (state.profil.rola === "trener") {
+
+state.samoocenaZatwierdzona = true;
+
+document.getElementById("team-step-badge").textContent = "Ocena Zespołu (Trener)";
+
+otworzEkranZespolu();
+
+} else {
+
+document.getElementById("self-team-label").textContent = state.profil.zespol;
+
+renderujSamoocene();
+
+document.getElementById("screen-self").classList.remove("hidden");
+
+}
+
+window.scrollTo({ top: 0, behavior: "smooth" });
+
+}
+
+
+
+function renderujSamoocene() {
+
+const container = document.getElementById("self-questions-container");
+
+container.innerHTML = "";
+
+
+
+PYTANIA_SAMOOCENA.forEach(q => {
+
+const card = document.createElement("div");
+
+card.className = "bg-white rounded-2xl shadow-sm border border-slate-200 p-5 space-y-3";
+
+card.innerHTML = `
+
+<p class="text-sm sm:text-base font-semibold text-slate-900 leading-snug">${q.tekst}</p>
+
+<div class="grid grid-cols-5 gap-2">
+
+${[0, 1, 2, 3, 4].map(val => `
+
+<button type="button" onclick="ustawSamoocene('${q.id}', ${val}, this)"
+
+class="scale-btn py-3 rounded-xl border border-slate-300 font-bold text-base text-slate-700 hover:bg-slate-50">
+
+${val}
+
+</button>
+
+`).join("")}
+
+</div>
+
+`;
+
+container.appendChild(card);
+
+});
+
+}
+
+
+
+function ustawSamoocene(qId, val, btnEl) {
+
+if (state.samoocenaZatwierdzona) return;
+
+state.samoocena[qId] = val;
+
+const parent = btnEl.parentElement;
+
+Array.from(parent.children).forEach(b => b.classList.remove("scale-selected"));
+
+btnEl.classList.add("scale-selected");
+
+}
+
+
+
+function zatwierdzSamoocene() {
+
+const brakujace = PYTANIA_SAMOOCENA.filter(q => state.samoocena[q.id] === null);
+
+if (brakujace.length > 0) {
+
+alert("Odpowiedz na wszystkie 4 pytania samooceny przed przejściem dalej.");
+
+return;
+
+}
+
+state.samoocenaZatwierdzona = true;
+
+document.getElementById("screen-self").classList.add("hidden");
+
+otworzEkranZespolu();
+
+}
+
+
+
+function otworzEkranZespolu() {
+
+state.aktualnePytanieIdx = 0;
+
+document.getElementById("screen-team").classList.remove("hidden");
+
+renderujPytanieZespolu();
+
+window.scrollTo({ top: 0, behavior: "smooth" });
+
+}
+
+
+
+function renderujPytanieZespolu() {
+
+const qObj = PYTANIA_ZESPOL[state.aktualnePytanieIdx];
+
+document.getElementById("team-progress-text").textContent = `Pytanie ${state.aktualnePytanieIdx + 1} z 4`;
+
+document.getElementById("q-title").textContent = qObj.tekst;
+
+
+
+const btnPrev = document.getElementById("btn-prev-q");
+
+const btnNext = document.getElementById("btn-next-q");
+
+
+
+if (state.aktualnePytanieIdx === 0) {
+
+btnPrev.classList.add("hidden");
+
+} else {
+
+btnPrev.classList.remove("hidden");
+
+}
+
+
+
+if (state.aktualnePytanieIdx === 3) {
+
+btnNext.textContent = "Zakończ i wyślij odpowiedzi ✓";
+
+btnNext.classList.remove("bg-blue-700", "hover:bg-blue-800");
+
+btnNext.classList.add("bg-emerald-700", "hover:bg-emerald-800");
+
+} else {
+
+btnNext.textContent = "Następne pytanie →";
+
+btnNext.classList.remove("bg-emerald-700", "hover:bg-emerald-800");
+
+btnNext.classList.add("bg-blue-700", "hover:bg-blue-800");
+
+}
+
+
+
+const container = document.getElementById("team-cards-container");
+
+container.innerHTML = "";
+
+
+
+state.profil.lista.forEach(person => {
+
+const currentVal = state.ocenyZespolu[person.staleId][qObj.id];
+
+const card = document.createElement("div");
+
+card.className = "bg-white rounded-xl shadow-sm border border-slate-200 p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3";
+
+
+
+const btnsHtml = [0, 1, 2, 3, 4].map(val => {
+
+const selClass = currentVal === val ? "scale-selected" : "";
+
+return `<button type="button" onclick="ustawOceneZespolu('${person.staleId}', '${qObj.id}', ${val}, this)"
+
+class="scale-btn w-11 h-11 rounded-lg border border-slate-300 font-bold text-sm text-slate-800 hover:bg-slate-50 ${selClass}">
+
+${val}
+
+</button>`;
+
+}).join("");
+
+
+
+const xSelClass = currentVal === "X" ? "x-selected" : "";
+
+const xBtnHtml = `<button type="button" onclick="ustawOceneZespolu('${person.staleId}', '${qObj.id}', 'X', this)"
+
+class="scale-btn w-11 h-11 ml-2 rounded-lg border-2 border-dashed border-slate-400 bg-slate-100 font-bold text-sm text-slate-700 hover:bg-slate-200 ${xSelClass}">
+
+X
+
+</button>`;
+
+
+
+card.innerHTML = `
+
+<div class="flex items-center justify-between sm:block">
+
+<span class="font-mono font-bold text-base text-slate-900 bg-slate-100 px-3 py-1 rounded-lg border border-slate-200">
+
+${person.pseudokod}
+
+</span>
+
+</div>
+
+<div class="flex items-center justify-between sm:justify-end gap-1.5">
+
+${btnsHtml}
+
+${xBtnHtml}
+
+</div>
+
+`;
+
+container.appendChild(card);
+
+});
+
+}
+
+
+
+function ustawOceneZespolu(staleId, qId, val, btnEl) {
+
+state.ocenyZespolu[staleId][qId] = val;
+
+const parent = btnEl.parentElement;
+
+Array.from(parent.children).forEach(b => b.classList.remove("scale-selected", "x-selected"));
+
+if (val === "X") {
+
+btnEl.classList.add("x-selected");
+
+} else {
+
+btnEl.classList.add("scale-selected");
+
+}
+
+}
+
+
+
+function zmienPytanie(delta) {
+
+const qObj = PYTANIA_ZESPOL[state.aktualnePytanieIdx];
+
+if (delta > 0) {
+
+const nieocenieni = state.profil.lista.filter(p => state.ocenyZespolu[p.staleId][qObj.id] === null);
+
+if (nieocenieni.length > 0) {
+
+alert(`Uzupełnij ocenę dla wszystkich kodów (pozostało: ${nieocenieni.length}). Jeśli ktoś nie grał, wybierz X.`);
+
+return;
+
+}
+
+}
+
+
+
+if (state.aktualnePytanieIdx + delta > 3) {
+
+document.getElementById("screen-team").classList.add("hidden");
+
+document.getElementById("screen-done").classList.remove("hidden");
+
+wyslijDane();
+
+return;
+
+}
+
+
+
+state.aktualnePytanieIdx += delta;
+
+renderujPytanieZespolu();
+
+window.scrollTo({ top: 0, behavior: "smooth" });
+
+}
+
+
+
+function obliczSrednia(a, b) {
+
+const nums = [a, b].filter(v => typeof v === "number");
+
+if (nums.length === 0) return "";
+
+const avg = nums.reduce((acc, v) => acc + v, 0) / nums.length;
+
+return Number(avg.toFixed(2));
+
+}
+
+
+
+async function wyslijDane() {
+
+document.getElementById("done-spinner").classList.remove("hidden");
+
+document.getElementById("done-success").classList.add("hidden");
+
+document.getElementById("done-error").classList.add("hidden");
+
+
+
+const timestamp = new Date().toISOString();
+
+const staleIdOceniajacego = state.profil.staleId;
+
+const rows = [];
+
+
+
+if (state.profil.rola === "zawodnik") {
+
+rows.push({
+
+timestamp,
+
+kod_oceniajacego: staleIdOceniajacego,
+
+rola_oceniajacego: "zawodnik",
+
+typ_oceny: "samoocena",
+
+pseudokod_wyswietlany: "SELF",
+
+stale_id_ocenianego: staleIdOceniajacego,
+
+P1: state.samoocena.P1,
+
+P2: state.samoocena.P2,
+
+P3: state.samoocena.P3,
+
+P4: state.samoocena.P4,
+
+srednia_Z: obliczSrednia(state.samoocena.P1, state.samoocena.P2),
+
+srednia_S: obliczSrednia(state.samoocena.P3, state.samoocena.P4)
+
+});
+
+}
+
+
+
+state.profil.lista.forEach(item => {
+
+const oc = state.ocenyZespolu[item.staleId];
+
+rows.push({
+
+timestamp,
+
+kod_oceniajacego: staleIdOceniajacego,
+
+rola_oceniajacego: state.profil.rola,
+
+typ_oceny: state.profil.rola === "trener" ? "ocena_trenera" : "ocena_kolezenska",
+
+pseudokod_wyswietlany: item.pseudokod,
+
+stale_id_ocenianego: item.staleId,
+
+P1: oc.P1,
+
+P2: oc.P2,
+
+P3: oc.P3,
+
+P4: oc.P4,
+
+srednia_Z: obliczSrednia(oc.P1, oc.P2),
+
+srednia_S: obliczSrednia(oc.P3, oc.P4)
+
+});
+
+});
+
+
+
+if (GOOGLE_SCRIPT_URL === "https://script.google.com/macros/s/AKfycbyWOmYPvATmDVAALb5EvUvz3WeJzXGVKdWXWK4w133zLjZLkNb5fzpRyn9-fDZIxQ/exec") {
+
+console.log("Symulacja wysyłki (brak adresu Apps Script):", rows);
+
+setTimeout(() => {
+
+document.getElementById("done-spinner").classList.add("hidden");
+
+document.getElementById("done-success").classList.remove("hidden");
+
+}, 700);
+
+return;
+
+}
+
+
+
+try {
+
+await fetch(GOOGLE_SCRIPT_URL, {
+
+method: "POST",
+
+mode: "no-cors",
+
+headers: { "Content-Type": "application/json" },
+
+body: JSON.stringify({ rows })
+
+});
+
+document.getElementById("done-spinner").classList.add("hidden");
+
+document.getElementById("done-success").classList.remove("hidden");
+
+} catch (err) {
+
+document.getElementById("done-spinner").classList.add("hidden");
+
+document.getElementById("done-error-msg").textContent = err.message;
+
+document.getElementById("done-error").classList.remove("hidden");
+
+}
+
+}
+
+</script>
+
 </body>
+
 </html>
