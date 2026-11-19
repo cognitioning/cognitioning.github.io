@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generator Randomizacji Badań Eksperymentalnych v2</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --border: #cbd5e1;
+      --text: #0f172a;
+      --muted: #64748b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      max-width: 1050px;
+      margin: 24px auto;
+      padding: 0 16px;
+      line-height: 1.5;
+    }
+    .card {
+      background: var(--card);
+      padding: 24px;
+      border-radius: 10px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      border: 1px solid #e2e8f0;
+      margin-bottom: 20px;
+    }
+    h1 { font-size: 22px; margin: 0 0 6px 0; }
+    h2 { font-size: 18px; margin: 0 0 16px 0; }
+    p.subtitle { color: var(--muted); font-size: 14px; margin: 0 0 20px 0; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .field { display: flex; flex-direction: column; gap: 5px; }
+    label { font-weight: 600; font-size: 13px; color: #334155; }
+    small { color: var(--muted); font-size: 12px; }
+    input, select {
+      padding: 9px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 14px;
+      background: #fff;
+      color: var(--text);
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+      padding: 10px 12px;
+      background: #f1f5f9;
+      border-radius: 6px;
+    }
+    .checkbox-row input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; }
+    .checkbox-row label { cursor: pointer; margin: 0; font-size: 14px; }
+    .actions {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    button {
+      padding: 10px 18px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.15s;
+    }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-success { background: #16a34a; color: white; }
+    .btn-success:hover { background: #15803d; }
+    .btn-secondary { background: #475569; color: white; }
+    .btn-secondary:hover { background: #334155; }
+    .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+    .btn-outline:hover { background: #f1f5f9; }
+    .hidden { display: none !important; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      font-size: 14px;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      text-align: left;
+    }
+    th { background: #f1f5f9; font-weight: 600; }
+    tr:nth-child(even) { background: #f8fafc; }
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      background: #dbeafe;
+      color: #1e40af;
+    }
+    .badge-solomon {
+      background: #fef3c7;
+      color: #92400e;
+    }
+    .badge-blind {
+      background: #e2e8f0;
+      color: #475569;
+      font-family: monospace;
+    }
+    .summary {
+      padding: 14px;
+      background: #f1f5f9;
+      border-left: 4px solid var(--primary);
+      border-radius: 6px;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+    .solomon-info {
+      grid-column: 1 / -1;
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      color: #92400e;
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <h1>Generator Randomizacji Badań Eksperymentalnych</h1>
+  <p class="subtitle">Konfigurator list randomizacyjnych dla badań równoległych, krzyżowych oraz planu czterogrupowego Solomona.</p>
+
+  <div class="grid">
+    <div class="field">
+      <label for="studyType">Typ planu badawczego</label>
+      <select id="studyType" onchange="updateFormVisibility()">
+        <option value="crossover">Krzyżowe (Crossover – każdy przechodzi wszystkie)</option>
+        <option value="parallel">Równoległe (Parallel – 1 interwencja na osobę)</option>
+        <option value="solomon">Plan czterogrupowy Solomona (Solomon 4-Group)</option>
+      </select>
+    </div>
+
+    <div class="field" id="crossoverSchemeField">
+      <label for="crossoverScheme">Schemat sekwencji (dla krzyżowych)</label>
+      <select id="crossoverScheme">
+        <option value="williams">Kwadrat Williamsa (Zbalansowany – kontrola przeniesienia)</option>
+        <option value="latin">Podstawowy Kwadrat Łaciński (Cykliczny: ABC, CAB, BCA)</option>
+        <option value="permutations">Pełne permutacje (Wszystkie możliwe kolejności)</option>
+      </select>
+      <small>Williams to standard kliniczny; Łaciński wymaga mniej osób.</small>
+    </div>
+
+    <div class="field" id="armsField">
+      <label for="arms" id="armsLabel">Interwencje / Ramiona (po przecinku)</label>
+      <input type="text" id="arms" value="CAF, PLA" placeholder="np. CAF, PLA lub A, B, C">
+      <small id="armsHint">Wpisz 2 lub więcej elementów oddzielonych przecinkiem.</small>
+    </div>
+
+    <div class="field">
+      <label for="nSubjects">Liczba uczestników (na jedną warstwę)</label>
+      <input type="number" id="nSubjects" value="24" min="1">
+      <small>Przy stratyfikacji to liczba osób w każdej z podgrup.</small>
+    </div>
+
+    <div class="field">
+      <label for="method">Algorytm randomizacji</label>
+      <select id="method" onchange="updateFormVisibility()">
+        <option value="block_fixed">Blokowa (stały rozmiar bloku)</option>
+        <option value="block_variable">Blokowa (zmienne losowe rozmiary bloków)</option>
+        <option value="simple">Prosta (całkowicie losowa)</option>
+      </select>
+    </div>
+
+    <div class="field" id="blockMultField">
+      <label for="blockMult">Mnożnik wielkości bloku</label>
+      <select id="blockMult">
+        <option value="1">1x (minimalny pełny cykl)</option>
+        <option value="2" selected>2x (zalecana równowaga)</option>
+        <option value="3">3x</option>
+      </select>
+      <small>Wielkość bloku = liczba dostępnych sekwencji/grup × mnożnik.</small>
+    </div>
+
+    <div class="field">
+      <label for="strata">Stratyfikacja (opcjonalnie, po przecinku)</label>
+      <input type="text" id="strata" placeholder="np. Kobiety, Mężczyźni">
+      <small>Zostaw puste, jeśli brak podziału na podgrupy (warstwy).</small>
+    </div>
+
+    <div class="field">
+      <label for="seed">Ziarno losowości / Seed (opcjonalnie)</label>
+      <input type="text" id="seed" placeholder="np. PROJEKT_2026">
+      <small>Pozwala odtworzyć identyczną listę w przyszłości.</small>
+    </div>
+
+    <div class="solomon-info hidden" id="solomonInfoBox">
+      <strong>Plan czterogrupowy Solomona:</strong> Dzieli uczestników na 4 grupy: (1) Pretest + Interwencja + Posttest, (2) Pretest + Kontrola + Posttest, (3) Bez pretestu + Interwencja + Posttest, (4) Bez pretestu + Kontrola + Posttest. W polu interwencji podaj dokładnie 2 nazwy: <em>Interwencja, Kontrola</em>.
+    </div>
+  </div>
+
+  <div class="checkbox-row">
+    <input type="checkbox" id="blindMode" onchange="toggleBlindView()">
+    <label for="blindMode"><strong>Tryb zaślepienia (Blinding):</strong> Ukryj nazwy interwencji/sekwencji w tabeli na ekranie (pokaż tylko kody zestawów KIT-XXXX; pełny klucz zostanie zachowany w pliku CSV).</label>
+  </div>
+
+  <div class="actions">
+    <button class="btn-primary" onclick="generateRandomization()">Generuj listę randomizacyjną</button>
+    <button class="btn-success hidden" id="btnCsv" onclick="downloadCSV()">Pobierz pełny klucz CSV (Excel)</button>
+    <button class="btn-secondary hidden" id="btnCopy" onclick="copyTable()">Kopiuj tabelę do schowka</button>
+  </div>
+</div>
+
+<div class="card hidden" id="resultCard">
+  <h2>Wygenerowana Lista Randomizacyjna</h2>
+  <div id="summaryBox" class="summary"></div>
+  <div style="overflow-x:auto;">
+    <table id="resultTable">
+      <thead></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  let rawRecords = [];
+  let tableHeaders = [];
+
+  function updateFormVisibility() {
+    const studyType = document.getElementById('studyType').value;
+    const method = document.getElementById('method').value;
+
+    document.getElementById('crossoverSchemeField').classList.toggle('hidden', studyType !== 'crossover');
+    document.getElementById('solomonInfoBox').classList.toggle('hidden', studyType !== 'solomon');
+    document.getElementById('blockMultField').classList.toggle('hidden', method === 'simple');
+
+    const armsInput = document.getElementById('arms');
+    const armsLabel = document.getElementById('armsLabel');
+    const armsHint = document.getElementById('armsHint');
+
+    if (studyType === 'solomon') {
+      armsLabel.textContent = 'Interwencja i Kontrola (2 nazwy po przecinku)';
+      armsHint.textContent = 'Pierwsza nazwa to interwencja (X), druga to grupa kontrolna.';
+      if (armsInput.value.split(',').length !== 2) {
+        armsInput.value = 'INTERWENCJA, KONTROLA';
+      }
+    } else {
+      armsLabel.textContent = 'Interwencje / Ramiona (po przecinku)';
+      armsHint.textContent = 'Wpisz 2 lub więcej elementów oddzielonych przecinkiem.';
+    }
+  }
+
+  // Generator pseudolosowy z obsługą ziarna (Mulberry32)
+  function createRNG(seedStr) {
+    if (!seedStr) return Math.random;
+    let h = 2166136261 >>> 0;
+    for (let i = 0; i < seedStr.length; i++) {
+      h ^= seedStr.charCodeAt(i);
+      h = Math.imul(h, 16777619);
+    }
+    return function() {
+      h += 0x6D2B79F5;
+      let t = Math.imul(h ^ (h >>> 15), 1 | h);
+      t ^= t + Math.imul(t ^ (t >>> 7), 61 | t);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function shuffle(array, rng) {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(rng() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  // Podstawowy Kwadrat Łaciński (przesunięcie cykliczne)
+  function getLatinSquare(arms) {
+    const n = arms.length;
+    const sequences = [];
+    for (let i = 0; i < n; i++) {
+      const seq = [];
+      for (let j = 0; j < n; j++) {
+        seq.push(arms[(i + j) % n]);
+      }
+      sequences.push(seq);
+    }
+    return sequences;
+  }
+
+  // Kwadrat Williamsa (zrównoważony pod kątem efektu przeniesienia)
+  function getWilliamsSquare(arms) {
+    const n = arms.length;
+    if (n === 1) return [[arms[0]]];
+    if (n === 2) return [[arms[0], arms[1]], [arms[1], arms[0]]];
+
+    const sequences = [];
+    for (let i = 0; i < n; i++) {
+      const seq = [];
+      for (let j = 0; j < n; j++) {
+        const idx = (i + (j % 2 === 0 ? j / 2 : n - (j + 1) / 2)) % n;
+        seq.push(arms[idx]);
+      }
+      sequences.push(seq);
+    }
+    if (n % 2 !== 0) {
+      const mirror = sequences.map(seq => [...seq].reverse());
+      return [...sequences, ...mirror];
+    }
+    return sequences;
+  }
+
+  // Pełne permutacje
+  function getPermutations(arms) {
+    if (arms.length <= 1) return [arms];
+    const result = [];
+    for (let i = 0; i < arms.length; i++) {
+      const current = arms[i];
+      const remaining = arms.slice(0, i).concat(arms.slice(i + 1));
+      const remainingPerms = getPermutations(remaining);
+      for (const perm of remainingPerms) {
+        result.push([current, ...perm]);
+      }
+    }
+    return result;
+  }
+
+  function generatePoolForStratum(options, count, method, mult, rng) {
+    const result = [];
+    if (method === 'simple') {
+      for (let i = 0; i < count; i++) {
+        result.push(options[Math.floor(rng() * options.length)]);
+      }
+    } else if (method === 'block_fixed') {
+      while (result.length < count) {
+        let block = [];
+        for (let m = 0; m < mult; m++) block.push(...options);
+        result.push(...shuffle(block, rng));
+      }
+    } else if (method === 'block_variable') {
+      const possibleMults = [1, mult, mult + 1];
+      while (result.length < count) {
+        const currentMult = possibleMults[Math.floor(rng() * possibleMults.length)];
+        let block = [];
+        for (let m = 0; m < currentMult; m++) block.push(...options);
+        result.push(...shuffle(block, rng));
+      }
+    }
+    return result.slice(0, count);
+  }
+
+  function generateRandomization() {
+    const studyType = document.getElementById('studyType').value;
+    const scheme = document.getElementById('crossoverScheme').value;
+    const armsRaw = document.getElementById('arms').value;
+    const arms = armsRaw.split(',').map(s => s.trim()).filter(Boolean);
+    const nSubjects = parseInt(document.getElementById('nSubjects').value);
+    const method = document.getElementById('method').value;
+    const mult = parseInt(document.getElementById('blockMult').value);
+    const strataRaw = document.getElementById('strata').value;
+    const strata = strataRaw.split(',').map(s => s.trim()).filter(Boolean);
+    const seed = document.getElementById('seed').value.trim();
+
+    if (arms.length < 2) {
+      alert("Podaj co najmniej 2 elementy oddzielone przecinkiem.");
+      return;
+    }
+    if (studyType === 'solomon' && arms.length !== 2) {
+      alert("Plan czterogrupowy Solomona wymaga podania dokładnie 2 elementów (np. INTERWENCJA, KONTROLA).");
+      return;
+    }
+    if (studyType === 'crossover' && scheme === 'permutations' && arms.length > 6) {
+      alert("Pełne permutacje dla więcej niż 6 elementów wygenerują ponad 5000 sekwencji. Zmniejsz liczbę elementów lub wybierz Kwadrat Williamsa.");
+      return;
+    }
+    if (isNaN(nSubjects) || nSubjects < 1) {
+      alert("Podaj poprawną liczbę uczestników.");
+      return;
+    }
+
+    const rng = createRNG(seed);
+    const activeStrata = strata.length > 0 ? strata : ['Ogólna'];
+
+    // Budowanie puli opcji do losowania
+    let poolOptions = [];
+    if (studyType === 'parallel') {
+      poolOptions = arms.map(a => ({ label: a, details: [a] }));
+    } else if (studyType === 'crossover') {
+      let seqs = [];
+      if (scheme === 'latin') seqs = getLatinSquare(arms);
+      else if (scheme === 'permutations') seqs = getPermutations(arms);
+      else seqs = getWilliamsSquare(arms);
+
+      poolOptions = seqs.map(seq => ({
+        label: seq.join(' → '),
+        details: seq
+      }));
+    } else if (studyType === 'solomon') {
+      const [expArm, ctrlArm] = arms;
+      poolOptions = [
+        { label: 'Grupa 1 (O1 - X - O2)', details: ['TAK (Pretest)', expArm, 'TAK (Posttest)'] },
+        { label: 'Grupa 2 (O1 - _ - O2)', details: ['TAK (Pretest)', ctrlArm, 'TAK (Posttest)'] },
+        { label: 'Grupa 3 ( _ - X - O2)', details: ['NIE (Brak)', expArm, 'TAK (Posttest)'] },
+        { label: 'Grupa 4 ( _ - _ - O2)', details: ['NIE (Brak)', ctrlArm, 'TAK (Posttest)'] }
+      ];
+    }
+
+    // Nagłówki tabeli
+    tableHeaders = ['ID Uczestnika', 'Kod Zestawu'];
+    if (strata.length > 0) tableHeaders.push('Warstwa');
+
+    if (studyType === 'parallel') {
+      tableHeaders.push('Przydzielona Interwencja');
+    } else if (studyType === 'crossover') {
+      tableHeaders.push('Sekwencja');
+      for (let p = 1; p <= arms.length; p++) tableHeaders.push(`Okres ${p}`);
+    } else if (studyType === 'solomon') {
+      tableHeaders.push('Grupa Solomona', 'Pomiar Wstępny (O1)', 'Interwencja (X)', 'Pomiar Końcowy (O2)');
+    }
+
+    rawRecords = [];
+    const countsSummary = {};
+    const usedKitCodes = new Set();
+
+    activeStrata.forEach(stratum => {
+      const assignments = generatePoolForStratum(poolOptions, nSubjects, method, mult, rng);
+
+      assignments.forEach((assign, idx) => {
+        const prefix = strata.length > 0 ? stratum.substring(0, 3).toUpperCase() + '-' : 'SUBJ-';
+        const subjId = `${prefix}${String(idx + 1).padStart(3, '0')}`;
+
+        // Unikalny 4-znakowy kod zestawu
+        let kitCode;
+        do {
+          const num = Math.floor(1000 + rng() * 9000);
+          kitCode = `KIT-${num}`;
+        } while (usedKitCodes.has(kitCode));
+        usedKitCodes.add(kitCode);
+
+        countsSummary[assign.label] = (countsSummary[assign.label] || 0) + 1;
+
+        rawRecords.push({
+          subjId,
+          kitCode,
+          stratum: strata.length > 0 ? stratum : null,
+          label: assign.label,
+          details: assign.details,
+          studyType
+        });
+      });
+    });
+
+    renderResults(countsSummary, seed, studyType, scheme);
+  }
+
+  function renderResults(countsSummary, seed, studyType, scheme) {
+    const isBlinded = document.getElementById('blindMode').checked;
+    const thead = document.querySelector('#resultTable thead');
+    const tbody = document.querySelector('#resultTable tbody');
+
+    thead.innerHTML = '<tr>' + tableHeaders.map(h => `<th>${h}</th>`).join('') + '</tr>';
+
+    tbody.innerHTML = rawRecords.map(rec => {
+      const cells = [
+        `<td><strong>${rec.subjId}</strong></td>`,
+        `<td><span class="badge badge-blind">${rec.kitCode}</span></td>`
+      ];
+
+      if (rec.stratum !== null) {
+        cells.push(`<td>${rec.stratum}</td>`);
+      }
+
+      if (isBlinded) {
+        const hiddenColsCount = tableHeaders.length - cells.length;
+        for (let i = 0; i < hiddenColsCount; i++) {
+          cells.push(`<td style="color:#94a3b8; font-style:italic;">[ZAŚLEPIONE]</td>`);
+        }
+      } else {
+        if (rec.studyType === 'parallel') {
+          cells.push(`<td><span class="badge">${rec.label}</span></td>`);
+        } else if (rec.studyType === 'crossover') {
+          cells.push(`<td><span class="badge">${rec.label}</span></td>`);
+          rec.details.forEach(d => cells.push(`<td>${d}</td>`));
+        } else if (rec.studyType === 'solomon') {
+          cells.push(`<td><span class="badge badge-solomon">${rec.label}</span></td>`);
+          rec.details.forEach(d => cells.push(`<td>${d}</td>`));
+        }
+      }
+
+      return '<tr>' + cells.join('') + '</tr>';
+    }).join('');
+
+    const summaryStats = Object.entries(countsSummary)
+      .map(([k, v]) => `<strong>${k}</strong>: ${v} os.`)
+      .join(' &nbsp;|&nbsp; ');
+
+    let schemeText = '';
+    if (studyType === 'crossover') {
+      const map = { williams: 'Kwadrat Williamsa', latin: 'Podstawowy Kwadrat Łaciński', permutations: 'Pełne permutacje' };
+      schemeText = ` | Schemat: <b>${map[scheme]}</b>`;
+    }
+
+    document.getElementById('summaryBox').innerHTML = `
+      <div><strong>Rozkład liczebności (łącznie ${rawRecords.length} os.):</strong> ${isBlinded ? '<em>Ukryty w trybie zaślepienia</em>' : summaryStats}</div>
+      <div style="margin-top:4px; color:#475569;">
+        Wygenerowano: ${new Date().toLocaleString('pl-PL')}${schemeText} ${seed ? `| Ziarno (Seed): <b>${seed}</b>` : '| Losowanie bez ziarna'}
+      </div>
+    `;
+
+    document.getElementById('resultCard').classList.remove('hidden');
+    document.getElementById('btnCsv').classList.remove('hidden');
+    document.getElementById('btnCopy').classList.remove('hidden');
+  }
+
+  function toggleBlindView() {
+    if (rawRecords.length > 0) {
+      generateRandomization();
+    }
+  }
+
+  function getExportRows() {
+    return rawRecords.map(rec => {
+      const row = [rec.subjId, rec.kitCode];
+      if (rec.stratum !== null) row.push(rec.stratum);
+      if (rec.studyType === 'parallel') {
+        row.push(rec.label);
+      } else {
+        row.push(rec.label.replace(/→/g, '-'));
+        row.push(...rec.details);
+      }
+      return row;
+    });
+  }
+
+  function downloadCSV() {
+    const rows = getExportRows();
+    const csvLines = [tableHeaders.join(';')];
+    rows.forEach(r => csvLines.push(r.join(';')));
+
+    const blob = new Blob(["\uFEFF" + csvLines.join('\n')], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `randomizacja_${new Date().toISOString().slice(0,10)}.csv`;
+    link.click();
+  }
+
+  function copyTable() {
+    const rows = getExportRows();
+    const tsvLines = [tableHeaders.join('\t')];
+    rows.forEach(r => tsvLines.push(r.join('\t')));
+
+    navigator.clipboard.writeText(tsvLines.join('\n')).then(() => {
+      const btn = document.getElementById('btnCopy');
+      const orig = btn.textContent;
+      btn.textContent = 'Skopiowano!';
+      setTimeout(() => btn.textContent = orig, 2000);
+    });
+  }
+
+  updateFormVisibility();
+</script>
+
+</body>
+</html>
