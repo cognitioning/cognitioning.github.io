@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Kwestionariusze: PSS-10 + BRUMS-PL + VAS (Eksport CSV)</title>
+<style>
+  :root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --card-inner: #0f172a;
+    --text: #f8fafc;
+    --muted: #94a3b8;
+    --accent: #38bdf8;
+    --accent-hover: #0284c7;
+    --success: #22c55e;
+    --error: #ef4444;
+    --warning: #f59e0b;
+    --border: #334155;
+  }
+
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  body {
+    margin: 0;
+    padding: 16px;
+    background-color: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 820px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 26px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.45);
+    margin: 12px 0;
+  }
+
+  h1, h2, h3 { margin-top: 0; color: var(--text); }
+  p { color: var(--muted); line-height: 1.55; }
+
+  .hidden { display: none !important; }
+
+  .badge {
+    display: inline-block;
+    background: rgba(56, 189, 248, 0.15);
+    color: var(--accent);
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.82rem;
+  }
+
+  .form-group { margin-bottom: 16px; }
+  label {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--muted);
+  }
+
+  input[type="text"], input[type="number"], select {
+    width: 100%;
+    padding: 11px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--card-inner);
+    color: var(--text);
+    font-size: 0.98rem;
+    outline: none;
+  }
+  input[type="text"]:focus, input[type="number"]:focus, select:focus {
+    border-color: var(--accent);
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+  }
+
+  .quick-tags {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+
+  .tag-btn {
+    background: var(--card-inner);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .tag-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--card-inner);
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+  .checkbox-row input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--accent);
+    cursor: pointer;
+  }
+  .checkbox-row span {
+    font-size: 0.92rem;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.02rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    background: var(--accent);
+    color: #0f172a;
+    margin-top: 10px;
+  }
+  .btn:hover { background: var(--accent-hover); color: #fff; }
+  .btn-secondary {
+    background: var(--border);
+    color: var(--text);
+  }
+  .btn-secondary:hover { background: #475569; }
+  .btn-success {
+    background: var(--success);
+    color: #052e16;
+  }
+  .btn-success:hover { background: #16a34a; color: #fff; }
+
+  .task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
+    margin-bottom: 18px;
+    font-size: 0.9rem;
+    color: var(--muted);
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .instruction-box {
+    background: var(--card-inner);
+    border-left: 4px solid var(--accent);
+    padding: 14px 16px;
+    border-radius: 8px;
+    margin-bottom: 18px;
+    font-size: 0.94rem;
+    color: var(--text);
+    line-height: 1.55;
+  }
+
+  .q-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .q-item {
+    background: var(--card-inner);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    transition: border-color 0.2s;
+  }
+  .q-item.unanswered {
+    border-color: var(--error);
+    background: rgba(239, 68, 68, 0.08);
+  }
+
+  .q-title {
+    font-weight: 600;
+    font-size: 0.98rem;
+    color: var(--text);
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+
+  .likert-options {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .likert-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 9px 4px;
+    cursor: pointer;
+    font-size: 0.78rem;
+    color: var(--muted);
+    transition: all 0.15s;
+    margin: 0;
+    user-select: none;
+  }
+  .likert-label input {
+    display: none;
+  }
+  .likert-label:has(input:checked) {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #0f172a;
+    font-weight: 800;
+  }
+  .likert-score {
+    font-size: 0.72rem;
+    opacity: 0.8;
+    margin-top: 2px;
+  }
+
+  /* VAS SLIDERS */
+  .vas-card {
+    background: var(--card-inner);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    transition: border-color 0.2s;
+  }
+  .vas-card.unanswered {
+    border-color: var(--error);
+    background: rgba(239, 68, 68, 0.08);
+  }
+  .vas-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .vas-question {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text);
+  }
+  .vas-value-pill {
+    background: rgba(56, 189, 248, 0.15);
+    color: var(--accent);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 0.92rem;
+    min-width: 78px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+  .vas-value-pill.untouched {
+    background: rgba(148, 163, 184, 0.12);
+    color: var(--muted);
+    border-color: var(--border);
+    font-weight: 600;
+  }
+  .vas-slider-wrap {
+    padding: 6px 0;
+  }
+  input[type="range"].vas-range {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 10px;
+    background: #334155;
+    border-radius: 999px;
+    outline: none;
+    cursor: pointer;
+    touch-action: pan-y;
+  }
+  input[type="range"].vas-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 3px solid #0f172a;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    cursor: pointer;
+    transition: transform 0.1s;
+  }
+  input[type="range"].vas-range::-webkit-slider-thumb:active {
+    transform: scale(1.15);
+  }
+  input[type="range"].vas-range::-moz-range-thumb {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 3px solid #0f172a;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    cursor: pointer;
+  }
+  input[type="range"].vas-range.untouched::-webkit-slider-thumb {
+    background: #64748b;
+  }
+  input[type="range"].vas-range.untouched::-moz-range-thumb {
+    background: #64748b;
+  }
+  .vas-anchors {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-top: 8px;
+    gap: 12px;
+  }
+  .vas-anchors span:last-child {
+    text-align: right;
+  }
+
+  .section-title {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent);
+    margin-top: 22px;
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    margin: 12px 0;
+  }
+  .stat-card {
+    background: var(--card-inner);
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  .stat-label { font-size: 0.78rem; color: var(--muted); }
+  .stat-val { font-size: 1.45rem; font-weight: 800; color: var(--text); margin-top: 4px; }
+  .stat-sub { font-size: 0.74rem; color: var(--muted); margin-top: 2px; }
+
+  .thank-you-box {
+    background: var(--card-inner);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 20px;
+    text-align: center;
+    margin: 18px 0;
+  }
+  .check-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(34, 197, 94, 0.15);
+    color: var(--success);
+    font-size: 2rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 14px auto;
+    border: 2px solid var(--success);
+  }
+
+  .error-banner {
+    color: var(--error);
+    font-weight: 700;
+    margin-top: 14px;
+    display: none;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid var(--error);
+    padding: 10px 14px;
+    border-radius: 8px;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- 1. KONFIGURACJA -->
+  <div id="screen-setup">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+      <span class="badge">PSS-10 + BRUMS-PL + VAS</span>
+      <span style="font-size:0.82rem; color:var(--muted);">Zapis wyników do CSV</span>
+    </div>
+    <h1>Kwestionariusze psychologiczne</h1>
+    <p>Wybierz zakres kwestionariuszy do wypełnienia w danym punkcie pomiarowym oraz wpisz ID uczestnika.</p>
+
+    <div class="grid-2">
+      <div class="form-group">
+        <label for="participant-id">ID Badanego</label>
+        <input type="text" id="participant-id" placeholder="np. SUB_01" autocomplete="off">
+      </div>
+
+      <div class="form-group">
+        <label for="timepoint-input">Wizyta i punkt czasowy</label>
+        <input type="text" id="timepoint-input" value="T1_0min" placeholder="np. T1_0min, T1_30min" autocomplete="off">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Szybki wybór punktu z protokołu:</label>
+      <div class="quick-tags">
+        <button type="button" class="tag-btn" data-tp="T1_0min" data-pss="1" data-brums="1" data-vas="1" data-demo="1">T1 – 0' (PSS-10 + BRUMS + VAS + Metryczka)</button>
+        <button type="button" class="tag-btn" data-tp="T1_30min" data-pss="0" data-brums="1" data-vas="1" data-demo="0">T1 – 30' po EP (BRUMS + VAS)</button>
+        <button type="button" class="tag-btn" data-tp="T2_0min" data-pss="1" data-brums="1" data-vas="1" data-demo="0">T2 – 0' (PSS-10 + BRUMS + VAS)</button>
+        <button type="button" class="tag-btn" data-tp="T2_30min" data-pss="0" data-brums="1" data-vas="1" data-demo="0">T2 – 30' po EP (BRUMS + VAS)</button>
+        <button type="button" class="tag-btn" data-tp="T3_0min" data-pss="1" data-brums="1" data-vas="1" data-demo="0">T3 – 0' (PSS-10 + BRUMS + VAS)</button>
+        <button type="button" class="tag-btn" data-tp="T3_30min" data-pss="0" data-brums="1" data-vas="1" data-demo="0">T3 – 30' po EP (BRUMS + VAS)</button>
+        <button type="button" class="tag-btn" data-tp="T4_0min" data-pss="1" data-brums="1" data-vas="1" data-demo="0">T4 – 0' (PSS-10 + BRUMS + VAS)</button>
+        <button type="button" class="tag-btn" data-tp="T4_30min" data-pss="0" data-brums="1" data-vas="1" data-demo="0">T4 – 30' po EP (BRUMS + VAS)</button>
+      </div>
+    </div>
+
+    <div style="margin-top: 16px;">
+      <label class="checkbox-row">
+        <input type="checkbox" id="chk-pss" checked>
+        <span>Wypełnij <strong>PSS-10</strong> (Skala Odczuwanego Stresu – 10 pytań, ostatni miesiąc)</span>
+      </label>
+
+      <label class="checkbox-row">
+        <input type="checkbox" id="chk-brums" checked>
+        <span>Wypełnij <strong>BRUMS-PL</strong> (Skala Nastroju – 24 przymiotniki, stan obecny)</span>
+      </label>
+
+      <label class="checkbox-row" id="row-demo">
+        <input type="checkbox" id="chk-demo" checked>
+        <span>Dołącz metryczkę uczestnika (Płeć, Wiek, Sport, Kontuzje, Klub, Wykształcenie)</span>
+      </label>
+
+      <label class="checkbox-row">
+        <input type="checkbox" id="chk-vas" checked>
+        <span>Wypełnij <strong>Skale VAS (0–100)</strong> (Zmęczenie fizyczne, umysłowe, stres, regeneracja)</span>
+      </label>
+    </div>
+
+    <button type="button" class="btn" id="btn-start">Rozpocznij wypełnianie</button>
+  </div>
+
+  <!-- 2. EKRAN PSS-10 -->
+  <div id="screen-pss" class="hidden">
+    <div class="task-header">
+      <span class="badge">PSS-10 (Adaptacja: Juczyński i Ogińska-Bulik)</span>
+      <span id="pss-meta"></span>
+    </div>
+
+    <div class="instruction-box">
+      Pytania zawarte w tej skali dotyczą Twoich myśli i odczuć związanych z doświadczanymi <strong>w ostatnim miesiącu</strong> zdarzeniami. W każdym pytaniu wskaż, jak często myślałeś/aś i odczuwałeś/aś w podany sposób. Najlepiej odpowiadać w miarę szybko, wybierając odpowiedź najbardziej trafną.
+    </div>
+
+    <div id="pss-container" class="q-list"></div>
+    <div id="pss-error" class="error-banner">Proszę odpowiedzieć na wszystkie podświetlone pytania PSS-10 przed przejściem dalej.</div>
+
+    <button type="button" class="btn" style="margin-top: 18px;" id="btn-submit-pss">Zapisz PSS-10 i przejdź dalej</button>
+  </div>
+
+  <!-- 3. EKRAN BRUMS-PL -->
+  <div id="screen-brums" class="hidden">
+    <div class="task-header">
+      <span class="badge">BRUMS-PL (P. Terry, J. Lim, R. Parsons-Smith; Adaptacja: Malik J., Główka N.)</span>
+      <span id="brums-meta"></span>
+    </div>
+
+    <!-- Metryczka -->
+    <div id="brums-demo-box" style="margin-bottom: 20px;">
+      <h3>Metryczka uczestnika</h3>
+      <div class="grid-2" style="background: var(--card-inner); padding: 16px; border-radius: 12px; border: 1px solid var(--border);">
+        <div>
+          <label for="demo-sex">Płeć</label>
+          <select id="demo-sex">
+            <option value="">-- Wybierz --</option>
+            <option value="Mężczyzna">Mężczyzna</option>
+            <option value="Kobieta">Kobieta</option>
+          </select>
+        </div>
+        <div>
+          <label for="demo-age">Wiek (lata)</label>
+          <input type="number" id="demo-age" min="15" max="99" placeholder="np. 24">
+        </div>
+        <div>
+          <label for="demo-sport">Uprawiana dyscyplina sportu</label>
+          <input type="text" id="demo-sport" placeholder="np. Biegi / Kolarstwo">
+        </div>
+        <div>
+          <label for="demo-injury">Status kontuzji</label>
+          <select id="demo-injury">
+            <option value="">-- Wybierz --</option>
+            <option value="Brak kontuzji">Brak kontuzji</option>
+            <option value="Kontuzjowany(a)">Kontuzjowany(a)</option>
+          </select>
+        </div>
+        <div>
+          <label for="demo-club">Zrzeszony(a) w klubie sportowym?</label>
+          <select id="demo-club">
+            <option value="">-- Wybierz --</option>
+            <option value="Tak">Tak</option>
+            <option value="Nie">Nie</option>
+          </select>
+        </div>
+        <div>
+          <label for="demo-edu">Najwyższe wykształcenie</label>
+          <select id="demo-edu">
+            <option value="">-- Wybierz --</option>
+            <option value="Podstawowe">Podstawowe</option>
+            <option value="Średnie">Średnie (Liceum / Technikum / Szkoła branżowa)</option>
+            <option value="Zawodowe">Zawodowe</option>
+            <option value="Wyższe (Licencjat / Inżynier)">Wyższe (Licencjat / Inżynier)</option>
+            <option value="Wyższe Magisterskie / Podyplomowe">Wyższe Magisterskie / Podyplomowe</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="instruction-box">
+      Poniżej znajduje się lista słów opisujących uczucia. Przeczytaj uważnie każde z nich, a następnie wybierz odpowiedź, która najlepiej opisuje to, <strong>jak się teraz czujesz</strong>. Upewnij się, że udzieliłeś odpowiedzi na każde pytanie.
+    </div>
+
+    <div id="brums-container" class="q-list"></div>
+    <div id="brums-error" class="error-banner">Proszę zaznaczyć odpowiedź przy wszystkich podświetlonych słowach.</div>
+
+    <button type="button" class="btn" style="margin-top: 18px;" id="btn-submit-brums">Zapisz BRUMS-PL i przejdź dalej</button>
+  </div>
+
+  <!-- 4. EKRAN SKALI VAS (0-100) -->
+  <div id="screen-vas" class="hidden">
+    <div class="task-header">
+      <span class="badge">Skale Wizualno-Analogowe (VAS 0–100)</span>
+      <span id="vas-meta"></span>
+    </div>
+
+    <div class="instruction-box">
+      Przesuń każdy z 4 suwaków w miejsce, które najdokładniej odzwierciedla <strong>Twój aktualny stan w tej chwili</strong> (w skali od 0 do 100). Dotknij lub przesuń każdy suwak przed przejściem dalej.
+    </div>
+
+    <div id="vas-container" class="q-list"></div>
+    <div id="vas-error" class="error-banner">Proszę ustawić wszystkie podświetlone suwaki przed zakończeniem.</div>
+
+    <button type="button" class="btn" style="margin-top: 18px;" id="btn-submit-vas">Zapisz i zakończ</button>
+  </div>
+
+  <!-- 5. EKRAN ZAKOŃCZENIA (BEZ WYNIKÓW DLA BADANEGO) -->
+  <div id="screen-summary" class="hidden">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+      <div>
+        <span style="color:var(--success); font-weight:700; font-size:0.85rem; text-transform:uppercase;">Zapisano</span>
+        <h2 style="margin-bottom:0;">Dziękujemy za wypełnienie!</h2>
+      </div>
+      <div style="text-align:right; font-size:0.85rem; color:var(--muted); background:var(--card-inner); padding:8px 12px; border-radius:8px; border:1px solid var(--border);" id="summary-meta"></div>
+    </div>
+
+    <div class="thank-you-box">
+      <div class="check-circle">✓</div>
+      <h3 style="margin-bottom: 8px; font-size: 1.25rem;">Twoje odpowiedzi zostały zarejestrowane</h3>
+      <p style="margin: 0 auto; max-width: 480px; font-size: 0.96rem;">
+        Plik z danymi został automatycznie pobrany na urządzenie. Proszę przekazać tablet / komputer osobie prowadzącej badanie.
+      </p>
+    </div>
+
+    <!-- Ukryty podgląd wyników wyłącznie dla badacza (po kliknięciu przycisku) -->
+    <div id="researcher-results-panel" class="hidden" style="border-top: 1px dashed var(--border); padding-top: 16px; margin-top: 16px;">
+      <div id="summary-pss-block" class="hidden">
+        <div class="section-title">Podgląd badacza: Skala Odczuwanego Stresu (PSS-10)</div>
+        <div class="stats-grid" id="pss-stats"></div>
+      </div>
+
+      <div id="summary-brums-block" class="hidden">
+        <div class="section-title">Podgląd badacza: Profil Nastroju (BRUMS-PL, 0–16 pkt)</div>
+        <div class="stats-grid" id="brums-stats"></div>
+      </div>
+
+      <div id="summary-vas-block" class="hidden">
+        <div class="section-title">Podgląd badacza: Skale VAS (0–100)</div>
+        <div class="stats-grid" id="vas-stats"></div>
+      </div>
+    </div>
+
+    <div style="display:flex; gap:10px; margin-top:20px; flex-wrap:wrap;">
+      <button type="button" class="btn btn-success" style="flex:2;" id="btn-download-csv">⬇ Pobierz CSV ponownie</button>
+      <button type="button" class="btn btn-secondary" style="flex:1;" id="btn-toggle-preview">Podgląd (Badacz)</button>
+      <button type="button" class="btn btn-secondary" style="flex:1;" id="btn-reset">Nowy pomiar</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const PSS_ITEMS = [
+    { id: 1, reverse: false, text: "Jak często w ciągu ostatniego miesiąca byłeś/aś zdenerwowany/a, ponieważ zdarzyło się coś niespodziewanego?" },
+    { id: 2, reverse: false, text: "Jak często w ciągu ostatniego miesiąca czułeś/aś, że ważne sprawy w twoim życiu wymykają ci się spod kontroli?" },
+    { id: 3, reverse: false, text: "Jak często w ciągu ostatniego miesiąca odczuwałeś/aś zdenerwowanie i napięcie?" },
+    { id: 4, reverse: true,  text: "Jak często w ciągu ostatniego miesiąca byłeś/aś przekonany/a, że jesteś w stanie poradzić sobie z problemami osobistymi?" },
+    { id: 5, reverse: true,  text: "Jak często w ciągu ostatniego miesiąca czułeś/aś, że sprawy układają się po twojej myśli?" },
+    { id: 6, reverse: false, text: "Jak często w ciągu ostatniego miesiąca stwierdzałeś/aś, że nie radzisz sobie ze wszystkimi obowiązkami?" },
+    { id: 7, reverse: true,  text: "Jak często w ciągu ostatniego miesiąca potrafiłeś/aś opanować swoje rozdrażnienie?" },
+    { id: 8, reverse: true,  text: "Jak często w ciągu ostatniego miesiąca czułeś/aś, że wszystko ci wychodzi?" },
+    { id: 9, reverse: false, text: "Jak często w ciągu ostatniego miesiąca złościłeś/aś się, ponieważ nie miałeś/aś wpływu na to co się zdarzyło?" },
+    { id: 10, reverse: false, text: "Jak często w ciągu ostatniego miesiąca czułeś/aś, że nie możesz przezwyciężyć narastających trudności?" }
+  ];
+
+  const PSS_OPTIONS = [
+    { val: 0, label: "Nigdy" },
+    { val: 1, label: "Prawie nigdy" },
+    { val: 2, label: "Czasem" },
+    { val: 3, label: "Dość często" },
+    { val: 4, label: "Bardzo często" }
+  ];
+
+  const BRUMS_ITEMS = [
+    { id: 1, text: "Spanikowany", scale: "Tension" },
+    { id: 2, text: "Ożywiony", scale: "Vigor" },
+    { id: 3, text: "Zdezorientowany", scale: "Confusion" },
+    { id: 4, text: "Wykończony", scale: "Fatigue" },
+    { id: 5, text: "Przygnębiony", scale: "Depression" },
+    { id: 6, text: "Przybity", scale: "Depression" },
+    { id: 7, text: "Zirytowany", scale: "Anger" },
+    { id: 8, text: "Wyczerpany", scale: "Fatigue" },
+    { id: 9, text: "Skołowany", scale: "Confusion" },
+    { id: 10, text: "Senny", scale: "Fatigue" },
+    { id: 11, text: "Rozgoryczony", scale: "Anger" },
+    { id: 12, text: "Nieszczęśliwy", scale: "Depression" },
+    { id: 13, text: "Zaniepokojony", scale: "Tension" },
+    { id: 14, text: "Zmartwiony", scale: "Tension" },
+    { id: 15, text: "Pełen energii", scale: "Vigor" },
+    { id: 16, text: "Załamany", scale: "Depression" },
+    { id: 17, text: "Otumaniony", scale: "Confusion" },
+    { id: 18, text: "Zdenerwowany", scale: "Tension" },
+    { id: 19, text: "Zły", scale: "Anger" },
+    { id: 20, text: "Aktywny", scale: "Vigor" },
+    { id: 21, text: "Zmęczony", scale: "Fatigue" },
+    { id: 22, text: "Rozdrażniony", scale: "Anger" },
+    { id: 23, text: "Czujny", scale: "Vigor" },
+    { id: 24, text: "Niepewny", scale: "Confusion" }
+  ];
+
+  const BRUMS_OPTIONS = [
+    { val: 0, label: "Wcale" },
+    { val: 1, label: "Trochę" },
+    { val: 2, label: "Średnio" },
+    { val: 3, label: "Dość mocno" },
+    { val: 4, label: "Bardzo mocno" }
+  ];
+
+  const VAS_ITEMS = [
+    {
+      id: "physical_fatigue",
+      shortLabel: "Zmęczenie fizyczne",
+      question: "1. Jak bardzo jesteś teraz zmęczony/a fizycznie (mięśniowo)?",
+      leftAnchor: "0 – Wcale nie jestem zmęczony/a",
+      rightAnchor: "100 – Skrajne wyczerpanie fizyczne"
+    },
+    {
+      id: "mental_fatigue",
+      shortLabel: "Zmęczenie umysłowe",
+      question: "2. Jak bardzo jesteś teraz zmęczony/a umysłowo (poznawczo)?",
+      leftAnchor: "0 – Pełna świeżość umysłu",
+      rightAnchor: "100 – Skrajne wyczerpanie umysłowe"
+    },
+    {
+      id: "perceived_stress",
+      shortLabel: "Poziom stresu",
+      question: "3. Jak wysoki poziom stresu / napięcia teraz odczuwasz?",
+      leftAnchor: "0 – Całkowity spokój, brak stresu",
+      rightAnchor: "100 – Maksymalny stres / napięcie"
+    },
+    {
+      id: "recovery_readiness",
+      shortLabel: "Poczucie regeneracji",
+      question: "4. Na ile czujesz się teraz zregenerowany/a i gotowy/a do wysiłku?",
+      leftAnchor: "0 – Wcale niezregenerowany/a",
+      rightAnchor: "100 – W pełni zregenerowany/a i gotowy/a"
+    }
+  ];
+
+  let state = {
+    participantId: '',
+    timepoint: '',
+    timestamp: '',
+    doPss: true,
+    doBrums: true,
+    doDemo: true,
+    doVas: true,
+    pssData: null,
+    brumsData: null,
+    vasData: null
+  };
+
+  function showScreen(screenId) {
+    ['screen-setup', 'screen-pss', 'screen-brums', 'screen-vas', 'screen-summary'].forEach(id => {
+      document.getElementById(id).classList.add('hidden');
+    });
+    document.getElementById(screenId).classList.remove('hidden');
+    window.scrollTo(0, 0);
+  }
+
+  // Szybkie tagi punktów czasowych
+  document.querySelectorAll('.tag-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.getElementById('timepoint-input').value = btn.dataset.tp;
+      document.getElementById('chk-pss').checked = (btn.dataset.pss === '1');
+      document.getElementById('chk-brums').checked = (btn.dataset.brums === '1');
+      document.getElementById('chk-vas').checked = (btn.dataset.vas === '1');
+      document.getElementById('chk-demo').checked = (btn.dataset.demo === '1');
+      updateDemoRowVisibility();
+    });
+  });
+
+  function updateDemoRowVisibility() {
+    const brumsChecked = document.getElementById('chk-brums').checked;
+    document.getElementById('row-demo').style.display = brumsChecked ? 'flex' : 'none';
+  }
+  document.getElementById('chk-brums').addEventListener('change', updateDemoRowVisibility);
+
+  // Start
+  document.getElementById('btn-start').addEventListener('click', () => {
+    const pid = document.getElementById('participant-id').value.trim();
+    if (!pid) {
+      alert('Wpisz ID badanego przed rozpoczęciem.');
+      return;
+    }
+    const doPss = document.getElementById('chk-pss').checked;
+    const doBrums = document.getElementById('chk-brums').checked;
+    const doVas = document.getElementById('chk-vas').checked;
+
+    if (!doPss && !doBrums && !doVas) {
+      alert('Zaznacz przynajmniej jeden kwestionariusz (PSS-10, BRUMS-PL lub VAS).');
+      return;
+    }
+
+    state.participantId = pid;
+    state.timepoint = document.getElementById('timepoint-input').value.trim() || 'POMIAR_1';
+    state.timestamp = new Date().toISOString();
+    state.doPss = doPss;
+    state.doBrums = doBrums;
+    state.doDemo = document.getElementById('chk-demo').checked && doBrums;
+    state.doVas = doVas;
+    state.pssData = null;
+    state.brumsData = null;
+    state.vasData = null;
+
+    if (state.doPss) {
+      renderPssForm();
+      showScreen('screen-pss');
+    } else if (state.doBrums) {
+      renderBrumsForm();
+      showScreen('screen-brums');
+    } else {
+      renderVasForm();
+      showScreen('screen-vas');
+    }
+  });
+
+  // Renderowanie PSS-10
+  function renderPssForm() {
+    document.getElementById('pss-meta').textContent = `ID: ${state.participantId} | Punkt: ${state.timepoint}`;
+    document.getElementById('pss-error').style.display = 'none';
+    const container = document.getElementById('pss-container');
+    container.innerHTML = '';
+
+    PSS_ITEMS.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'q-item';
+      div.id = `pss-row-${item.id}`;
+
+      let opts = '';
+      PSS_OPTIONS.forEach(opt => {
+        opts += `
+          <label class="likert-label">
+            <input type="radio" name="pss_q_${item.id}" value="${opt.val}">
+            <span>${opt.label}</span>
+            <span class="likert-score">(${opt.val})</span>
+          </label>
+        `;
+      });
+
+      div.innerHTML = `
+        <div class="q-title">${item.id}. ${item.text}</div>
+        <div class="likert-options">${opts}</div>
+      `;
+      div.querySelectorAll('input').forEach(inp => {
+        inp.addEventListener('change', () => div.classList.remove('unanswered'));
+      });
+      container.appendChild(div);
+    });
+  }
+
+  document.getElementById('btn-submit-pss').addEventListener('click', () => {
+    let valid = true;
+    const rawAnswers = {};
+    const scoredAnswers = {};
+    let totalScore = 0;
+
+    PSS_ITEMS.forEach(item => {
+      const checked = document.querySelector(`input[name="pss_q_${item.id}"]:checked`);
+      const row = document.getElementById(`pss-row-${item.id}`);
+      if (!checked) {
+        row.classList.add('unanswered');
+        valid = false;
+      } else {
+        row.classList.remove('unanswered');
+        const raw = parseInt(checked.value, 10);
+        const scored = item.reverse ? (4 - raw) : raw;
+        rawAnswers[item.id] = raw;
+        scoredAnswers[item.id] = scored;
+        totalScore += scored;
+      }
+    });
+
+    if (!valid) {
+      document.getElementById('pss-error').style.display = 'block';
+      const firstErr = document.querySelector('#pss-container .unanswered');
+      if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    let level = 'Przeciętny (14–19 pkt)';
+    if (totalScore <= 13) level = 'Niski poziom stresu (0–13 pkt)';
+    else if (totalScore >= 20) level = 'Wysoki poziom stresu (20–40 pkt)';
+
+    state.pssData = { rawAnswers, scoredAnswers, totalScore, level };
+
+    if (state.doBrums) {
+      renderBrumsForm();
+      showScreen('screen-brums');
+    } else if (state.doVas) {
+      renderVasForm();
+      showScreen('screen-vas');
+    } else {
+      finishAndSave();
+    }
+  });
+
+  // Renderowanie BRUMS-PL
+  function renderBrumsForm() {
+    document.getElementById('brums-meta').textContent = `ID: ${state.participantId} | Punkt: ${state.timepoint}`;
+    document.getElementById('brums-demo-box').style.display = state.doDemo ? 'block' : 'none';
+    document.getElementById('brums-error').style.display = 'none';
+
+    const btnBrums = document.getElementById('btn-submit-brums');
+    btnBrums.textContent = state.doVas ? 'Zapisz BRUMS-PL i przejdź do skal VAS' : 'Zapisz i zakończ';
+
+    const container = document.getElementById('brums-container');
+    container.innerHTML = '';
+
+    BRUMS_ITEMS.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'q-item';
+      div.id = `brums-row-${item.id}`;
+
+      let opts = '';
+      BRUMS_OPTIONS.forEach(opt => {
+        opts += `
+          <label class="likert-label">
+            <input type="radio" name="brums_q_${item.id}" value="${opt.val}">
+            <span>${opt.label}</span>
+            <span class="likert-score">(${opt.val})</span>
+          </label>
+        `;
+      });
+
+      div.innerHTML = `
+        <div class="q-title">${item.id}. ${item.text}</div>
+        <div class="likert-options">${opts}</div>
+      `;
+      div.querySelectorAll('input').forEach(inp => {
+        inp.addEventListener('change', () => div.classList.remove('unanswered'));
+      });
+      container.appendChild(div);
+    });
+  }
+
+  document.getElementById('btn-submit-brums').addEventListener('click', () => {
+    let valid = true;
+    const answers = {};
+
+    BRUMS_ITEMS.forEach(item => {
+      const checked = document.querySelector(`input[name="brums_q_${item.id}"]:checked`);
+      const row = document.getElementById(`brums-row-${item.id}`);
+      if (!checked) {
+        row.classList.add('unanswered');
+        valid = false;
+      } else {
+        row.classList.remove('unanswered');
+        answers[item.id] = parseInt(checked.value, 10);
+      }
+    });
+
+    if (!valid) {
+      document.getElementById('brums-error').style.display = 'block';
+      const firstErr = document.querySelector('#brums-container .unanswered');
+      if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    const scores = { Tension: 0, Depression: 0, Anger: 0, Vigor: 0, Fatigue: 0, Confusion: 0 };
+    BRUMS_ITEMS.forEach(item => {
+      scores[item.scale] += answers[item.id];
+    });
+    scores.TMD = (scores.Tension + scores.Depression + scores.Anger + scores.Fatigue + scores.Confusion) - scores.Vigor;
+
+    const demographics = state.doDemo ? {
+      sex: document.getElementById('demo-sex').value || 'NA',
+      age: document.getElementById('demo-age').value || 'NA',
+      sport: document.getElementById('demo-sport').value.trim() || 'NA',
+      injury: document.getElementById('demo-injury').value || 'NA',
+      club: document.getElementById('demo-club').value || 'NA',
+      education: document.getElementById('demo-edu').value || 'NA'
+    } : null;
+
+    state.brumsData = { demographics, answers, scores };
+
+    if (state.doVas) {
+      renderVasForm();
+      showScreen('screen-vas');
+    } else {
+      finishAndSave();
+    }
+  });
+
+  // Renderowanie VAS (0-100)
+  function renderVasForm() {
+    document.getElementById('vas-meta').textContent = `ID: ${state.participantId} | Punkt: ${state.timepoint}`;
+    document.getElementById('vas-error').style.display = 'none';
+
+    const container = document.getElementById('vas-container');
+    container.innerHTML = '';
+
+    VAS_ITEMS.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'vas-card';
+      card.id = `vas-card-${item.id}`;
+      card.dataset.touched = '0';
+
+      card.innerHTML = `
+        <div class="vas-header-row">
+          <div class="vas-question">${item.question}</div>
+          <div class="vas-value-pill untouched" id="vas-pill-${item.id}">Przesuń</div>
+        </div>
+        <div class="vas-slider-wrap">
+          <input type="range" class="vas-range untouched" id="vas-input-${item.id}" min="0" max="100" step="1" value="50">
+        </div>
+        <div class="vas-anchors">
+          <span>${item.leftAnchor}</span>
+          <span>${item.rightAnchor}</span>
+        </div>
+      `;
+
+      const slider = card.querySelector('input[type="range"]');
+      const pill = card.querySelector('.vas-value-pill');
+
+      const activateSlider = () => {
+        card.dataset.touched = '1';
+        card.classList.remove('unanswered');
+        slider.classList.remove('untouched');
+        pill.classList.remove('untouched');
+        pill.textContent = `${slider.value} / 100`;
+      };
+
+      slider.addEventListener('input', activateSlider);
+      slider.addEventListener('pointerdown', activateSlider);
+      slider.addEventListener('touchstart', activateSlider, { passive: true });
+
+      container.appendChild(card);
+    });
+  }
+
+  document.getElementById('btn-submit-vas').addEventListener('click', () => {
+    let valid = true;
+    const values = {};
+
+    VAS_ITEMS.forEach(item => {
+      const card = document.getElementById(`vas-card-${item.id}`);
+      const slider = document.getElementById(`vas-input-${item.id}`);
+      if (card.dataset.touched !== '1') {
+        card.classList.add('unanswered');
+        valid = false;
+      } else {
+        card.classList.remove('unanswered');
+        values[item.id] = parseInt(slider.value, 10);
+      }
+    });
+
+    if (!valid) {
+      document.getElementById('vas-error').style.display = 'block';
+      const firstErr = document.querySelector('#vas-container .unanswered');
+      if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    state.vasData = values;
+    finishAndSave();
+  });
+
+  // Zakończenie: pokazuje ekran podziękowania (bez wyników dla badanego!) i automatycznie pobiera CSV
+  function finishAndSave() {
+    showScreen('screen-summary');
+    document.getElementById('summary-meta').innerHTML = `ID: <strong>${state.participantId}</strong> | Punkt: <strong>${state.timepoint}</strong>`;
+
+    const panel = document.getElementById('researcher-results-panel');
+    panel.classList.add('hidden');
+    document.getElementById('btn-toggle-preview').textContent = 'Podgląd (Badacz)';
+
+    const pssBlock = document.getElementById('summary-pss-block');
+    if (state.pssData) {
+      pssBlock.classList.remove('hidden');
+      document.getElementById('pss-stats').innerHTML = `
+        <div class="stat-card">
+          <div class="stat-label">Wynik ogólny PSS-10</div>
+          <div class="stat-val" style="color:var(--accent)">${state.pssData.totalScore} <span style="font-size:0.85rem;color:var(--muted)">/ 40 pkt</span></div>
+          <div class="stat-sub">${state.pssData.level}</div>
+        </div>
+      `;
+    } else {
+      pssBlock.classList.add('hidden');
+    }
+
+    const brumsBlock = document.getElementById('summary-brums-block');
+    if (state.brumsData) {
+      brumsBlock.classList.remove('hidden');
+      const s = state.brumsData.scores;
+      document.getElementById('brums-stats').innerHTML = `
+        <div class="stat-card">
+          <div class="stat-label">Napięcie (Tension)</div>
+          <div class="stat-val" style="color:var(--accent)">${s.Tension} <span style="font-size:0.85rem;color:var(--muted)">/ 16</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Przygnębienie (Depression)</div>
+          <div class="stat-val">${s.Depression} <span style="font-size:0.85rem;color:var(--muted)">/ 16</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Gniew (Anger)</div>
+          <div class="stat-val">${s.Anger} <span style="font-size:0.85rem;color:var(--muted)">/ 16</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Wigor (Vigor)</div>
+          <div class="stat-val" style="color:var(--success)">${s.Vigor} <span style="font-size:0.85rem;color:var(--muted)">/ 16</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Zmęczenie (Fatigue)</div>
+          <div class="stat-val" style="color:var(--warning)">${s.Fatigue} <span style="font-size:0.85rem;color:var(--muted)">/ 16</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Dezorientacja (Confusion)</div>
+          <div class="stat-val">${s.Confusion} <span style="font-size:0.85rem;color:var(--muted)">/ 16</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Obciążenie nastroju (TMD)</div>
+          <div class="stat-val" style="color:var(--accent)">${s.TMD}</div>
+          <div class="stat-sub">Suma negat. - Wigor</div>
+        </div>
+      `;
+    } else {
+      brumsBlock.classList.add('hidden');
+    }
+
+    const vasBlock = document.getElementById('summary-vas-block');
+    if (state.vasData) {
+      vasBlock.classList.remove('hidden');
+      const v = state.vasData;
+      document.getElementById('vas-stats').innerHTML = `
+        <div class="stat-card">
+          <div class="stat-label">Zmęczenie fizyczne</div>
+          <div class="stat-val" style="color:var(--warning)">${v.physical_fatigue} <span style="font-size:0.85rem;color:var(--muted)">/ 100</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Zmęczenie umysłowe</div>
+          <div class="stat-val" style="color:var(--warning)">${v.mental_fatigue} <span style="font-size:0.85rem;color:var(--muted)">/ 100</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Poziom stresu</div>
+          <div class="stat-val" style="color:var(--accent)">${v.perceived_stress} <span style="font-size:0.85rem;color:var(--muted)">/ 100</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Poczucie regeneracji</div>
+          <div class="stat-val" style="color:var(--success)">${v.recovery_readiness} <span style="font-size:0.85rem;color:var(--muted)">/ 100</span></div>
+        </div>
+      `;
+    } else {
+      vasBlock.classList.add('hidden');
+    }
+
+    downloadCsvFile();
+  }
+
+  function downloadCsvFile() {
+    let csv = [];
+    csv.push(`# METADANE POMIARU`);
+    csv.push(`ID_Badanego;Punkt_Pomiarowy;Data_Czas`);
+    csv.push(`${state.participantId};${state.timepoint};${state.timestamp}`);
+    csv.push('');
+
+    if (state.pssData) {
+      csv.push(`# PSS-10 WYNIK OGOLNY (po rekodowaniu pozycji 4, 5, 7, 8)`);
+      csv.push(`ID_Badanego;Punkt_Pomiarowy;PSS10_Suma_0_40;Interpretacja`);
+      csv.push(`${state.participantId};${state.timepoint};${state.pssData.totalScore};${state.pssData.level}`);
+      csv.push('');
+
+      csv.push(`# PSS-10 SZCZEGOLOWE ODPOWIEDZI`);
+      csv.push(`Nr_Pytania;Odwrotna_Punktacja;Surowa_Odpowiedz_0_4;Punktacja_Po_Rekodowaniu`);
+      PSS_ITEMS.forEach(item => {
+        csv.push(`${item.id};${item.reverse ? 1 : 0};${state.pssData.rawAnswers[item.id]};${state.pssData.scoredAnswers[item.id]}`);
+      });
+      csv.push('');
+    }
+
+    if (state.brumsData) {
+      csv.push(`# BRUMS-PL PODSUMOWANIE PODSKAL (0-16)`);
+      csv.push(`ID_Badanego;Punkt_Pomiarowy;Tension;Depression;Anger;Vigor;Fatigue;Confusion;TMD`);
+      const sc = state.brumsData.scores;
+      csv.push(`${state.participantId};${state.timepoint};${sc.Tension};${sc.Depression};${sc.Anger};${sc.Vigor};${sc.Fatigue};${sc.Confusion};${sc.TMD}`);
+      csv.push('');
+
+      if (state.brumsData.demographics) {
+        const d = state.brumsData.demographics;
+        csv.push(`# METRYCZKA UCZESTNIKA`);
+        csv.push(`Plec;Wiek;Dyscyplina;Status_Kontuzji;Klub_Sportowy;Wyksztalcenie`);
+        csv.push(`${d.sex};${d.age};${d.sport};${d.injury};${d.club};${d.education}`);
+        csv.push('');
+      }
+
+      csv.push(`# BRUMS-PL POJEDYNCZE POZYCJE (0-4)`);
+      csv.push(`Nr_Pytania;Przymiotnik;Podskala;Odpowiedz_0_4`);
+      BRUMS_ITEMS.forEach(item => {
+        csv.push(`${item.id};${item.text};${item.scale};${state.brumsData.answers[item.id]}`);
+      });
+      csv.push('');
+    }
+
+    if (state.vasData) {
+      csv.push(`# SKALE WIZUALNO-ANALOGOWE VAS (0-100)`);
+      csv.push(`ID_Badanego;Punkt_Pomiarowy;VAS_Zmeczenie_Fizyczne;VAS_Zmeczenie_Umyslowe;VAS_Poziom_Stresu;VAS_Poczucie_Regeneracji`);
+      const v = state.vasData;
+      csv.push(`${state.participantId};${state.timepoint};${v.physical_fatigue};${v.mental_fatigue};${v.perceived_stress};${v.recovery_readiness}`);
+      csv.push('');
+    }
+
+    csv.push(`# WIERSZ ZBIORCZY DO BAZY (1 WIERSZ = 1 POMIAR)`);
+    let wideHeaders = ['ID_Badanego', 'Punkt_Pomiarowy', 'Data_Czas'];
+    let wideValues = [state.participantId, state.timepoint, state.timestamp];
+
+    if (state.pssData) {
+      wideHeaders.push('PSS10_Total');
+      wideValues.push(state.pssData.totalScore);
+      PSS_ITEMS.forEach(item => {
+        wideHeaders.push(`PSS_${item.id}`);
+        wideValues.push(state.pssData.scoredAnswers[item.id]);
+      });
+    }
+    if (state.brumsData) {
+      const sc = state.brumsData.scores;
+      wideHeaders.push('BRUMS_Tension', 'BRUMS_Depression', 'BRUMS_Anger', 'BRUMS_Vigor', 'BRUMS_Fatigue', 'BRUMS_Confusion', 'BRUMS_TMD');
+      wideValues.push(sc.Tension, sc.Depression, sc.Anger, sc.Vigor, sc.Fatigue, sc.Confusion, sc.TMD);
+      BRUMS_ITEMS.forEach(item => {
+        wideHeaders.push(`BRUMS_${item.id}_${item.text}`);
+        wideValues.push(state.brumsData.answers[item.id]);
+      });
+    }
+    if (state.vasData) {
+      const v = state.vasData;
+      wideHeaders.push('VAS_Physical_Fatigue', 'VAS_Mental_Fatigue', 'VAS_Perceived_Stress', 'VAS_Recovery_Readiness');
+      wideValues.push(v.physical_fatigue, v.mental_fatigue, v.perceived_stress, v.recovery_readiness);
+    }
+    csv.push(wideHeaders.join(';'));
+    csv.push(wideValues.join(';'));
+
+    const blob = new Blob(["\uFEFF" + csv.join('\n')], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const safeTp = state.timepoint.replace(/[^a-zA-Z0-9_-]/g, '_');
+    a.href = url;
+    a.download = `Kwestionariusze_${state.participantId}_${safeTp}_${new Date().toISOString().slice(0,10)}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  document.getElementById('btn-download-csv').addEventListener('click', downloadCsvFile);
+
+  document.getElementById('btn-toggle-preview').addEventListener('click', () => {
+    const panel = document.getElementById('researcher-results-panel');
+    const btn = document.getElementById('btn-toggle-preview');
+    const isHidden = panel.classList.contains('hidden');
+    if (isHidden) {
+      panel.classList.remove('hidden');
+      btn.textContent = 'Ukryj podgląd';
+    } else {
+      panel.classList.add('hidden');
+      btn.textContent = 'Podgląd (Badacz)';
+    }
+  });
+
+  document.getElementById('btn-reset').addEventListener('click', () => {
+    showScreen('screen-setup');
+  });
+});
+</script>
+</body>
+</html>
