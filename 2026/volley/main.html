@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Badanie Dynamiki Zespołowej 360° — Siatkówka (T1–T3)</title>
+  <title>Badanie Dynamiki Zespołowej 360° — Siatkówka</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
@@ -38,7 +38,7 @@
   <header class="bg-slate-900 text-white shadow-md sticky top-0 z-30">
     <div class="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
       <div>
-        <span class="text-[11px] uppercase tracking-wider text-sky-400 font-bold block">Badanie Podłużne 360° • 4 Zespoły</span>
+        <span class="text-[11px] uppercase tracking-wider text-sky-400 font-bold block">Badanie 360° • 4 Zespoły</span>
         <h1 class="text-base sm:text-lg font-bold leading-tight">Dynamika Zespołowa w Siatkówce</h1>
       </div>
       <div id="header-badge" class="hidden bg-slate-800 border border-slate-700 px-3 py-1 rounded-full text-xs font-mono text-sky-300"></div>
@@ -52,24 +52,16 @@
       <div class="space-y-2">
         <h2 class="text-xl font-bold text-slate-900">Logowanie do badania</h2>
         <p class="text-sm text-slate-600 leading-relaxed">
-          Wpisz swój indywidualny <strong>kod wejściowy</strong> z otrzymanej kartki (np. <code class="bg-slate-100 px-1.5 py-0.5 rounded font-mono text-slate-800">A_JM01</code> lub <code class="bg-slate-100 px-1.5 py-0.5 rounded font-mono text-slate-800">A_TR01</code>) oraz wybierz etap pomiaru.
+          Wpisz swój indywidualny <strong>kod wejściowy</strong> z otrzymanej kartki (np. <code class="bg-slate-100 px-1.5 py-0.5 rounded font-mono text-slate-800">A_JM01</code> lub <code class="bg-slate-100 px-1.5 py-0.5 rounded font-mono text-slate-800">B_TR01</code>).
         </p>
       </div>
 
       <div class="space-y-4">
         <div>
-          <label for="input-termin" class="block text-sm font-semibold text-slate-700 mb-1">Etap pomiaru</label>
-          <select id="input-termin" class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-base font-medium focus:border-blue-600 focus:bg-white focus:outline-none">
-            <option value="T1">T1 — Pomiar I (początek okresu startowego)</option>
-            <option value="T2">T2 — Pomiar II (środek sezonu)</option>
-            <option value="T3">T3 — Pomiar III (końcówka sezonu)</option>
-          </select>
-        </div>
-
-        <div>
           <label for="input-kod" class="block text-sm font-semibold text-slate-700 mb-1">Twój kod wejściowy</label>
           <input type="text" id="input-kod" placeholder="np. A_JM01" autocapitalize="characters" autocomplete="off"
-                 class="w-full rounded-xl border border-slate-300 px-4 py-3 text-lg font-mono uppercase tracking-wider focus:border-blue-600 focus:outline-none" />
+                 onkeydown="if(event.key==='Enter') zaloguj()"
+                 class="w-full rounded-xl border border-slate-300 px-4 py-3.5 text-xl font-mono text-center uppercase tracking-wider font-bold focus:border-blue-600 focus:outline-none" />
           <p id="login-error" class="hidden text-sm text-red-600 font-medium mt-2"></p>
         </div>
       </div>
@@ -180,7 +172,7 @@
   </main>
 
   <footer class="text-center text-xs text-slate-400 py-4">
-    Narzędzie badawcze • Praca magisterska (Siatkówka 360°)
+    Narzędzie badawcze • Koło Naukowe Cognitioning (Siatkówka 360°)
   </footer>
 
   <script>
@@ -197,3496 +189,1144 @@
     "zespol": "Zespół A",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-755",
-        "staleId": "A_JM04"
-      },
-      {
-        "pseudokod": "KOD-215",
-        "staleId": "A_JM11"
-      },
-      {
-        "pseudokod": "KOD-126",
-        "staleId": "A_JM14"
-      },
-      {
-        "pseudokod": "KOD-860",
-        "staleId": "A_JM08"
-      },
-      {
-        "pseudokod": "KOD-382",
-        "staleId": "A_JM10"
-      },
-      {
-        "pseudokod": "KOD-351",
-        "staleId": "A_JM12"
-      },
-      {
-        "pseudokod": "KOD-329",
-        "staleId": "A_JM13"
-      },
-      {
-        "pseudokod": "KOD-243",
-        "staleId": "A_JM05"
-      },
-      {
-        "pseudokod": "KOD-855",
-        "staleId": "A_JM06"
-      },
-      {
-        "pseudokod": "KOD-205",
-        "staleId": "A_JM07"
-      },
-      {
-        "pseudokod": "KOD-793",
-        "staleId": "A_JM03"
-      },
-      {
-        "pseudokod": "KOD-859",
-        "staleId": "A_JM02"
-      },
-      {
-        "pseudokod": "KOD-659",
-        "staleId": "A_JM09"
-      }
+      { "pseudokod": "KOD-755", "staleId": "A_JM04" },
+      { "pseudokod": "KOD-215", "staleId": "A_JM11" },
+      { "pseudokod": "KOD-126", "staleId": "A_JM14" },
+      { "pseudokod": "KOD-860", "staleId": "A_JM08" },
+      { "pseudokod": "KOD-382", "staleId": "A_JM10" },
+      { "pseudokod": "KOD-351", "staleId": "A_JM12" },
+      { "pseudokod": "KOD-329", "staleId": "A_JM13" },
+      { "pseudokod": "KOD-243", "staleId": "A_JM05" },
+      { "pseudokod": "KOD-855", "staleId": "A_JM06" },
+      { "pseudokod": "KOD-205", "staleId": "A_JM07" },
+      { "pseudokod": "KOD-793", "staleId": "A_JM03" },
+      { "pseudokod": "KOD-859", "staleId": "A_JM02" },
+      { "pseudokod": "KOD-659", "staleId": "A_JM09" }
     ]
   },
   "A_JM02": {
     "zespol": "Zespół A",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-190",
-        "staleId": "A_JM14"
-      },
-      {
-        "pseudokod": "KOD-705",
-        "staleId": "A_JM08"
-      },
-      {
-        "pseudokod": "KOD-533",
-        "staleId": "A_JM01"
-      },
-      {
-        "pseudokod": "KOD-133",
-        "staleId": "A_JM05"
-      },
-      {
-        "pseudokod": "KOD-131",
-        "staleId": "A_JM07"
-      },
-      {
-        "pseudokod": "KOD-196",
-        "staleId": "A_JM06"
-      },
-      {
-        "pseudokod": "KOD-324",
-        "staleId": "A_JM13"
-      },
-      {
-        "pseudokod": "KOD-339",
-        "staleId": "A_JM11"
-      },
-      {
-        "pseudokod": "KOD-618",
-        "staleId": "A_JM09"
-      },
-      {
-        "pseudokod": "KOD-717",
-        "staleId": "A_JM12"
-      },
-      {
-        "pseudokod": "KOD-128",
-        "staleId": "A_JM04"
-      },
-      {
-        "pseudokod": "KOD-675",
-        "staleId": "A_JM10"
-      },
-      {
-        "pseudokod": "KOD-304",
-        "staleId": "A_JM03"
-      }
+      { "pseudokod": "KOD-190", "staleId": "A_JM14" },
+      { "pseudokod": "KOD-705", "staleId": "A_JM08" },
+      { "pseudokod": "KOD-533", "staleId": "A_JM01" },
+      { "pseudokod": "KOD-133", "staleId": "A_JM05" },
+      { "pseudokod": "KOD-131", "staleId": "A_JM07" },
+      { "pseudokod": "KOD-196", "staleId": "A_JM06" },
+      { "pseudokod": "KOD-324", "staleId": "A_JM13" },
+      { "pseudokod": "KOD-339", "staleId": "A_JM11" },
+      { "pseudokod": "KOD-618", "staleId": "A_JM09" },
+      { "pseudokod": "KOD-717", "staleId": "A_JM12" },
+      { "pseudokod": "KOD-128", "staleId": "A_JM04" },
+      { "pseudokod": "KOD-675", "staleId": "A_JM10" },
+      { "pseudokod": "KOD-304", "staleId": "A_JM03" }
     ]
   },
   "A_JM03": {
     "zespol": "Zespół A",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-834",
-        "staleId": "A_JM04"
-      },
-      {
-        "pseudokod": "KOD-766",
-        "staleId": "A_JM05"
-      },
-      {
-        "pseudokod": "KOD-819",
-        "staleId": "A_JM14"
-      },
-      {
-        "pseudokod": "KOD-986",
-        "staleId": "A_JM12"
-      },
-      {
-        "pseudokod": "KOD-530",
-        "staleId": "A_JM11"
-      },
-      {
-        "pseudokod": "KOD-326",
-        "staleId": "A_JM02"
-      },
-      {
-        "pseudokod": "KOD-560",
-        "staleId": "A_JM01"
-      },
-      {
-        "pseudokod": "KOD-704",
-        "staleId": "A_JM10"
-      },
-      {
-        "pseudokod": "KOD-385",
-        "staleId": "A_JM09"
-      },
-      {
-        "pseudokod": "KOD-929",
-        "staleId": "A_JM07"
-      },
-      {
-        "pseudokod": "KOD-107",
-        "staleId": "A_JM08"
-      },
-      {
-        "pseudokod": "KOD-878",
-        "staleId": "A_JM06"
-      },
-      {
-        "pseudokod": "KOD-926",
-        "staleId": "A_JM13"
-      }
+      { "pseudokod": "KOD-834", "staleId": "A_JM04" },
+      { "pseudokod": "KOD-766", "staleId": "A_JM05" },
+      { "pseudokod": "KOD-819", "staleId": "A_JM14" },
+      { "pseudokod": "KOD-986", "staleId": "A_JM12" },
+      { "pseudokod": "KOD-530", "staleId": "A_JM11" },
+      { "pseudokod": "KOD-326", "staleId": "A_JM02" },
+      { "pseudokod": "KOD-560", "staleId": "A_JM01" },
+      { "pseudokod": "KOD-704", "staleId": "A_JM10" },
+      { "pseudokod": "KOD-385", "staleId": "A_JM09" },
+      { "pseudokod": "KOD-929", "staleId": "A_JM07" },
+      { "pseudokod": "KOD-107", "staleId": "A_JM08" },
+      { "pseudokod": "KOD-878", "staleId": "A_JM06" },
+      { "pseudokod": "KOD-926", "staleId": "A_JM13" }
     ]
   },
   "A_JM04": {
     "zespol": "Zespół A",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-264",
-        "staleId": "A_JM13"
-      },
-      {
-        "pseudokod": "KOD-815",
-        "staleId": "A_JM03"
-      },
-      {
-        "pseudokod": "KOD-983",
-        "staleId": "A_JM06"
-      },
-      {
-        "pseudokod": "KOD-449",
-        "staleId": "A_JM02"
-      },
-      {
-        "pseudokod": "KOD-964",
-        "staleId": "A_JM08"
-      },
-      {
-        "pseudokod": "KOD-260",
-        "staleId": "A_JM07"
-      },
-      {
-        "pseudokod": "KOD-321",
-        "staleId": "A_JM09"
-      },
-      {
-        "pseudokod": "KOD-882",
-        "staleId": "A_JM01"
-      },
-      {
-        "pseudokod": "KOD-445",
-        "staleId": "A_JM12"
-      },
-      {
-        "pseudokod": "KOD-989",
-        "staleId": "A_JM14"
-      },
-      {
-        "pseudokod": "KOD-195",
-        "staleId": "A_JM05"
-      },
-      {
-        "pseudokod": "KOD-490",
-        "staleId": "A_JM10"
-      },
-      {
-        "pseudokod": "KOD-200",
-        "staleId": "A_JM11"
-      }
+      { "pseudokod": "KOD-264", "staleId": "A_JM13" },
+      { "pseudokod": "KOD-815", "staleId": "A_JM03" },
+      { "pseudokod": "KOD-983", "staleId": "A_JM06" },
+      { "pseudokod": "KOD-449", "staleId": "A_JM02" },
+      { "pseudokod": "KOD-964", "staleId": "A_JM08" },
+      { "pseudokod": "KOD-260", "staleId": "A_JM07" },
+      { "pseudokod": "KOD-321", "staleId": "A_JM09" },
+      { "pseudokod": "KOD-882", "staleId": "A_JM01" },
+      { "pseudokod": "KOD-445", "staleId": "A_JM12" },
+      { "pseudokod": "KOD-989", "staleId": "A_JM14" },
+      { "pseudokod": "KOD-195", "staleId": "A_JM05" },
+      { "pseudokod": "KOD-490", "staleId": "A_JM10" },
+      { "pseudokod": "KOD-200", "staleId": "A_JM11" }
     ]
   },
   "A_JM05": {
     "zespol": "Zespół A",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-468",
-        "staleId": "A_JM03"
-      },
-      {
-        "pseudokod": "KOD-453",
-        "staleId": "A_JM14"
-      },
-      {
-        "pseudokod": "KOD-719",
-        "staleId": "A_JM01"
-      },
-      {
-        "pseudokod": "KOD-371",
-        "staleId": "A_JM11"
-      },
-      {
-        "pseudokod": "KOD-927",
-        "staleId": "A_JM08"
-      },
-      {
-        "pseudokod": "KOD-145",
-        "staleId": "A_JM12"
-      },
-      {
-        "pseudokod": "KOD-848",
-        "staleId": "A_JM13"
-      },
-      {
-        "pseudokod": "KOD-571",
-        "staleId": "A_JM09"
-      },
-      {
-        "pseudokod": "KOD-650",
-        "staleId": "A_JM06"
-      },
-      {
-        "pseudokod": "KOD-228",
-        "staleId": "A_JM04"
-      },
-      {
-        "pseudokod": "KOD-488",
-        "staleId": "A_JM10"
-      },
-      {
-        "pseudokod": "KOD-181",
-        "staleId": "A_JM02"
-      },
-      {
-        "pseudokod": "KOD-666",
-        "staleId": "A_JM07"
-      }
+      { "pseudokod": "KOD-468", "staleId": "A_JM03" },
+      { "pseudokod": "KOD-453", "staleId": "A_JM14" },
+      { "pseudokod": "KOD-719", "staleId": "A_JM01" },
+      { "pseudokod": "KOD-371", "staleId": "A_JM11" },
+      { "pseudokod": "KOD-927", "staleId": "A_JM08" },
+      { "pseudokod": "KOD-145", "staleId": "A_JM12" },
+      { "pseudokod": "KOD-848", "staleId": "A_JM13" },
+      { "pseudokod": "KOD-571", "staleId": "A_JM09" },
+      { "pseudokod": "KOD-650", "staleId": "A_JM06" },
+      { "pseudokod": "KOD-228", "staleId": "A_JM04" },
+      { "pseudokod": "KOD-488", "staleId": "A_JM10" },
+      { "pseudokod": "KOD-181", "staleId": "A_JM02" },
+      { "pseudokod": "KOD-666", "staleId": "A_JM07" }
     ]
   },
   "A_JM06": {
     "zespol": "Zespół A",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-401",
-        "staleId": "A_JM10"
-      },
-      {
-        "pseudokod": "KOD-744",
-        "staleId": "A_JM01"
-      },
-      {
-        "pseudokod": "KOD-734",
-        "staleId": "A_JM09"
-      },
-      {
-        "pseudokod": "KOD-471",
-        "staleId": "A_JM05"
-      },
-      {
-        "pseudokod": "KOD-692",
-        "staleId": "A_JM07"
-      },
-      {
-        "pseudokod": "KOD-297",
-        "staleId": "A_JM12"
-      },
-      {
-        "pseudokod": "KOD-822",
-        "staleId": "A_JM03"
-      },
-      {
-        "pseudokod": "KOD-172",
-        "staleId": "A_JM13"
-      },
-      {
-        "pseudokod": "KOD-147",
-        "staleId": "A_JM11"
-      },
-      {
-        "pseudokod": "KOD-778",
-        "staleId": "A_JM02"
-      },
-      {
-        "pseudokod": "KOD-334",
-        "staleId": "A_JM04"
-      },
-      {
-        "pseudokod": "KOD-892",
-        "staleId": "A_JM08"
-      },
-      {
-        "pseudokod": "KOD-397",
-        "staleId": "A_JM14"
-      }
+      { "pseudokod": "KOD-401", "staleId": "A_JM10" },
+      { "pseudokod": "KOD-744", "staleId": "A_JM01" },
+      { "pseudokod": "KOD-734", "staleId": "A_JM09" },
+      { "pseudokod": "KOD-471", "staleId": "A_JM05" },
+      { "pseudokod": "KOD-692", "staleId": "A_JM07" },
+      { "pseudokod": "KOD-297", "staleId": "A_JM12" },
+      { "pseudokod": "KOD-822", "staleId": "A_JM03" },
+      { "pseudokod": "KOD-172", "staleId": "A_JM13" },
+      { "pseudokod": "KOD-147", "staleId": "A_JM11" },
+      { "pseudokod": "KOD-778", "staleId": "A_JM02" },
+      { "pseudokod": "KOD-334", "staleId": "A_JM04" },
+      { "pseudokod": "KOD-892", "staleId": "A_JM08" },
+      { "pseudokod": "KOD-397", "staleId": "A_JM14" }
     ]
   },
   "A_JM07": {
     "zespol": "Zespół A",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-182",
-        "staleId": "A_JM04"
-      },
-      {
-        "pseudokod": "KOD-978",
-        "staleId": "A_JM09"
-      },
-      {
-        "pseudokod": "KOD-204",
-        "staleId": "A_JM05"
-      },
-      {
-        "pseudokod": "KOD-948",
-        "staleId": "A_JM11"
-      },
-      {
-        "pseudokod": "KOD-955",
-        "staleId": "A_JM10"
-      },
-      {
-        "pseudokod": "KOD-565",
-        "staleId": "A_JM03"
-      },
-      {
-        "pseudokod": "KOD-751",
-        "staleId": "A_JM06"
-      },
-      {
-        "pseudokod": "KOD-474",
-        "staleId": "A_JM08"
-      },
-      {
-        "pseudokod": "KOD-267",
-        "staleId": "A_JM01"
-      },
-      {
-        "pseudokod": "KOD-480",
-        "staleId": "A_JM02"
-      },
-      {
-        "pseudokod": "KOD-464",
-        "staleId": "A_JM13"
-      },
-      {
-        "pseudokod": "KOD-315",
-        "staleId": "A_JM14"
-      },
-      {
-        "pseudokod": "KOD-787",
-        "staleId": "A_JM12"
-      }
+      { "pseudokod": "KOD-182", "staleId": "A_JM04" },
+      { "pseudokod": "KOD-978", "staleId": "A_JM09" },
+      { "pseudokod": "KOD-204", "staleId": "A_JM05" },
+      { "pseudokod": "KOD-948", "staleId": "A_JM11" },
+      { "pseudokod": "KOD-955", "staleId": "A_JM10" },
+      { "pseudokod": "KOD-565", "staleId": "A_JM03" },
+      { "pseudokod": "KOD-751", "staleId": "A_JM06" },
+      { "pseudokod": "KOD-474", "staleId": "A_JM08" },
+      { "pseudokod": "KOD-267", "staleId": "A_JM01" },
+      { "pseudokod": "KOD-480", "staleId": "A_JM02" },
+      { "pseudokod": "KOD-464", "staleId": "A_JM13" },
+      { "pseudokod": "KOD-315", "staleId": "A_JM14" },
+      { "pseudokod": "KOD-787", "staleId": "A_JM12" }
     ]
   },
   "A_JM08": {
     "zespol": "Zespół A",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-374",
-        "staleId": "A_JM06"
-      },
-      {
-        "pseudokod": "KOD-970",
-        "staleId": "A_JM13"
-      },
-      {
-        "pseudokod": "KOD-800",
-        "staleId": "A_JM14"
-      },
-      {
-        "pseudokod": "KOD-764",
-        "staleId": "A_JM11"
-      },
-      {
-        "pseudokod": "KOD-174",
-        "staleId": "A_JM01"
-      },
-      {
-        "pseudokod": "KOD-724",
-        "staleId": "A_JM02"
-      },
-      {
-        "pseudokod": "KOD-914",
-        "staleId": "A_JM04"
-      },
-      {
-        "pseudokod": "KOD-276",
-        "staleId": "A_JM05"
-      },
-      {
-        "pseudokod": "KOD-647",
-        "staleId": "A_JM12"
-      },
-      {
-        "pseudokod": "KOD-847",
-        "staleId": "A_JM07"
-      },
-      {
-        "pseudokod": "KOD-993",
-        "staleId": "A_JM03"
-      },
-      {
-        "pseudokod": "KOD-268",
-        "staleId": "A_JM09"
-      },
-      {
-        "pseudokod": "KOD-574",
-        "staleId": "A_JM10"
-      }
+      { "pseudokod": "KOD-374", "staleId": "A_JM06" },
+      { "pseudokod": "KOD-970", "staleId": "A_JM13" },
+      { "pseudokod": "KOD-800", "staleId": "A_JM14" },
+      { "pseudokod": "KOD-764", "staleId": "A_JM11" },
+      { "pseudokod": "KOD-174", "staleId": "A_JM01" },
+      { "pseudokod": "KOD-724", "staleId": "A_JM02" },
+      { "pseudokod": "KOD-914", "staleId": "A_JM04" },
+      { "pseudokod": "KOD-276", "staleId": "A_JM05" },
+      { "pseudokod": "KOD-647", "staleId": "A_JM12" },
+      { "pseudokod": "KOD-847", "staleId": "A_JM07" },
+      { "pseudokod": "KOD-993", "staleId": "A_JM03" },
+      { "pseudokod": "KOD-268", "staleId": "A_JM09" },
+      { "pseudokod": "KOD-574", "staleId": "A_JM10" }
     ]
   },
   "A_JM09": {
     "zespol": "Zespół A",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-489",
-        "staleId": "A_JM03"
-      },
-      {
-        "pseudokod": "KOD-377",
-        "staleId": "A_JM07"
-      },
-      {
-        "pseudokod": "KOD-756",
-        "staleId": "A_JM11"
-      },
-      {
-        "pseudokod": "KOD-805",
-        "staleId": "A_JM05"
-      },
-      {
-        "pseudokod": "KOD-671",
-        "staleId": "A_JM06"
-      },
-      {
-        "pseudokod": "KOD-325",
-        "staleId": "A_JM08"
-      },
-      {
-        "pseudokod": "KOD-802",
-        "staleId": "A_JM13"
-      },
-      {
-        "pseudokod": "KOD-433",
-        "staleId": "A_JM04"
-      },
-      {
-        "pseudokod": "KOD-158",
-        "staleId": "A_JM02"
-      },
-      {
-        "pseudokod": "KOD-335",
-        "staleId": "A_JM14"
-      },
-      {
-        "pseudokod": "KOD-982",
-        "staleId": "A_JM10"
-      },
-      {
-        "pseudokod": "KOD-424",
-        "staleId": "A_JM12"
-      },
-      {
-        "pseudokod": "KOD-511",
-        "staleId": "A_JM01"
-      }
+      { "pseudokod": "KOD-489", "staleId": "A_JM03" },
+      { "pseudokod": "KOD-377", "staleId": "A_JM07" },
+      { "pseudokod": "KOD-756", "staleId": "A_JM11" },
+      { "pseudokod": "KOD-805", "staleId": "A_JM05" },
+      { "pseudokod": "KOD-671", "staleId": "A_JM06" },
+      { "pseudokod": "KOD-325", "staleId": "A_JM08" },
+      { "pseudokod": "KOD-802", "staleId": "A_JM13" },
+      { "pseudokod": "KOD-433", "staleId": "A_JM04" },
+      { "pseudokod": "KOD-158", "staleId": "A_JM02" },
+      { "pseudokod": "KOD-335", "staleId": "A_JM14" },
+      { "pseudokod": "KOD-982", "staleId": "A_JM10" },
+      { "pseudokod": "KOD-424", "staleId": "A_JM12" },
+      { "pseudokod": "KOD-511", "staleId": "A_JM01" }
     ]
   },
   "A_JM10": {
     "zespol": "Zespół A",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-375",
-        "staleId": "A_JM11"
-      },
-      {
-        "pseudokod": "KOD-168",
-        "staleId": "A_JM02"
-      },
-      {
-        "pseudokod": "KOD-317",
-        "staleId": "A_JM08"
-      },
-      {
-        "pseudokod": "KOD-681",
-        "staleId": "A_JM06"
-      },
-      {
-        "pseudokod": "KOD-836",
-        "staleId": "A_JM13"
-      },
-      {
-        "pseudokod": "KOD-423",
-        "staleId": "A_JM04"
-      },
-      {
-        "pseudokod": "KOD-318",
-        "staleId": "A_JM09"
-      },
-      {
-        "pseudokod": "KOD-772",
-        "staleId": "A_JM05"
-      },
-      {
-        "pseudokod": "KOD-612",
-        "staleId": "A_JM12"
-      },
-      {
-        "pseudokod": "KOD-506",
-        "staleId": "A_JM14"
-      },
-      {
-        "pseudokod": "KOD-759",
-        "staleId": "A_JM07"
-      },
-      {
-        "pseudokod": "KOD-570",
-        "staleId": "A_JM03"
-      },
-      {
-        "pseudokod": "KOD-247",
-        "staleId": "A_JM01"
-      }
+      { "pseudokod": "KOD-375", "staleId": "A_JM11" },
+      { "pseudokod": "KOD-168", "staleId": "A_JM02" },
+      { "pseudokod": "KOD-317", "staleId": "A_JM08" },
+      { "pseudokod": "KOD-681", "staleId": "A_JM06" },
+      { "pseudokod": "KOD-836", "staleId": "A_JM13" },
+      { "pseudokod": "KOD-423", "staleId": "A_JM04" },
+      { "pseudokod": "KOD-318", "staleId": "A_JM09" },
+      { "pseudokod": "KOD-772", "staleId": "A_JM05" },
+      { "pseudokod": "KOD-612", "staleId": "A_JM12" },
+      { "pseudokod": "KOD-506", "staleId": "A_JM14" },
+      { "pseudokod": "KOD-759", "staleId": "A_JM07" },
+      { "pseudokod": "KOD-570", "staleId": "A_JM03" },
+      { "pseudokod": "KOD-247", "staleId": "A_JM01" }
     ]
   },
   "A_JM11": {
     "zespol": "Zespół A",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-372",
-        "staleId": "A_JM10"
-      },
-      {
-        "pseudokod": "KOD-991",
-        "staleId": "A_JM02"
-      },
-      {
-        "pseudokod": "KOD-353",
-        "staleId": "A_JM07"
-      },
-      {
-        "pseudokod": "KOD-863",
-        "staleId": "A_JM12"
-      },
-      {
-        "pseudokod": "KOD-974",
-        "staleId": "A_JM08"
-      },
-      {
-        "pseudokod": "KOD-652",
-        "staleId": "A_JM14"
-      },
-      {
-        "pseudokod": "KOD-370",
-        "staleId": "A_JM06"
-      },
-      {
-        "pseudokod": "KOD-699",
-        "staleId": "A_JM09"
-      },
-      {
-        "pseudokod": "KOD-539",
-        "staleId": "A_JM01"
-      },
-      {
-        "pseudokod": "KOD-698",
-        "staleId": "A_JM13"
-      },
-      {
-        "pseudokod": "KOD-509",
-        "staleId": "A_JM05"
-      },
-      {
-        "pseudokod": "KOD-930",
-        "staleId": "A_JM04"
-      },
-      {
-        "pseudokod": "KOD-889",
-        "staleId": "A_JM03"
-      }
+      { "pseudokod": "KOD-372", "staleId": "A_JM10" },
+      { "pseudokod": "KOD-991", "staleId": "A_JM02" },
+      { "pseudokod": "KOD-353", "staleId": "A_JM07" },
+      { "pseudokod": "KOD-863", "staleId": "A_JM12" },
+      { "pseudokod": "KOD-974", "staleId": "A_JM08" },
+      { "pseudokod": "KOD-652", "staleId": "A_JM14" },
+      { "pseudokod": "KOD-370", "staleId": "A_JM06" },
+      { "pseudokod": "KOD-699", "staleId": "A_JM09" },
+      { "pseudokod": "KOD-539", "staleId": "A_JM01" },
+      { "pseudokod": "KOD-698", "staleId": "A_JM13" },
+      { "pseudokod": "KOD-509", "staleId": "A_JM05" },
+      { "pseudokod": "KOD-930", "staleId": "A_JM04" },
+      { "pseudokod": "KOD-889", "staleId": "A_JM03" }
     ]
   },
   "A_JM12": {
     "zespol": "Zespół A",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-242",
-        "staleId": "A_JM06"
-      },
-      {
-        "pseudokod": "KOD-622",
-        "staleId": "A_JM04"
-      },
-      {
-        "pseudokod": "KOD-606",
-        "staleId": "A_JM11"
-      },
-      {
-        "pseudokod": "KOD-194",
-        "staleId": "A_JM05"
-      },
-      {
-        "pseudokod": "KOD-149",
-        "staleId": "A_JM10"
-      },
-      {
-        "pseudokod": "KOD-213",
-        "staleId": "A_JM08"
-      },
-      {
-        "pseudokod": "KOD-257",
-        "staleId": "A_JM07"
-      },
-      {
-        "pseudokod": "KOD-743",
-        "staleId": "A_JM02"
-      },
-      {
-        "pseudokod": "KOD-959",
-        "staleId": "A_JM13"
-      },
-      {
-        "pseudokod": "KOD-797",
-        "staleId": "A_JM01"
-      },
-      {
-        "pseudokod": "KOD-957",
-        "staleId": "A_JM03"
-      },
-      {
-        "pseudokod": "KOD-711",
-        "staleId": "A_JM14"
-      },
-      {
-        "pseudokod": "KOD-166",
-        "staleId": "A_JM09"
-      }
+      { "pseudokod": "KOD-242", "staleId": "A_JM06" },
+      { "pseudokod": "KOD-622", "staleId": "A_JM04" },
+      { "pseudokod": "KOD-606", "staleId": "A_JM11" },
+      { "pseudokod": "KOD-194", "staleId": "A_JM05" },
+      { "pseudokod": "KOD-149", "staleId": "A_JM10" },
+      { "pseudokod": "KOD-213", "staleId": "A_JM08" },
+      { "pseudokod": "KOD-257", "staleId": "A_JM07" },
+      { "pseudokod": "KOD-743", "staleId": "A_JM02" },
+      { "pseudokod": "KOD-959", "staleId": "A_JM13" },
+      { "pseudokod": "KOD-797", "staleId": "A_JM01" },
+      { "pseudokod": "KOD-957", "staleId": "A_JM03" },
+      { "pseudokod": "KOD-711", "staleId": "A_JM14" },
+      { "pseudokod": "KOD-166", "staleId": "A_JM09" }
     ]
   },
   "A_JM13": {
     "zespol": "Zespół A",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-495",
-        "staleId": "A_JM14"
-      },
-      {
-        "pseudokod": "KOD-491",
-        "staleId": "A_JM09"
-      },
-      {
-        "pseudokod": "KOD-844",
-        "staleId": "A_JM08"
-      },
-      {
-        "pseudokod": "KOD-580",
-        "staleId": "A_JM03"
-      },
-      {
-        "pseudokod": "KOD-642",
-        "staleId": "A_JM05"
-      },
-      {
-        "pseudokod": "KOD-358",
-        "staleId": "A_JM06"
-      },
-      {
-        "pseudokod": "KOD-667",
-        "staleId": "A_JM11"
-      },
-      {
-        "pseudokod": "KOD-112",
-        "staleId": "A_JM12"
-      },
-      {
-        "pseudokod": "KOD-846",
-        "staleId": "A_JM01"
-      },
-      {
-        "pseudokod": "KOD-218",
-        "staleId": "A_JM04"
-      },
-      {
-        "pseudokod": "KOD-799",
-        "staleId": "A_JM10"
-      },
-      {
-        "pseudokod": "KOD-938",
-        "staleId": "A_JM02"
-      },
-      {
-        "pseudokod": "KOD-907",
-        "staleId": "A_JM07"
-      }
+      { "pseudokod": "KOD-495", "staleId": "A_JM14" },
+      { "pseudokod": "KOD-491", "staleId": "A_JM09" },
+      { "pseudokod": "KOD-844", "staleId": "A_JM08" },
+      { "pseudokod": "KOD-580", "staleId": "A_JM03" },
+      { "pseudokod": "KOD-642", "staleId": "A_JM05" },
+      { "pseudokod": "KOD-358", "staleId": "A_JM06" },
+      { "pseudokod": "KOD-667", "staleId": "A_JM11" },
+      { "pseudokod": "KOD-112", "staleId": "A_JM12" },
+      { "pseudokod": "KOD-846", "staleId": "A_JM01" },
+      { "pseudokod": "KOD-218", "staleId": "A_JM04" },
+      { "pseudokod": "KOD-799", "staleId": "A_JM10" },
+      { "pseudokod": "KOD-938", "staleId": "A_JM02" },
+      { "pseudokod": "KOD-907", "staleId": "A_JM07" }
     ]
   },
   "A_JM14": {
     "zespol": "Zespół A",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-757",
-        "staleId": "A_JM09"
-      },
-      {
-        "pseudokod": "KOD-956",
-        "staleId": "A_JM01"
-      },
-      {
-        "pseudokod": "KOD-997",
-        "staleId": "A_JM08"
-      },
-      {
-        "pseudokod": "KOD-933",
-        "staleId": "A_JM10"
-      },
-      {
-        "pseudokod": "KOD-546",
-        "staleId": "A_JM03"
-      },
-      {
-        "pseudokod": "KOD-262",
-        "staleId": "A_JM13"
-      },
-      {
-        "pseudokod": "KOD-915",
-        "staleId": "A_JM02"
-      },
-      {
-        "pseudokod": "KOD-104",
-        "staleId": "A_JM07"
-      },
-      {
-        "pseudokod": "KOD-862",
-        "staleId": "A_JM05"
-      },
-      {
-        "pseudokod": "KOD-613",
-        "staleId": "A_JM04"
-      },
-      {
-        "pseudokod": "KOD-283",
-        "staleId": "A_JM06"
-      },
-      {
-        "pseudokod": "KOD-620",
-        "staleId": "A_JM12"
-      },
-      {
-        "pseudokod": "KOD-209",
-        "staleId": "A_JM11"
-      }
+      { "pseudokod": "KOD-757", "staleId": "A_JM09" },
+      { "pseudokod": "KOD-956", "staleId": "A_JM01" },
+      { "pseudokod": "KOD-997", "staleId": "A_JM08" },
+      { "pseudokod": "KOD-933", "staleId": "A_JM10" },
+      { "pseudokod": "KOD-546", "staleId": "A_JM03" },
+      { "pseudokod": "KOD-262", "staleId": "A_JM13" },
+      { "pseudokod": "KOD-915", "staleId": "A_JM02" },
+      { "pseudokod": "KOD-104", "staleId": "A_JM07" },
+      { "pseudokod": "KOD-862", "staleId": "A_JM05" },
+      { "pseudokod": "KOD-613", "staleId": "A_JM04" },
+      { "pseudokod": "KOD-283", "staleId": "A_JM06" },
+      { "pseudokod": "KOD-620", "staleId": "A_JM12" },
+      { "pseudokod": "KOD-209", "staleId": "A_JM11" }
     ]
   },
   "A_TR01": {
     "zespol": "Zespół A",
     "rola": "trener",
     "lista": [
-      {
-        "pseudokod": "KOD-741",
-        "staleId": "A_JM07"
-      },
-      {
-        "pseudokod": "KOD-406",
-        "staleId": "A_JM13"
-      },
-      {
-        "pseudokod": "KOD-998",
-        "staleId": "A_JM14"
-      },
-      {
-        "pseudokod": "KOD-818",
-        "staleId": "A_JM06"
-      },
-      {
-        "pseudokod": "KOD-902",
-        "staleId": "A_JM09"
-      },
-      {
-        "pseudokod": "KOD-973",
-        "staleId": "A_JM03"
-      },
-      {
-        "pseudokod": "KOD-849",
-        "staleId": "A_JM05"
-      },
-      {
-        "pseudokod": "KOD-483",
-        "staleId": "A_JM04"
-      },
-      {
-        "pseudokod": "KOD-266",
-        "staleId": "A_JM11"
-      },
-      {
-        "pseudokod": "KOD-653",
-        "staleId": "A_JM02"
-      },
-      {
-        "pseudokod": "KOD-644",
-        "staleId": "A_JM12"
-      },
-      {
-        "pseudokod": "KOD-101",
-        "staleId": "A_JM10"
-      },
-      {
-        "pseudokod": "KOD-714",
-        "staleId": "A_JM08"
-      },
-      {
-        "pseudokod": "KOD-432",
-        "staleId": "A_JM01"
-      }
+      { "pseudokod": "KOD-741", "staleId": "A_JM07" },
+      { "pseudokod": "KOD-406", "staleId": "A_JM13" },
+      { "pseudokod": "KOD-998", "staleId": "A_JM14" },
+      { "pseudokod": "KOD-818", "staleId": "A_JM06" },
+      { "pseudokod": "KOD-902", "staleId": "A_JM09" },
+      { "pseudokod": "KOD-973", "staleId": "A_JM03" },
+      { "pseudokod": "KOD-849", "staleId": "A_JM05" },
+      { "pseudokod": "KOD-483", "staleId": "A_JM04" },
+      { "pseudokod": "KOD-266", "staleId": "A_JM11" },
+      { "pseudokod": "KOD-653", "staleId": "A_JM02" },
+      { "pseudokod": "KOD-644", "staleId": "A_JM12" },
+      { "pseudokod": "KOD-101", "staleId": "A_JM10" },
+      { "pseudokod": "KOD-714", "staleId": "A_JM08" },
+      { "pseudokod": "KOD-432", "staleId": "A_JM01" }
     ]
   },
   "B_JM01": {
     "zespol": "Zespół B",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-479",
-        "staleId": "B_JM06"
-      },
-      {
-        "pseudokod": "KOD-392",
-        "staleId": "B_JM02"
-      },
-      {
-        "pseudokod": "KOD-262",
-        "staleId": "B_JM04"
-      },
-      {
-        "pseudokod": "KOD-549",
-        "staleId": "B_JM10"
-      },
-      {
-        "pseudokod": "KOD-954",
-        "staleId": "B_JM03"
-      },
-      {
-        "pseudokod": "KOD-657",
-        "staleId": "B_JM13"
-      },
-      {
-        "pseudokod": "KOD-821",
-        "staleId": "B_JM14"
-      },
-      {
-        "pseudokod": "KOD-410",
-        "staleId": "B_JM09"
-      },
-      {
-        "pseudokod": "KOD-727",
-        "staleId": "B_JM07"
-      },
-      {
-        "pseudokod": "KOD-927",
-        "staleId": "B_JM12"
-      },
-      {
-        "pseudokod": "KOD-770",
-        "staleId": "B_JM11"
-      },
-      {
-        "pseudokod": "KOD-642",
-        "staleId": "B_JM08"
-      },
-      {
-        "pseudokod": "KOD-109",
-        "staleId": "B_JM05"
-      }
+      { "pseudokod": "KOD-479", "staleId": "B_JM06" },
+      { "pseudokod": "KOD-392", "staleId": "B_JM02" },
+      { "pseudokod": "KOD-262", "staleId": "B_JM04" },
+      { "pseudokod": "KOD-549", "staleId": "B_JM10" },
+      { "pseudokod": "KOD-954", "staleId": "B_JM03" },
+      { "pseudokod": "KOD-657", "staleId": "B_JM13" },
+      { "pseudokod": "KOD-821", "staleId": "B_JM14" },
+      { "pseudokod": "KOD-410", "staleId": "B_JM09" },
+      { "pseudokod": "KOD-727", "staleId": "B_JM07" },
+      { "pseudokod": "KOD-927", "staleId": "B_JM12" },
+      { "pseudokod": "KOD-770", "staleId": "B_JM11" },
+      { "pseudokod": "KOD-642", "staleId": "B_JM08" },
+      { "pseudokod": "KOD-109", "staleId": "B_JM05" }
     ]
   },
   "B_JM02": {
     "zespol": "Zespół B",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-784",
-        "staleId": "B_JM05"
-      },
-      {
-        "pseudokod": "KOD-937",
-        "staleId": "B_JM14"
-      },
-      {
-        "pseudokod": "KOD-668",
-        "staleId": "B_JM01"
-      },
-      {
-        "pseudokod": "KOD-407",
-        "staleId": "B_JM11"
-      },
-      {
-        "pseudokod": "KOD-780",
-        "staleId": "B_JM04"
-      },
-      {
-        "pseudokod": "KOD-207",
-        "staleId": "B_JM09"
-      },
-      {
-        "pseudokod": "KOD-238",
-        "staleId": "B_JM08"
-      },
-      {
-        "pseudokod": "KOD-371",
-        "staleId": "B_JM13"
-      },
-      {
-        "pseudokod": "KOD-219",
-        "staleId": "B_JM07"
-      },
-      {
-        "pseudokod": "KOD-210",
-        "staleId": "B_JM10"
-      },
-      {
-        "pseudokod": "KOD-861",
-        "staleId": "B_JM06"
-      },
-      {
-        "pseudokod": "KOD-667",
-        "staleId": "B_JM03"
-      },
-      {
-        "pseudokod": "KOD-260",
-        "staleId": "B_JM12"
-      }
+      { "pseudokod": "KOD-784", "staleId": "B_JM05" },
+      { "pseudokod": "KOD-937", "staleId": "B_JM14" },
+      { "pseudokod": "KOD-668", "staleId": "B_JM01" },
+      { "pseudokod": "KOD-407", "staleId": "B_JM11" },
+      { "pseudokod": "KOD-780", "staleId": "B_JM04" },
+      { "pseudokod": "KOD-207", "staleId": "B_JM09" },
+      { "pseudokod": "KOD-238", "staleId": "B_JM08" },
+      { "pseudokod": "KOD-371", "staleId": "B_JM13" },
+      { "pseudokod": "KOD-219", "staleId": "B_JM07" },
+      { "pseudokod": "KOD-210", "staleId": "B_JM10" },
+      { "pseudokod": "KOD-861", "staleId": "B_JM06" },
+      { "pseudokod": "KOD-667", "staleId": "B_JM03" },
+      { "pseudokod": "KOD-260", "staleId": "B_JM12" }
     ]
   },
   "B_JM03": {
     "zespol": "Zespół B",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-379",
-        "staleId": "B_JM13"
-      },
-      {
-        "pseudokod": "KOD-389",
-        "staleId": "B_JM08"
-      },
-      {
-        "pseudokod": "KOD-720",
-        "staleId": "B_JM04"
-      },
-      {
-        "pseudokod": "KOD-316",
-        "staleId": "B_JM10"
-      },
-      {
-        "pseudokod": "KOD-835",
-        "staleId": "B_JM06"
-      },
-      {
-        "pseudokod": "KOD-452",
-        "staleId": "B_JM07"
-      },
-      {
-        "pseudokod": "KOD-309",
-        "staleId": "B_JM12"
-      },
-      {
-        "pseudokod": "KOD-804",
-        "staleId": "B_JM11"
-      },
-      {
-        "pseudokod": "KOD-750",
-        "staleId": "B_JM02"
-      },
-      {
-        "pseudokod": "KOD-978",
-        "staleId": "B_JM09"
-      },
-      {
-        "pseudokod": "KOD-618",
-        "staleId": "B_JM05"
-      },
-      {
-        "pseudokod": "KOD-601",
-        "staleId": "B_JM14"
-      },
-      {
-        "pseudokod": "KOD-358",
-        "staleId": "B_JM01"
-      }
+      { "pseudokod": "KOD-379", "staleId": "B_JM13" },
+      { "pseudokod": "KOD-389", "staleId": "B_JM08" },
+      { "pseudokod": "KOD-720", "staleId": "B_JM04" },
+      { "pseudokod": "KOD-316", "staleId": "B_JM10" },
+      { "pseudokod": "KOD-835", "staleId": "B_JM06" },
+      { "pseudokod": "KOD-452", "staleId": "B_JM07" },
+      { "pseudokod": "KOD-309", "staleId": "B_JM12" },
+      { "pseudokod": "KOD-804", "staleId": "B_JM11" },
+      { "pseudokod": "KOD-750", "staleId": "B_JM02" },
+      { "pseudokod": "KOD-978", "staleId": "B_JM09" },
+      { "pseudokod": "KOD-618", "staleId": "B_JM05" },
+      { "pseudokod": "KOD-601", "staleId": "B_JM14" },
+      { "pseudokod": "KOD-358", "staleId": "B_JM01" }
     ]
   },
   "B_JM04": {
     "zespol": "Zespół B",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-153",
-        "staleId": "B_JM10"
-      },
-      {
-        "pseudokod": "KOD-195",
-        "staleId": "B_JM07"
-      },
-      {
-        "pseudokod": "KOD-964",
-        "staleId": "B_JM11"
-      },
-      {
-        "pseudokod": "KOD-534",
-        "staleId": "B_JM06"
-      },
-      {
-        "pseudokod": "KOD-950",
-        "staleId": "B_JM14"
-      },
-      {
-        "pseudokod": "KOD-384",
-        "staleId": "B_JM12"
-      },
-      {
-        "pseudokod": "KOD-146",
-        "staleId": "B_JM13"
-      },
-      {
-        "pseudokod": "KOD-104",
-        "staleId": "B_JM02"
-      },
-      {
-        "pseudokod": "KOD-442",
-        "staleId": "B_JM01"
-      },
-      {
-        "pseudokod": "KOD-890",
-        "staleId": "B_JM03"
-      },
-      {
-        "pseudokod": "KOD-234",
-        "staleId": "B_JM05"
-      },
-      {
-        "pseudokod": "KOD-753",
-        "staleId": "B_JM08"
-      },
-      {
-        "pseudokod": "KOD-369",
-        "staleId": "B_JM09"
-      }
+      { "pseudokod": "KOD-153", "staleId": "B_JM10" },
+      { "pseudokod": "KOD-195", "staleId": "B_JM07" },
+      { "pseudokod": "KOD-964", "staleId": "B_JM11" },
+      { "pseudokod": "KOD-534", "staleId": "B_JM06" },
+      { "pseudokod": "KOD-950", "staleId": "B_JM14" },
+      { "pseudokod": "KOD-384", "staleId": "B_JM12" },
+      { "pseudokod": "KOD-146", "staleId": "B_JM13" },
+      { "pseudokod": "KOD-104", "staleId": "B_JM02" },
+      { "pseudokod": "KOD-442", "staleId": "B_JM01" },
+      { "pseudokod": "KOD-890", "staleId": "B_JM03" },
+      { "pseudokod": "KOD-234", "staleId": "B_JM05" },
+      { "pseudokod": "KOD-753", "staleId": "B_JM08" },
+      { "pseudokod": "KOD-369", "staleId": "B_JM09" }
     ]
   },
   "B_JM05": {
     "zespol": "Zespół B",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-266",
-        "staleId": "B_JM14"
-      },
-      {
-        "pseudokod": "KOD-860",
-        "staleId": "B_JM07"
-      },
-      {
-        "pseudokod": "KOD-553",
-        "staleId": "B_JM11"
-      },
-      {
-        "pseudokod": "KOD-665",
-        "staleId": "B_JM13"
-      },
-      {
-        "pseudokod": "KOD-823",
-        "staleId": "B_JM06"
-      },
-      {
-        "pseudokod": "KOD-538",
-        "staleId": "B_JM12"
-      },
-      {
-        "pseudokod": "KOD-675",
-        "staleId": "B_JM08"
-      },
-      {
-        "pseudokod": "KOD-110",
-        "staleId": "B_JM03"
-      },
-      {
-        "pseudokod": "KOD-215",
-        "staleId": "B_JM09"
-      },
-      {
-        "pseudokod": "KOD-178",
-        "staleId": "B_JM02"
-      },
-      {
-        "pseudokod": "KOD-808",
-        "staleId": "B_JM04"
-      },
-      {
-        "pseudokod": "KOD-253",
-        "staleId": "B_JM10"
-      },
-      {
-        "pseudokod": "KOD-659",
-        "staleId": "B_JM01"
-      }
+      { "pseudokod": "KOD-266", "staleId": "B_JM14" },
+      { "pseudokod": "KOD-860", "staleId": "B_JM07" },
+      { "pseudokod": "KOD-553", "staleId": "B_JM11" },
+      { "pseudokod": "KOD-665", "staleId": "B_JM13" },
+      { "pseudokod": "KOD-823", "staleId": "B_JM06" },
+      { "pseudokod": "KOD-538", "staleId": "B_JM12" },
+      { "pseudokod": "KOD-675", "staleId": "B_JM08" },
+      { "pseudokod": "KOD-110", "staleId": "B_JM03" },
+      { "pseudokod": "KOD-215", "staleId": "B_JM09" },
+      { "pseudokod": "KOD-178", "staleId": "B_JM02" },
+      { "pseudokod": "KOD-808", "staleId": "B_JM04" },
+      { "pseudokod": "KOD-253", "staleId": "B_JM10" },
+      { "pseudokod": "KOD-659", "staleId": "B_JM01" }
     ]
   },
   "B_JM06": {
     "zespol": "Zespół B",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-137",
-        "staleId": "B_JM07"
-      },
-      {
-        "pseudokod": "KOD-998",
-        "staleId": "B_JM01"
-      },
-      {
-        "pseudokod": "KOD-697",
-        "staleId": "B_JM14"
-      },
-      {
-        "pseudokod": "KOD-666",
-        "staleId": "B_JM04"
-      },
-      {
-        "pseudokod": "KOD-252",
-        "staleId": "B_JM12"
-      },
-      {
-        "pseudokod": "KOD-541",
-        "staleId": "B_JM02"
-      },
-      {
-        "pseudokod": "KOD-231",
-        "staleId": "B_JM08"
-      },
-      {
-        "pseudokod": "KOD-143",
-        "staleId": "B_JM05"
-      },
-      {
-        "pseudokod": "KOD-416",
-        "staleId": "B_JM11"
-      },
-      {
-        "pseudokod": "KOD-474",
-        "staleId": "B_JM13"
-      },
-      {
-        "pseudokod": "KOD-916",
-        "staleId": "B_JM03"
-      },
-      {
-        "pseudokod": "KOD-141",
-        "staleId": "B_JM09"
-      },
-      {
-        "pseudokod": "KOD-467",
-        "staleId": "B_JM10"
-      }
+      { "pseudokod": "KOD-137", "staleId": "B_JM07" },
+      { "pseudokod": "KOD-998", "staleId": "B_JM01" },
+      { "pseudokod": "KOD-697", "staleId": "B_JM14" },
+      { "pseudokod": "KOD-666", "staleId": "B_JM04" },
+      { "pseudokod": "KOD-252", "staleId": "B_JM12" },
+      { "pseudokod": "KOD-541", "staleId": "B_JM02" },
+      { "pseudokod": "KOD-231", "staleId": "B_JM08" },
+      { "pseudokod": "KOD-143", "staleId": "B_JM05" },
+      { "pseudokod": "KOD-416", "staleId": "B_JM11" },
+      { "pseudokod": "KOD-474", "staleId": "B_JM13" },
+      { "pseudokod": "KOD-916", "staleId": "B_JM03" },
+      { "pseudokod": "KOD-141", "staleId": "B_JM09" },
+      { "pseudokod": "KOD-467", "staleId": "B_JM10" }
     ]
   },
   "B_JM07": {
     "zespol": "Zespół B",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-969",
-        "staleId": "B_JM12"
-      },
-      {
-        "pseudokod": "KOD-799",
-        "staleId": "B_JM06"
-      },
-      {
-        "pseudokod": "KOD-356",
-        "staleId": "B_JM10"
-      },
-      {
-        "pseudokod": "KOD-783",
-        "staleId": "B_JM01"
-      },
-      {
-        "pseudokod": "KOD-206",
-        "staleId": "B_JM13"
-      },
-      {
-        "pseudokod": "KOD-463",
-        "staleId": "B_JM08"
-      },
-      {
-        "pseudokod": "KOD-899",
-        "staleId": "B_JM03"
-      },
-      {
-        "pseudokod": "KOD-674",
-        "staleId": "B_JM11"
-      },
-      {
-        "pseudokod": "KOD-517",
-        "staleId": "B_JM04"
-      },
-      {
-        "pseudokod": "KOD-736",
-        "staleId": "B_JM14"
-      },
-      {
-        "pseudokod": "KOD-868",
-        "staleId": "B_JM02"
-      },
-      {
-        "pseudokod": "KOD-259",
-        "staleId": "B_JM09"
-      },
-      {
-        "pseudokod": "KOD-343",
-        "staleId": "B_JM05"
-      }
+      { "pseudokod": "KOD-969", "staleId": "B_JM12" },
+      { "pseudokod": "KOD-799", "staleId": "B_JM06" },
+      { "pseudokod": "KOD-356", "staleId": "B_JM10" },
+      { "pseudokod": "KOD-783", "staleId": "B_JM01" },
+      { "pseudokod": "KOD-206", "staleId": "B_JM13" },
+      { "pseudokod": "KOD-463", "staleId": "B_JM08" },
+      { "pseudokod": "KOD-899", "staleId": "B_JM03" },
+      { "pseudokod": "KOD-674", "staleId": "B_JM11" },
+      { "pseudokod": "KOD-517", "staleId": "B_JM04" },
+      { "pseudokod": "KOD-736", "staleId": "B_JM14" },
+      { "pseudokod": "KOD-868", "staleId": "B_JM02" },
+      { "pseudokod": "KOD-259", "staleId": "B_JM09" },
+      { "pseudokod": "KOD-343", "staleId": "B_JM05" }
     ]
   },
   "B_JM08": {
     "zespol": "Zespół B",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-267",
-        "staleId": "B_JM06"
-      },
-      {
-        "pseudokod": "KOD-282",
-        "staleId": "B_JM01"
-      },
-      {
-        "pseudokod": "KOD-523",
-        "staleId": "B_JM10"
-      },
-      {
-        "pseudokod": "KOD-126",
-        "staleId": "B_JM09"
-      },
-      {
-        "pseudokod": "KOD-284",
-        "staleId": "B_JM05"
-      },
-      {
-        "pseudokod": "KOD-855",
-        "staleId": "B_JM12"
-      },
-      {
-        "pseudokod": "KOD-441",
-        "staleId": "B_JM11"
-      },
-      {
-        "pseudokod": "KOD-522",
-        "staleId": "B_JM13"
-      },
-      {
-        "pseudokod": "KOD-786",
-        "staleId": "B_JM02"
-      },
-      {
-        "pseudokod": "KOD-853",
-        "staleId": "B_JM14"
-      },
-      {
-        "pseudokod": "KOD-355",
-        "staleId": "B_JM03"
-      },
-      {
-        "pseudokod": "KOD-374",
-        "staleId": "B_JM07"
-      },
-      {
-        "pseudokod": "KOD-264",
-        "staleId": "B_JM04"
-      }
+      { "pseudokod": "KOD-267", "staleId": "B_JM06" },
+      { "pseudokod": "KOD-282", "staleId": "B_JM01" },
+      { "pseudokod": "KOD-523", "staleId": "B_JM10" },
+      { "pseudokod": "KOD-126", "staleId": "B_JM09" },
+      { "pseudokod": "KOD-284", "staleId": "B_JM05" },
+      { "pseudokod": "KOD-855", "staleId": "B_JM12" },
+      { "pseudokod": "KOD-441", "staleId": "B_JM11" },
+      { "pseudokod": "KOD-522", "staleId": "B_JM13" },
+      { "pseudokod": "KOD-786", "staleId": "B_JM02" },
+      { "pseudokod": "KOD-853", "staleId": "B_JM14" },
+      { "pseudokod": "KOD-355", "staleId": "B_JM03" },
+      { "pseudokod": "KOD-374", "staleId": "B_JM07" },
+      { "pseudokod": "KOD-264", "staleId": "B_JM04" }
     ]
   },
   "B_JM09": {
     "zespol": "Zespół B",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-819",
-        "staleId": "B_JM06"
-      },
-      {
-        "pseudokod": "KOD-211",
-        "staleId": "B_JM08"
-      },
-      {
-        "pseudokod": "KOD-492",
-        "staleId": "B_JM02"
-      },
-      {
-        "pseudokod": "KOD-140",
-        "staleId": "B_JM05"
-      },
-      {
-        "pseudokod": "KOD-582",
-        "staleId": "B_JM03"
-      },
-      {
-        "pseudokod": "KOD-328",
-        "staleId": "B_JM10"
-      },
-      {
-        "pseudokod": "KOD-305",
-        "staleId": "B_JM14"
-      },
-      {
-        "pseudokod": "KOD-572",
-        "staleId": "B_JM12"
-      },
-      {
-        "pseudokod": "KOD-459",
-        "staleId": "B_JM01"
-      },
-      {
-        "pseudokod": "KOD-413",
-        "staleId": "B_JM11"
-      },
-      {
-        "pseudokod": "KOD-334",
-        "staleId": "B_JM13"
-      },
-      {
-        "pseudokod": "KOD-329",
-        "staleId": "B_JM07"
-      },
-      {
-        "pseudokod": "KOD-125",
-        "staleId": "B_JM04"
-      }
+      { "pseudokod": "KOD-819", "staleId": "B_JM06" },
+      { "pseudokod": "KOD-211", "staleId": "B_JM08" },
+      { "pseudokod": "KOD-492", "staleId": "B_JM02" },
+      { "pseudokod": "KOD-140", "staleId": "B_JM05" },
+      { "pseudokod": "KOD-582", "staleId": "B_JM03" },
+      { "pseudokod": "KOD-328", "staleId": "B_JM10" },
+      { "pseudokod": "KOD-305", "staleId": "B_JM14" },
+      { "pseudokod": "KOD-572", "staleId": "B_JM12" },
+      { "pseudokod": "KOD-459", "staleId": "B_JM01" },
+      { "pseudokod": "KOD-413", "staleId": "B_JM11" },
+      { "pseudokod": "KOD-334", "staleId": "B_JM13" },
+      { "pseudokod": "KOD-329", "staleId": "B_JM07" },
+      { "pseudokod": "KOD-125", "staleId": "B_JM04" }
     ]
   },
   "B_JM10": {
     "zespol": "Zespół B",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-776",
-        "staleId": "B_JM06"
-      },
-      {
-        "pseudokod": "KOD-298",
-        "staleId": "B_JM07"
-      },
-      {
-        "pseudokod": "KOD-509",
-        "staleId": "B_JM01"
-      },
-      {
-        "pseudokod": "KOD-437",
-        "staleId": "B_JM05"
-      },
-      {
-        "pseudokod": "KOD-386",
-        "staleId": "B_JM12"
-      },
-      {
-        "pseudokod": "KOD-172",
-        "staleId": "B_JM03"
-      },
-      {
-        "pseudokod": "KOD-877",
-        "staleId": "B_JM02"
-      },
-      {
-        "pseudokod": "KOD-460",
-        "staleId": "B_JM08"
-      },
-      {
-        "pseudokod": "KOD-757",
-        "staleId": "B_JM04"
-      },
-      {
-        "pseudokod": "KOD-622",
-        "staleId": "B_JM11"
-      },
-      {
-        "pseudokod": "KOD-510",
-        "staleId": "B_JM14"
-      },
-      {
-        "pseudokod": "KOD-796",
-        "staleId": "B_JM13"
-      },
-      {
-        "pseudokod": "KOD-650",
-        "staleId": "B_JM09"
-      }
+      { "pseudokod": "KOD-776", "staleId": "B_JM06" },
+      { "pseudokod": "KOD-298", "staleId": "B_JM07" },
+      { "pseudokod": "KOD-509", "staleId": "B_JM01" },
+      { "pseudokod": "KOD-437", "staleId": "B_JM05" },
+      { "pseudokod": "KOD-386", "staleId": "B_JM12" },
+      { "pseudokod": "KOD-172", "staleId": "B_JM03" },
+      { "pseudokod": "KOD-877", "staleId": "B_JM02" },
+      { "pseudokod": "KOD-460", "staleId": "B_JM08" },
+      { "pseudokod": "KOD-757", "staleId": "B_JM04" },
+      { "pseudokod": "KOD-622", "staleId": "B_JM11" },
+      { "pseudokod": "KOD-510", "staleId": "B_JM14" },
+      { "pseudokod": "KOD-796", "staleId": "B_JM13" },
+      { "pseudokod": "KOD-650", "staleId": "B_JM09" }
     ]
   },
   "B_JM11": {
     "zespol": "Zespół B",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-440",
-        "staleId": "B_JM09"
-      },
-      {
-        "pseudokod": "KOD-129",
-        "staleId": "B_JM04"
-      },
-      {
-        "pseudokod": "KOD-977",
-        "staleId": "B_JM10"
-      },
-      {
-        "pseudokod": "KOD-368",
-        "staleId": "B_JM01"
-      },
-      {
-        "pseudokod": "KOD-283",
-        "staleId": "B_JM14"
-      },
-      {
-        "pseudokod": "KOD-695",
-        "staleId": "B_JM05"
-      },
-      {
-        "pseudokod": "KOD-372",
-        "staleId": "B_JM02"
-      },
-      {
-        "pseudokod": "KOD-891",
-        "staleId": "B_JM08"
-      },
-      {
-        "pseudokod": "KOD-212",
-        "staleId": "B_JM03"
-      },
-      {
-        "pseudokod": "KOD-711",
-        "staleId": "B_JM07"
-      },
-      {
-        "pseudokod": "KOD-545",
-        "staleId": "B_JM13"
-      },
-      {
-        "pseudokod": "KOD-454",
-        "staleId": "B_JM12"
-      },
-      {
-        "pseudokod": "KOD-847",
-        "staleId": "B_JM06"
-      }
+      { "pseudokod": "KOD-440", "staleId": "B_JM09" },
+      { "pseudokod": "KOD-129", "staleId": "B_JM04" },
+      { "pseudokod": "KOD-977", "staleId": "B_JM10" },
+      { "pseudokod": "KOD-368", "staleId": "B_JM01" },
+      { "pseudokod": "KOD-283", "staleId": "B_JM14" },
+      { "pseudokod": "KOD-695", "staleId": "B_JM05" },
+      { "pseudokod": "KOD-372", "staleId": "B_JM02" },
+      { "pseudokod": "KOD-891", "staleId": "B_JM08" },
+      { "pseudokod": "KOD-212", "staleId": "B_JM03" },
+      { "pseudokod": "KOD-711", "staleId": "B_JM07" },
+      { "pseudokod": "KOD-545", "staleId": "B_JM13" },
+      { "pseudokod": "KOD-454", "staleId": "B_JM12" },
+      { "pseudokod": "KOD-847", "staleId": "B_JM06" }
     ]
   },
   "B_JM12": {
     "zespol": "Zespół B",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-422",
-        "staleId": "B_JM05"
-      },
-      {
-        "pseudokod": "KOD-547",
-        "staleId": "B_JM14"
-      },
-      {
-        "pseudokod": "KOD-721",
-        "staleId": "B_JM13"
-      },
-      {
-        "pseudokod": "KOD-624",
-        "staleId": "B_JM06"
-      },
-      {
-        "pseudokod": "KOD-866",
-        "staleId": "B_JM04"
-      },
-      {
-        "pseudokod": "KOD-495",
-        "staleId": "B_JM09"
-      },
-      {
-        "pseudokod": "KOD-691",
-        "staleId": "B_JM01"
-      },
-      {
-        "pseudokod": "KOD-295",
-        "staleId": "B_JM10"
-      },
-      {
-        "pseudokod": "KOD-361",
-        "staleId": "B_JM08"
-      },
-      {
-        "pseudokod": "KOD-953",
-        "staleId": "B_JM03"
-      },
-      {
-        "pseudokod": "KOD-826",
-        "staleId": "B_JM07"
-      },
-      {
-        "pseudokod": "KOD-854",
-        "staleId": "B_JM11"
-      },
-      {
-        "pseudokod": "KOD-102",
-        "staleId": "B_JM02"
-      }
+      { "pseudokod": "KOD-422", "staleId": "B_JM05" },
+      { "pseudokod": "KOD-547", "staleId": "B_JM14" },
+      { "pseudokod": "KOD-721", "staleId": "B_JM13" },
+      { "pseudokod": "KOD-624", "staleId": "B_JM06" },
+      { "pseudokod": "KOD-866", "staleId": "B_JM04" },
+      { "pseudokod": "KOD-495", "staleId": "B_JM09" },
+      { "pseudokod": "KOD-691", "staleId": "B_JM01" },
+      { "pseudokod": "KOD-295", "staleId": "B_JM10" },
+      { "pseudokod": "KOD-361", "staleId": "B_JM08" },
+      { "pseudokod": "KOD-953", "staleId": "B_JM03" },
+      { "pseudokod": "KOD-826", "staleId": "B_JM07" },
+      { "pseudokod": "KOD-854", "staleId": "B_JM11" },
+      { "pseudokod": "KOD-102", "staleId": "B_JM02" }
     ]
   },
   "B_JM13": {
     "zespol": "Zespół B",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-633",
-        "staleId": "B_JM02"
-      },
-      {
-        "pseudokod": "KOD-652",
-        "staleId": "B_JM08"
-      },
-      {
-        "pseudokod": "KOD-965",
-        "staleId": "B_JM03"
-      },
-      {
-        "pseudokod": "KOD-837",
-        "staleId": "B_JM12"
-      },
-      {
-        "pseudokod": "KOD-787",
-        "staleId": "B_JM04"
-      },
-      {
-        "pseudokod": "KOD-302",
-        "staleId": "B_JM01"
-      },
-      {
-        "pseudokod": "KOD-473",
-        "staleId": "B_JM09"
-      },
-      {
-        "pseudokod": "KOD-542",
-        "staleId": "B_JM10"
-      },
-      {
-        "pseudokod": "KOD-876",
-        "staleId": "B_JM11"
-      },
-      {
-        "pseudokod": "KOD-781",
-        "staleId": "B_JM05"
-      },
-      {
-        "pseudokod": "KOD-439",
-        "staleId": "B_JM07"
-      },
-      {
-        "pseudokod": "KOD-739",
-        "staleId": "B_JM14"
-      },
-      {
-        "pseudokod": "KOD-902",
-        "staleId": "B_JM06"
-      }
+      { "pseudokod": "KOD-633", "staleId": "B_JM02" },
+      { "pseudokod": "KOD-652", "staleId": "B_JM08" },
+      { "pseudokod": "KOD-965", "staleId": "B_JM03" },
+      { "pseudokod": "KOD-837", "staleId": "B_JM12" },
+      { "pseudokod": "KOD-787", "staleId": "B_JM04" },
+      { "pseudokod": "KOD-302", "staleId": "B_JM01" },
+      { "pseudokod": "KOD-473", "staleId": "B_JM09" },
+      { "pseudokod": "KOD-542", "staleId": "B_JM10" },
+      { "pseudokod": "KOD-876", "staleId": "B_JM11" },
+      { "pseudokod": "KOD-781", "staleId": "B_JM05" },
+      { "pseudokod": "KOD-439", "staleId": "B_JM07" },
+      { "pseudokod": "KOD-739", "staleId": "B_JM14" },
+      { "pseudokod": "KOD-902", "staleId": "B_JM06" }
     ]
   },
   "B_JM14": {
     "zespol": "Zespół B",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-981",
-        "staleId": "B_JM12"
-      },
-      {
-        "pseudokod": "KOD-228",
-        "staleId": "B_JM03"
-      },
-      {
-        "pseudokod": "KOD-408",
-        "staleId": "B_JM05"
-      },
-      {
-        "pseudokod": "KOD-620",
-        "staleId": "B_JM13"
-      },
-      {
-        "pseudokod": "KOD-417",
-        "staleId": "B_JM08"
-      },
-      {
-        "pseudokod": "KOD-917",
-        "staleId": "B_JM07"
-      },
-      {
-        "pseudokod": "KOD-519",
-        "staleId": "B_JM10"
-      },
-      {
-        "pseudokod": "KOD-435",
-        "staleId": "B_JM09"
-      },
-      {
-        "pseudokod": "KOD-513",
-        "staleId": "B_JM01"
-      },
-      {
-        "pseudokod": "KOD-814",
-        "staleId": "B_JM02"
-      },
-      {
-        "pseudokod": "KOD-403",
-        "staleId": "B_JM11"
-      },
-      {
-        "pseudokod": "KOD-983",
-        "staleId": "B_JM04"
-      },
-      {
-        "pseudokod": "KOD-989",
-        "staleId": "B_JM06"
-      }
+      { "pseudokod": "KOD-981", "staleId": "B_JM12" },
+      { "pseudokod": "KOD-228", "staleId": "B_JM03" },
+      { "pseudokod": "KOD-408", "staleId": "B_JM05" },
+      { "pseudokod": "KOD-620", "staleId": "B_JM13" },
+      { "pseudokod": "KOD-417", "staleId": "B_JM08" },
+      { "pseudokod": "KOD-917", "staleId": "B_JM07" },
+      { "pseudokod": "KOD-519", "staleId": "B_JM10" },
+      { "pseudokod": "KOD-435", "staleId": "B_JM09" },
+      { "pseudokod": "KOD-513", "staleId": "B_JM01" },
+      { "pseudokod": "KOD-814", "staleId": "B_JM02" },
+      { "pseudokod": "KOD-403", "staleId": "B_JM11" },
+      { "pseudokod": "KOD-983", "staleId": "B_JM04" },
+      { "pseudokod": "KOD-989", "staleId": "B_JM06" }
     ]
   },
   "B_TR01": {
     "zespol": "Zespół B",
     "rola": "trener",
     "lista": [
-      {
-        "pseudokod": "KOD-297",
-        "staleId": "B_JM06"
-      },
-      {
-        "pseudokod": "KOD-531",
-        "staleId": "B_JM09"
-      },
-      {
-        "pseudokod": "KOD-833",
-        "staleId": "B_JM13"
-      },
-      {
-        "pseudokod": "KOD-489",
-        "staleId": "B_JM01"
-      },
-      {
-        "pseudokod": "KOD-794",
-        "staleId": "B_JM12"
-      },
-      {
-        "pseudokod": "KOD-279",
-        "staleId": "B_JM03"
-      },
-      {
-        "pseudokod": "KOD-731",
-        "staleId": "B_JM07"
-      },
-      {
-        "pseudokod": "KOD-683",
-        "staleId": "B_JM05"
-      },
-      {
-        "pseudokod": "KOD-409",
-        "staleId": "B_JM14"
-      },
-      {
-        "pseudokod": "KOD-516",
-        "staleId": "B_JM04"
-      },
-      {
-        "pseudokod": "KOD-662",
-        "staleId": "B_JM10"
-      },
-      {
-        "pseudokod": "KOD-101",
-        "staleId": "B_JM02"
-      },
-      {
-        "pseudokod": "KOD-412",
-        "staleId": "B_JM11"
-      },
-      {
-        "pseudokod": "KOD-394",
-        "staleId": "B_JM08"
-      }
+      { "pseudokod": "KOD-297", "staleId": "B_JM06" },
+      { "pseudokod": "KOD-531", "staleId": "B_JM09" },
+      { "pseudokod": "KOD-833", "staleId": "B_JM13" },
+      { "pseudokod": "KOD-489", "staleId": "B_JM01" },
+      { "pseudokod": "KOD-794", "staleId": "B_JM12" },
+      { "pseudokod": "KOD-279", "staleId": "B_JM03" },
+      { "pseudokod": "KOD-731", "staleId": "B_JM07" },
+      { "pseudokod": "KOD-683", "staleId": "B_JM05" },
+      { "pseudokod": "KOD-409", "staleId": "B_JM14" },
+      { "pseudokod": "KOD-516", "staleId": "B_JM04" },
+      { "pseudokod": "KOD-662", "staleId": "B_JM10" },
+      { "pseudokod": "KOD-101", "staleId": "B_JM02" },
+      { "pseudokod": "KOD-412", "staleId": "B_JM11" },
+      { "pseudokod": "KOD-394", "staleId": "B_JM08" }
     ]
   },
   "C_JM01": {
     "zespol": "Zespół C",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-211",
-        "staleId": "C_JM02"
-      },
-      {
-        "pseudokod": "KOD-693",
-        "staleId": "C_JM07"
-      },
-      {
-        "pseudokod": "KOD-127",
-        "staleId": "C_JM04"
-      },
-      {
-        "pseudokod": "KOD-420",
-        "staleId": "C_JM09"
-      },
-      {
-        "pseudokod": "KOD-690",
-        "staleId": "C_JM08"
-      },
-      {
-        "pseudokod": "KOD-794",
-        "staleId": "C_JM10"
-      },
-      {
-        "pseudokod": "KOD-485",
-        "staleId": "C_JM12"
-      },
-      {
-        "pseudokod": "KOD-507",
-        "staleId": "C_JM13"
-      },
-      {
-        "pseudokod": "KOD-833",
-        "staleId": "C_JM05"
-      },
-      {
-        "pseudokod": "KOD-304",
-        "staleId": "C_JM03"
-      },
-      {
-        "pseudokod": "KOD-178",
-        "staleId": "C_JM06"
-      },
-      {
-        "pseudokod": "KOD-707",
-        "staleId": "C_JM11"
-      },
-      {
-        "pseudokod": "KOD-808",
-        "staleId": "C_JM14"
-      }
+      { "pseudokod": "KOD-211", "staleId": "C_JM02" },
+      { "pseudokod": "KOD-693", "staleId": "C_JM07" },
+      { "pseudokod": "KOD-127", "staleId": "C_JM04" },
+      { "pseudokod": "KOD-420", "staleId": "C_JM09" },
+      { "pseudokod": "KOD-690", "staleId": "C_JM08" },
+      { "pseudokod": "KOD-794", "staleId": "C_JM10" },
+      { "pseudokod": "KOD-485", "staleId": "C_JM12" },
+      { "pseudokod": "KOD-507", "staleId": "C_JM13" },
+      { "pseudokod": "KOD-833", "staleId": "C_JM05" },
+      { "pseudokod": "KOD-304", "staleId": "C_JM03" },
+      { "pseudokod": "KOD-178", "staleId": "C_JM06" },
+      { "pseudokod": "KOD-707", "staleId": "C_JM11" },
+      { "pseudokod": "KOD-808", "staleId": "C_JM14" }
     ]
   },
   "C_JM02": {
     "zespol": "Zespół C",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-951",
-        "staleId": "C_JM03"
-      },
-      {
-        "pseudokod": "KOD-743",
-        "staleId": "C_JM04"
-      },
-      {
-        "pseudokod": "KOD-349",
-        "staleId": "C_JM05"
-      },
-      {
-        "pseudokod": "KOD-205",
-        "staleId": "C_JM07"
-      },
-      {
-        "pseudokod": "KOD-814",
-        "staleId": "C_JM01"
-      },
-      {
-        "pseudokod": "KOD-892",
-        "staleId": "C_JM10"
-      },
-      {
-        "pseudokod": "KOD-409",
-        "staleId": "C_JM13"
-      },
-      {
-        "pseudokod": "KOD-971",
-        "staleId": "C_JM12"
-      },
-      {
-        "pseudokod": "KOD-801",
-        "staleId": "C_JM08"
-      },
-      {
-        "pseudokod": "KOD-715",
-        "staleId": "C_JM11"
-      },
-      {
-        "pseudokod": "KOD-925",
-        "staleId": "C_JM06"
-      },
-      {
-        "pseudokod": "KOD-224",
-        "staleId": "C_JM14"
-      },
-      {
-        "pseudokod": "KOD-916",
-        "staleId": "C_JM09"
-      }
+      { "pseudokod": "KOD-951", "staleId": "C_JM03" },
+      { "pseudokod": "KOD-743", "staleId": "C_JM04" },
+      { "pseudokod": "KOD-349", "staleId": "C_JM05" },
+      { "pseudokod": "KOD-205", "staleId": "C_JM07" },
+      { "pseudokod": "KOD-814", "staleId": "C_JM01" },
+      { "pseudokod": "KOD-892", "staleId": "C_JM10" },
+      { "pseudokod": "KOD-409", "staleId": "C_JM13" },
+      { "pseudokod": "KOD-971", "staleId": "C_JM12" },
+      { "pseudokod": "KOD-801", "staleId": "C_JM08" },
+      { "pseudokod": "KOD-715", "staleId": "C_JM11" },
+      { "pseudokod": "KOD-925", "staleId": "C_JM06" },
+      { "pseudokod": "KOD-224", "staleId": "C_JM14" },
+      { "pseudokod": "KOD-916", "staleId": "C_JM09" }
     ]
   },
   "C_JM03": {
     "zespol": "Zespół C",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-680",
-        "staleId": "C_JM10"
-      },
-      {
-        "pseudokod": "KOD-902",
-        "staleId": "C_JM09"
-      },
-      {
-        "pseudokod": "KOD-143",
-        "staleId": "C_JM08"
-      },
-      {
-        "pseudokod": "KOD-456",
-        "staleId": "C_JM07"
-      },
-      {
-        "pseudokod": "KOD-646",
-        "staleId": "C_JM13"
-      },
-      {
-        "pseudokod": "KOD-539",
-        "staleId": "C_JM01"
-      },
-      {
-        "pseudokod": "KOD-778",
-        "staleId": "C_JM14"
-      },
-      {
-        "pseudokod": "KOD-480",
-        "staleId": "C_JM11"
-      },
-      {
-        "pseudokod": "KOD-171",
-        "staleId": "C_JM05"
-      },
-      {
-        "pseudokod": "KOD-619",
-        "staleId": "C_JM04"
-      },
-      {
-        "pseudokod": "KOD-764",
-        "staleId": "C_JM02"
-      },
-      {
-        "pseudokod": "KOD-450",
-        "staleId": "C_JM12"
-      },
-      {
-        "pseudokod": "KOD-113",
-        "staleId": "C_JM06"
-      }
+      { "pseudokod": "KOD-680", "staleId": "C_JM10" },
+      { "pseudokod": "KOD-902", "staleId": "C_JM09" },
+      { "pseudokod": "KOD-143", "staleId": "C_JM08" },
+      { "pseudokod": "KOD-456", "staleId": "C_JM07" },
+      { "pseudokod": "KOD-646", "staleId": "C_JM13" },
+      { "pseudokod": "KOD-539", "staleId": "C_JM01" },
+      { "pseudokod": "KOD-778", "staleId": "C_JM14" },
+      { "pseudokod": "KOD-480", "staleId": "C_JM11" },
+      { "pseudokod": "KOD-171", "staleId": "C_JM05" },
+      { "pseudokod": "KOD-619", "staleId": "C_JM04" },
+      { "pseudokod": "KOD-764", "staleId": "C_JM02" },
+      { "pseudokod": "KOD-450", "staleId": "C_JM12" },
+      { "pseudokod": "KOD-113", "staleId": "C_JM06" }
     ]
   },
   "C_JM04": {
     "zespol": "Zespół C",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-531",
-        "staleId": "C_JM02"
-      },
-      {
-        "pseudokod": "KOD-943",
-        "staleId": "C_JM14"
-      },
-      {
-        "pseudokod": "KOD-602",
-        "staleId": "C_JM10"
-      },
-      {
-        "pseudokod": "KOD-209",
-        "staleId": "C_JM12"
-      },
-      {
-        "pseudokod": "KOD-544",
-        "staleId": "C_JM08"
-      },
-      {
-        "pseudokod": "KOD-471",
-        "staleId": "C_JM07"
-      },
-      {
-        "pseudokod": "KOD-751",
-        "staleId": "C_JM03"
-      },
-      {
-        "pseudokod": "KOD-949",
-        "staleId": "C_JM05"
-      },
-      {
-        "pseudokod": "KOD-571",
-        "staleId": "C_JM01"
-      },
-      {
-        "pseudokod": "KOD-825",
-        "staleId": "C_JM06"
-      },
-      {
-        "pseudokod": "KOD-257",
-        "staleId": "C_JM09"
-      },
-      {
-        "pseudokod": "KOD-546",
-        "staleId": "C_JM11"
-      },
-      {
-        "pseudokod": "KOD-281",
-        "staleId": "C_JM13"
-      }
+      { "pseudokod": "KOD-531", "staleId": "C_JM02" },
+      { "pseudokod": "KOD-943", "staleId": "C_JM14" },
+      { "pseudokod": "KOD-602", "staleId": "C_JM10" },
+      { "pseudokod": "KOD-209", "staleId": "C_JM12" },
+      { "pseudokod": "KOD-544", "staleId": "C_JM08" },
+      { "pseudokod": "KOD-471", "staleId": "C_JM07" },
+      { "pseudokod": "KOD-751", "staleId": "C_JM03" },
+      { "pseudokod": "KOD-949", "staleId": "C_JM05" },
+      { "pseudokod": "KOD-571", "staleId": "C_JM01" },
+      { "pseudokod": "KOD-825", "staleId": "C_JM06" },
+      { "pseudokod": "KOD-257", "staleId": "C_JM09" },
+      { "pseudokod": "KOD-546", "staleId": "C_JM11" },
+      { "pseudokod": "KOD-281", "staleId": "C_JM13" }
     ]
   },
   "C_JM05": {
     "zespol": "Zespół C",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-852",
-        "staleId": "C_JM10"
-      },
-      {
-        "pseudokod": "KOD-635",
-        "staleId": "C_JM13"
-      },
-      {
-        "pseudokod": "KOD-767",
-        "staleId": "C_JM01"
-      },
-      {
-        "pseudokod": "KOD-377",
-        "staleId": "C_JM03"
-      },
-      {
-        "pseudokod": "KOD-731",
-        "staleId": "C_JM07"
-      },
-      {
-        "pseudokod": "KOD-928",
-        "staleId": "C_JM09"
-      },
-      {
-        "pseudokod": "KOD-652",
-        "staleId": "C_JM14"
-      },
-      {
-        "pseudokod": "KOD-894",
-        "staleId": "C_JM02"
-      },
-      {
-        "pseudokod": "KOD-596",
-        "staleId": "C_JM08"
-      },
-      {
-        "pseudokod": "KOD-577",
-        "staleId": "C_JM04"
-      },
-      {
-        "pseudokod": "KOD-547",
-        "staleId": "C_JM11"
-      },
-      {
-        "pseudokod": "KOD-849",
-        "staleId": "C_JM12"
-      },
-      {
-        "pseudokod": "KOD-987",
-        "staleId": "C_JM06"
-      }
+      { "pseudokod": "KOD-852", "staleId": "C_JM10" },
+      { "pseudokod": "KOD-635", "staleId": "C_JM13" },
+      { "pseudokod": "KOD-767", "staleId": "C_JM01" },
+      { "pseudokod": "KOD-377", "staleId": "C_JM03" },
+      { "pseudokod": "KOD-731", "staleId": "C_JM07" },
+      { "pseudokod": "KOD-928", "staleId": "C_JM09" },
+      { "pseudokod": "KOD-652", "staleId": "C_JM14" },
+      { "pseudokod": "KOD-894", "staleId": "C_JM02" },
+      { "pseudokod": "KOD-596", "staleId": "C_JM08" },
+      { "pseudokod": "KOD-577", "staleId": "C_JM04" },
+      { "pseudokod": "KOD-547", "staleId": "C_JM11" },
+      { "pseudokod": "KOD-849", "staleId": "C_JM12" },
+      { "pseudokod": "KOD-987", "staleId": "C_JM06" }
     ]
   },
   "C_JM06": {
     "zespol": "Zespół C",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-375",
-        "staleId": "C_JM08"
-      },
-      {
-        "pseudokod": "KOD-431",
-        "staleId": "C_JM10"
-      },
-      {
-        "pseudokod": "KOD-352",
-        "staleId": "C_JM02"
-      },
-      {
-        "pseudokod": "KOD-189",
-        "staleId": "C_JM07"
-      },
-      {
-        "pseudokod": "KOD-386",
-        "staleId": "C_JM13"
-      },
-      {
-        "pseudokod": "KOD-562",
-        "staleId": "C_JM04"
-      },
-      {
-        "pseudokod": "KOD-350",
-        "staleId": "C_JM14"
-      },
-      {
-        "pseudokod": "KOD-869",
-        "staleId": "C_JM09"
-      },
-      {
-        "pseudokod": "KOD-576",
-        "staleId": "C_JM12"
-      },
-      {
-        "pseudokod": "KOD-684",
-        "staleId": "C_JM11"
-      },
-      {
-        "pseudokod": "KOD-725",
-        "staleId": "C_JM05"
-      },
-      {
-        "pseudokod": "KOD-785",
-        "staleId": "C_JM03"
-      },
-      {
-        "pseudokod": "KOD-489",
-        "staleId": "C_JM01"
-      }
+      { "pseudokod": "KOD-375", "staleId": "C_JM08" },
+      { "pseudokod": "KOD-431", "staleId": "C_JM10" },
+      { "pseudokod": "KOD-352", "staleId": "C_JM02" },
+      { "pseudokod": "KOD-189", "staleId": "C_JM07" },
+      { "pseudokod": "KOD-386", "staleId": "C_JM13" },
+      { "pseudokod": "KOD-562", "staleId": "C_JM04" },
+      { "pseudokod": "KOD-350", "staleId": "C_JM14" },
+      { "pseudokod": "KOD-869", "staleId": "C_JM09" },
+      { "pseudokod": "KOD-576", "staleId": "C_JM12" },
+      { "pseudokod": "KOD-684", "staleId": "C_JM11" },
+      { "pseudokod": "KOD-725", "staleId": "C_JM05" },
+      { "pseudokod": "KOD-785", "staleId": "C_JM03" },
+      { "pseudokod": "KOD-489", "staleId": "C_JM01" }
     ]
   },
   "C_JM07": {
     "zespol": "Zespół C",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-445",
-        "staleId": "C_JM13"
-      },
-      {
-        "pseudokod": "KOD-130",
-        "staleId": "C_JM14"
-      },
-      {
-        "pseudokod": "KOD-607",
-        "staleId": "C_JM04"
-      },
-      {
-        "pseudokod": "KOD-433",
-        "staleId": "C_JM10"
-      },
-      {
-        "pseudokod": "KOD-287",
-        "staleId": "C_JM12"
-      },
-      {
-        "pseudokod": "KOD-600",
-        "staleId": "C_JM03"
-      },
-      {
-        "pseudokod": "KOD-318",
-        "staleId": "C_JM05"
-      },
-      {
-        "pseudokod": "KOD-464",
-        "staleId": "C_JM06"
-      },
-      {
-        "pseudokod": "KOD-365",
-        "staleId": "C_JM08"
-      },
-      {
-        "pseudokod": "KOD-449",
-        "staleId": "C_JM01"
-      },
-      {
-        "pseudokod": "KOD-387",
-        "staleId": "C_JM11"
-      },
-      {
-        "pseudokod": "KOD-711",
-        "staleId": "C_JM02"
-      },
-      {
-        "pseudokod": "KOD-819",
-        "staleId": "C_JM09"
-      }
+      { "pseudokod": "KOD-445", "staleId": "C_JM13" },
+      { "pseudokod": "KOD-130", "staleId": "C_JM14" },
+      { "pseudokod": "KOD-607", "staleId": "C_JM04" },
+      { "pseudokod": "KOD-433", "staleId": "C_JM10" },
+      { "pseudokod": "KOD-287", "staleId": "C_JM12" },
+      { "pseudokod": "KOD-600", "staleId": "C_JM03" },
+      { "pseudokod": "KOD-318", "staleId": "C_JM05" },
+      { "pseudokod": "KOD-464", "staleId": "C_JM06" },
+      { "pseudokod": "KOD-365", "staleId": "C_JM08" },
+      { "pseudokod": "KOD-449", "staleId": "C_JM01" },
+      { "pseudokod": "KOD-387", "staleId": "C_JM11" },
+      { "pseudokod": "KOD-711", "staleId": "C_JM02" },
+      { "pseudokod": "KOD-819", "staleId": "C_JM09" }
     ]
   },
   "C_JM08": {
     "zespol": "Zespół C",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-383",
-        "staleId": "C_JM06"
-      },
-      {
-        "pseudokod": "KOD-670",
-        "staleId": "C_JM02"
-      },
-      {
-        "pseudokod": "KOD-111",
-        "staleId": "C_JM10"
-      },
-      {
-        "pseudokod": "KOD-630",
-        "staleId": "C_JM09"
-      },
-      {
-        "pseudokod": "KOD-296",
-        "staleId": "C_JM07"
-      },
-      {
-        "pseudokod": "KOD-188",
-        "staleId": "C_JM13"
-      },
-      {
-        "pseudokod": "KOD-348",
-        "staleId": "C_JM04"
-      },
-      {
-        "pseudokod": "KOD-838",
-        "staleId": "C_JM03"
-      },
-      {
-        "pseudokod": "KOD-517",
-        "staleId": "C_JM01"
-      },
-      {
-        "pseudokod": "KOD-601",
-        "staleId": "C_JM11"
-      },
-      {
-        "pseudokod": "KOD-669",
-        "staleId": "C_JM05"
-      },
-      {
-        "pseudokod": "KOD-877",
-        "staleId": "C_JM12"
-      },
-      {
-        "pseudokod": "KOD-347",
-        "staleId": "C_JM14"
-      }
+      { "pseudokod": "KOD-383", "staleId": "C_JM06" },
+      { "pseudokod": "KOD-670", "staleId": "C_JM02" },
+      { "pseudokod": "KOD-111", "staleId": "C_JM10" },
+      { "pseudokod": "KOD-630", "staleId": "C_JM09" },
+      { "pseudokod": "KOD-296", "staleId": "C_JM07" },
+      { "pseudokod": "KOD-188", "staleId": "C_JM13" },
+      { "pseudokod": "KOD-348", "staleId": "C_JM04" },
+      { "pseudokod": "KOD-838", "staleId": "C_JM03" },
+      { "pseudokod": "KOD-517", "staleId": "C_JM01" },
+      { "pseudokod": "KOD-601", "staleId": "C_JM11" },
+      { "pseudokod": "KOD-669", "staleId": "C_JM05" },
+      { "pseudokod": "KOD-877", "staleId": "C_JM12" },
+      { "pseudokod": "KOD-347", "staleId": "C_JM14" }
     ]
   },
   "C_JM09": {
     "zespol": "Zespół C",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-986",
-        "staleId": "C_JM05"
-      },
-      {
-        "pseudokod": "KOD-588",
-        "staleId": "C_JM10"
-      },
-      {
-        "pseudokod": "KOD-762",
-        "staleId": "C_JM04"
-      },
-      {
-        "pseudokod": "KOD-829",
-        "staleId": "C_JM14"
-      },
-      {
-        "pseudokod": "KOD-603",
-        "staleId": "C_JM01"
-      },
-      {
-        "pseudokod": "KOD-559",
-        "staleId": "C_JM11"
-      },
-      {
-        "pseudokod": "KOD-118",
-        "staleId": "C_JM03"
-      },
-      {
-        "pseudokod": "KOD-196",
-        "staleId": "C_JM07"
-      },
-      {
-        "pseudokod": "KOD-402",
-        "staleId": "C_JM06"
-      },
-      {
-        "pseudokod": "KOD-327",
-        "staleId": "C_JM13"
-      },
-      {
-        "pseudokod": "KOD-515",
-        "staleId": "C_JM02"
-      },
-      {
-        "pseudokod": "KOD-809",
-        "staleId": "C_JM08"
-      },
-      {
-        "pseudokod": "KOD-927",
-        "staleId": "C_JM12"
-      }
+      { "pseudokod": "KOD-986", "staleId": "C_JM05" },
+      { "pseudokod": "KOD-588", "staleId": "C_JM10" },
+      { "pseudokod": "KOD-762", "staleId": "C_JM04" },
+      { "pseudokod": "KOD-829", "staleId": "C_JM14" },
+      { "pseudokod": "KOD-603", "staleId": "C_JM01" },
+      { "pseudokod": "KOD-559", "staleId": "C_JM11" },
+      { "pseudokod": "KOD-118", "staleId": "C_JM03" },
+      { "pseudokod": "KOD-196", "staleId": "C_JM07" },
+      { "pseudokod": "KOD-402", "staleId": "C_JM06" },
+      { "pseudokod": "KOD-327", "staleId": "C_JM13" },
+      { "pseudokod": "KOD-515", "staleId": "C_JM02" },
+      { "pseudokod": "KOD-809", "staleId": "C_JM08" },
+      { "pseudokod": "KOD-927", "staleId": "C_JM12" }
     ]
   },
   "C_JM10": {
     "zespol": "Zespół C",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-414",
-        "staleId": "C_JM11"
-      },
-      {
-        "pseudokod": "KOD-780",
-        "staleId": "C_JM06"
-      },
-      {
-        "pseudokod": "KOD-696",
-        "staleId": "C_JM02"
-      },
-      {
-        "pseudokod": "KOD-478",
-        "staleId": "C_JM12"
-      },
-      {
-        "pseudokod": "KOD-585",
-        "staleId": "C_JM03"
-      },
-      {
-        "pseudokod": "KOD-667",
-        "staleId": "C_JM14"
-      },
-      {
-        "pseudokod": "KOD-644",
-        "staleId": "C_JM04"
-      },
-      {
-        "pseudokod": "KOD-453",
-        "staleId": "C_JM01"
-      },
-      {
-        "pseudokod": "KOD-536",
-        "staleId": "C_JM09"
-      },
-      {
-        "pseudokod": "KOD-864",
-        "staleId": "C_JM07"
-      },
-      {
-        "pseudokod": "KOD-664",
-        "staleId": "C_JM05"
-      },
-      {
-        "pseudokod": "KOD-439",
-        "staleId": "C_JM08"
-      },
-      {
-        "pseudokod": "KOD-461",
-        "staleId": "C_JM13"
-      }
+      { "pseudokod": "KOD-414", "staleId": "C_JM11" },
+      { "pseudokod": "KOD-780", "staleId": "C_JM06" },
+      { "pseudokod": "KOD-696", "staleId": "C_JM02" },
+      { "pseudokod": "KOD-478", "staleId": "C_JM12" },
+      { "pseudokod": "KOD-585", "staleId": "C_JM03" },
+      { "pseudokod": "KOD-667", "staleId": "C_JM14" },
+      { "pseudokod": "KOD-644", "staleId": "C_JM04" },
+      { "pseudokod": "KOD-453", "staleId": "C_JM01" },
+      { "pseudokod": "KOD-536", "staleId": "C_JM09" },
+      { "pseudokod": "KOD-864", "staleId": "C_JM07" },
+      { "pseudokod": "KOD-664", "staleId": "C_JM05" },
+      { "pseudokod": "KOD-439", "staleId": "C_JM08" },
+      { "pseudokod": "KOD-461", "staleId": "C_JM13" }
     ]
   },
   "C_JM11": {
     "zespol": "Zespół C",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-820",
-        "staleId": "C_JM06"
-      },
-      {
-        "pseudokod": "KOD-565",
-        "staleId": "C_JM05"
-      },
-      {
-        "pseudokod": "KOD-378",
-        "staleId": "C_JM13"
-      },
-      {
-        "pseudokod": "KOD-881",
-        "staleId": "C_JM03"
-      },
-      {
-        "pseudokod": "KOD-358",
-        "staleId": "C_JM02"
-      },
-      {
-        "pseudokod": "KOD-337",
-        "staleId": "C_JM10"
-      },
-      {
-        "pseudokod": "KOD-974",
-        "staleId": "C_JM04"
-      },
-      {
-        "pseudokod": "KOD-839",
-        "staleId": "C_JM08"
-      },
-      {
-        "pseudokod": "KOD-298",
-        "staleId": "C_JM12"
-      },
-      {
-        "pseudokod": "KOD-424",
-        "staleId": "C_JM01"
-      },
-      {
-        "pseudokod": "KOD-223",
-        "staleId": "C_JM09"
-      },
-      {
-        "pseudokod": "KOD-649",
-        "staleId": "C_JM07"
-      },
-      {
-        "pseudokod": "KOD-807",
-        "staleId": "C_JM14"
-      }
+      { "pseudokod": "KOD-820", "staleId": "C_JM06" },
+      { "pseudokod": "KOD-565", "staleId": "C_JM05" },
+      { "pseudokod": "KOD-378", "staleId": "C_JM13" },
+      { "pseudokod": "KOD-881", "staleId": "C_JM03" },
+      { "pseudokod": "KOD-358", "staleId": "C_JM02" },
+      { "pseudokod": "KOD-337", "staleId": "C_JM10" },
+      { "pseudokod": "KOD-974", "staleId": "C_JM04" },
+      { "pseudokod": "KOD-839", "staleId": "C_JM08" },
+      { "pseudokod": "KOD-298", "staleId": "C_JM12" },
+      { "pseudokod": "KOD-424", "staleId": "C_JM01" },
+      { "pseudokod": "KOD-223", "staleId": "C_JM09" },
+      { "pseudokod": "KOD-649", "staleId": "C_JM07" },
+      { "pseudokod": "KOD-807", "staleId": "C_JM14" }
     ]
   },
   "C_JM12": {
     "zespol": "Zespół C",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-290",
-        "staleId": "C_JM02"
-      },
-      {
-        "pseudokod": "KOD-297",
-        "staleId": "C_JM07"
-      },
-      {
-        "pseudokod": "KOD-322",
-        "staleId": "C_JM09"
-      },
-      {
-        "pseudokod": "KOD-938",
-        "staleId": "C_JM14"
-      },
-      {
-        "pseudokod": "KOD-384",
-        "staleId": "C_JM06"
-      },
-      {
-        "pseudokod": "KOD-842",
-        "staleId": "C_JM10"
-      },
-      {
-        "pseudokod": "KOD-704",
-        "staleId": "C_JM13"
-      },
-      {
-        "pseudokod": "KOD-638",
-        "staleId": "C_JM03"
-      },
-      {
-        "pseudokod": "KOD-712",
-        "staleId": "C_JM05"
-      },
-      {
-        "pseudokod": "KOD-390",
-        "staleId": "C_JM04"
-      },
-      {
-        "pseudokod": "KOD-203",
-        "staleId": "C_JM01"
-      },
-      {
-        "pseudokod": "KOD-299",
-        "staleId": "C_JM08"
-      },
-      {
-        "pseudokod": "KOD-404",
-        "staleId": "C_JM11"
-      }
+      { "pseudokod": "KOD-290", "staleId": "C_JM02" },
+      { "pseudokod": "KOD-297", "staleId": "C_JM07" },
+      { "pseudokod": "KOD-322", "staleId": "C_JM09" },
+      { "pseudokod": "KOD-938", "staleId": "C_JM14" },
+      { "pseudokod": "KOD-384", "staleId": "C_JM06" },
+      { "pseudokod": "KOD-842", "staleId": "C_JM10" },
+      { "pseudokod": "KOD-704", "staleId": "C_JM13" },
+      { "pseudokod": "KOD-638", "staleId": "C_JM03" },
+      { "pseudokod": "KOD-712", "staleId": "C_JM05" },
+      { "pseudokod": "KOD-390", "staleId": "C_JM04" },
+      { "pseudokod": "KOD-203", "staleId": "C_JM01" },
+      { "pseudokod": "KOD-299", "staleId": "C_JM08" },
+      { "pseudokod": "KOD-404", "staleId": "C_JM11" }
     ]
   },
   "C_JM13": {
     "zespol": "Zespół C",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-333",
-        "staleId": "C_JM06"
-      },
-      {
-        "pseudokod": "KOD-470",
-        "staleId": "C_JM14"
-      },
-      {
-        "pseudokod": "KOD-284",
-        "staleId": "C_JM11"
-      },
-      {
-        "pseudokod": "KOD-410",
-        "staleId": "C_JM04"
-      },
-      {
-        "pseudokod": "KOD-115",
-        "staleId": "C_JM08"
-      },
-      {
-        "pseudokod": "KOD-826",
-        "staleId": "C_JM02"
-      },
-      {
-        "pseudokod": "KOD-647",
-        "staleId": "C_JM10"
-      },
-      {
-        "pseudokod": "KOD-230",
-        "staleId": "C_JM07"
-      },
-      {
-        "pseudokod": "KOD-381",
-        "staleId": "C_JM01"
-      },
-      {
-        "pseudokod": "KOD-147",
-        "staleId": "C_JM09"
-      },
-      {
-        "pseudokod": "KOD-156",
-        "staleId": "C_JM05"
-      },
-      {
-        "pseudokod": "KOD-876",
-        "staleId": "C_JM03"
-      },
-      {
-        "pseudokod": "KOD-400",
-        "staleId": "C_JM12"
-      }
+      { "pseudokod": "KOD-333", "staleId": "C_JM06" },
+      { "pseudokod": "KOD-470", "staleId": "C_JM14" },
+      { "pseudokod": "KOD-284", "staleId": "C_JM11" },
+      { "pseudokod": "KOD-410", "staleId": "C_JM04" },
+      { "pseudokod": "KOD-115", "staleId": "C_JM08" },
+      { "pseudokod": "KOD-826", "staleId": "C_JM02" },
+      { "pseudokod": "KOD-647", "staleId": "C_JM10" },
+      { "pseudokod": "KOD-230", "staleId": "C_JM07" },
+      { "pseudokod": "KOD-381", "staleId": "C_JM01" },
+      { "pseudokod": "KOD-147", "staleId": "C_JM09" },
+      { "pseudokod": "KOD-156", "staleId": "C_JM05" },
+      { "pseudokod": "KOD-876", "staleId": "C_JM03" },
+      { "pseudokod": "KOD-400", "staleId": "C_JM12" }
     ]
   },
   "C_JM14": {
     "zespol": "Zespół C",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-815",
-        "staleId": "C_JM03"
-      },
-      {
-        "pseudokod": "KOD-835",
-        "staleId": "C_JM01"
-      },
-      {
-        "pseudokod": "KOD-754",
-        "staleId": "C_JM10"
-      },
-      {
-        "pseudokod": "KOD-890",
-        "staleId": "C_JM02"
-      },
-      {
-        "pseudokod": "KOD-206",
-        "staleId": "C_JM06"
-      },
-      {
-        "pseudokod": "KOD-960",
-        "staleId": "C_JM04"
-      },
-      {
-        "pseudokod": "KOD-688",
-        "staleId": "C_JM13"
-      },
-      {
-        "pseudokod": "KOD-392",
-        "staleId": "C_JM07"
-      },
-      {
-        "pseudokod": "KOD-581",
-        "staleId": "C_JM11"
-      },
-      {
-        "pseudokod": "KOD-591",
-        "staleId": "C_JM09"
-      },
-      {
-        "pseudokod": "KOD-552",
-        "staleId": "C_JM05"
-      },
-      {
-        "pseudokod": "KOD-911",
-        "staleId": "C_JM12"
-      },
-      {
-        "pseudokod": "KOD-289",
-        "staleId": "C_JM08"
-      }
+      { "pseudokod": "KOD-815", "staleId": "C_JM03" },
+      { "pseudokod": "KOD-835", "staleId": "C_JM01" },
+      { "pseudokod": "KOD-754", "staleId": "C_JM10" },
+      { "pseudokod": "KOD-890", "staleId": "C_JM02" },
+      { "pseudokod": "KOD-206", "staleId": "C_JM06" },
+      { "pseudokod": "KOD-960", "staleId": "C_JM04" },
+      { "pseudokod": "KOD-688", "staleId": "C_JM13" },
+      { "pseudokod": "KOD-392", "staleId": "C_JM07" },
+      { "pseudokod": "KOD-581", "staleId": "C_JM11" },
+      { "pseudokod": "KOD-591", "staleId": "C_JM09" },
+      { "pseudokod": "KOD-552", "staleId": "C_JM05" },
+      { "pseudokod": "KOD-911", "staleId": "C_JM12" },
+      { "pseudokod": "KOD-289", "staleId": "C_JM08" }
     ]
   },
   "C_TR01": {
     "zespol": "Zespół C",
     "rola": "trener",
     "lista": [
-      {
-        "pseudokod": "KOD-153",
-        "staleId": "C_JM06"
-      },
-      {
-        "pseudokod": "KOD-359",
-        "staleId": "C_JM11"
-      },
-      {
-        "pseudokod": "KOD-590",
-        "staleId": "C_JM01"
-      },
-      {
-        "pseudokod": "KOD-217",
-        "staleId": "C_JM08"
-      },
-      {
-        "pseudokod": "KOD-167",
-        "staleId": "C_JM12"
-      },
-      {
-        "pseudokod": "KOD-511",
-        "staleId": "C_JM13"
-      },
-      {
-        "pseudokod": "KOD-604",
-        "staleId": "C_JM14"
-      },
-      {
-        "pseudokod": "KOD-176",
-        "staleId": "C_JM05"
-      },
-      {
-        "pseudokod": "KOD-691",
-        "staleId": "C_JM02"
-      },
-      {
-        "pseudokod": "KOD-745",
-        "staleId": "C_JM03"
-      },
-      {
-        "pseudokod": "KOD-803",
-        "staleId": "C_JM09"
-      },
-      {
-        "pseudokod": "KOD-155",
-        "staleId": "C_JM10"
-      },
-      {
-        "pseudokod": "KOD-256",
-        "staleId": "C_JM04"
-      },
-      {
-        "pseudokod": "KOD-253",
-        "staleId": "C_JM07"
-      }
+      { "pseudokod": "KOD-153", "staleId": "C_JM06" },
+      { "pseudokod": "KOD-359", "staleId": "C_JM11" },
+      { "pseudokod": "KOD-590", "staleId": "C_JM01" },
+      { "pseudokod": "KOD-217", "staleId": "C_JM08" },
+      { "pseudokod": "KOD-167", "staleId": "C_JM12" },
+      { "pseudokod": "KOD-511", "staleId": "C_JM13" },
+      { "pseudokod": "KOD-604", "staleId": "C_JM14" },
+      { "pseudokod": "KOD-176", "staleId": "C_JM05" },
+      { "pseudokod": "KOD-691", "staleId": "C_JM02" },
+      { "pseudokod": "KOD-745", "staleId": "C_JM03" },
+      { "pseudokod": "KOD-803", "staleId": "C_JM09" },
+      { "pseudokod": "KOD-155", "staleId": "C_JM10" },
+      { "pseudokod": "KOD-256", "staleId": "C_JM04" },
+      { "pseudokod": "KOD-253", "staleId": "C_JM07" }
     ]
   },
   "D_JM01": {
     "zespol": "Zespół D",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-844",
-        "staleId": "D_JM10"
-      },
-      {
-        "pseudokod": "KOD-406",
-        "staleId": "D_JM03"
-      },
-      {
-        "pseudokod": "KOD-958",
-        "staleId": "D_JM02"
-      },
-      {
-        "pseudokod": "KOD-702",
-        "staleId": "D_JM14"
-      },
-      {
-        "pseudokod": "KOD-694",
-        "staleId": "D_JM09"
-      },
-      {
-        "pseudokod": "KOD-776",
-        "staleId": "D_JM06"
-      },
-      {
-        "pseudokod": "KOD-602",
-        "staleId": "D_JM12"
-      },
-      {
-        "pseudokod": "KOD-987",
-        "staleId": "D_JM11"
-      },
-      {
-        "pseudokod": "KOD-253",
-        "staleId": "D_JM05"
-      },
-      {
-        "pseudokod": "KOD-558",
-        "staleId": "D_JM04"
-      },
-      {
-        "pseudokod": "KOD-652",
-        "staleId": "D_JM08"
-      },
-      {
-        "pseudokod": "KOD-596",
-        "staleId": "D_JM13"
-      },
-      {
-        "pseudokod": "KOD-454",
-        "staleId": "D_JM07"
-      }
+      { "pseudokod": "KOD-844", "staleId": "D_JM10" },
+      { "pseudokod": "KOD-406", "staleId": "D_JM03" },
+      { "pseudokod": "KOD-958", "staleId": "D_JM02" },
+      { "pseudokod": "KOD-702", "staleId": "D_JM14" },
+      { "pseudokod": "KOD-694", "staleId": "D_JM09" },
+      { "pseudokod": "KOD-776", "staleId": "D_JM06" },
+      { "pseudokod": "KOD-602", "staleId": "D_JM12" },
+      { "pseudokod": "KOD-987", "staleId": "D_JM11" },
+      { "pseudokod": "KOD-253", "staleId": "D_JM05" },
+      { "pseudokod": "KOD-558", "staleId": "D_JM04" },
+      { "pseudokod": "KOD-652", "staleId": "D_JM08" },
+      { "pseudokod": "KOD-596", "staleId": "D_JM13" },
+      { "pseudokod": "KOD-454", "staleId": "D_JM07" }
     ]
   },
   "D_JM02": {
     "zespol": "Zespół D",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-441",
-        "staleId": "D_JM13"
-      },
-      {
-        "pseudokod": "KOD-666",
-        "staleId": "D_JM12"
-      },
-      {
-        "pseudokod": "KOD-882",
-        "staleId": "D_JM01"
-      },
-      {
-        "pseudokod": "KOD-657",
-        "staleId": "D_JM04"
-      },
-      {
-        "pseudokod": "KOD-487",
-        "staleId": "D_JM05"
-      },
-      {
-        "pseudokod": "KOD-567",
-        "staleId": "D_JM08"
-      },
-      {
-        "pseudokod": "KOD-430",
-        "staleId": "D_JM10"
-      },
-      {
-        "pseudokod": "KOD-294",
-        "staleId": "D_JM11"
-      },
-      {
-        "pseudokod": "KOD-815",
-        "staleId": "D_JM14"
-      },
-      {
-        "pseudokod": "KOD-345",
-        "staleId": "D_JM03"
-      },
-      {
-        "pseudokod": "KOD-686",
-        "staleId": "D_JM07"
-      },
-      {
-        "pseudokod": "KOD-493",
-        "staleId": "D_JM06"
-      },
-      {
-        "pseudokod": "KOD-340",
-        "staleId": "D_JM09"
-      }
+      { "pseudokod": "KOD-441", "staleId": "D_JM13" },
+      { "pseudokod": "KOD-666", "staleId": "D_JM12" },
+      { "pseudokod": "KOD-882", "staleId": "D_JM01" },
+      { "pseudokod": "KOD-657", "staleId": "D_JM04" },
+      { "pseudokod": "KOD-487", "staleId": "D_JM05" },
+      { "pseudokod": "KOD-567", "staleId": "D_JM08" },
+      { "pseudokod": "KOD-430", "staleId": "D_JM10" },
+      { "pseudokod": "KOD-294", "staleId": "D_JM11" },
+      { "pseudokod": "KOD-815", "staleId": "D_JM14" },
+      { "pseudokod": "KOD-345", "staleId": "D_JM03" },
+      { "pseudokod": "KOD-686", "staleId": "D_JM07" },
+      { "pseudokod": "KOD-493", "staleId": "D_JM06" },
+      { "pseudokod": "KOD-340", "staleId": "D_JM09" }
     ]
   },
   "D_JM03": {
     "zespol": "Zespół D",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-895",
-        "staleId": "D_JM14"
-      },
-      {
-        "pseudokod": "KOD-521",
-        "staleId": "D_JM11"
-      },
-      {
-        "pseudokod": "KOD-145",
-        "staleId": "D_JM13"
-      },
-      {
-        "pseudokod": "KOD-426",
-        "staleId": "D_JM05"
-      },
-      {
-        "pseudokod": "KOD-863",
-        "staleId": "D_JM04"
-      },
-      {
-        "pseudokod": "KOD-585",
-        "staleId": "D_JM08"
-      },
-      {
-        "pseudokod": "KOD-823",
-        "staleId": "D_JM12"
-      },
-      {
-        "pseudokod": "KOD-931",
-        "staleId": "D_JM07"
-      },
-      {
-        "pseudokod": "KOD-491",
-        "staleId": "D_JM09"
-      },
-      {
-        "pseudokod": "KOD-496",
-        "staleId": "D_JM02"
-      },
-      {
-        "pseudokod": "KOD-780",
-        "staleId": "D_JM10"
-      },
-      {
-        "pseudokod": "KOD-912",
-        "staleId": "D_JM06"
-      },
-      {
-        "pseudokod": "KOD-941",
-        "staleId": "D_JM01"
-      }
+      { "pseudokod": "KOD-895", "staleId": "D_JM14" },
+      { "pseudokod": "KOD-521", "staleId": "D_JM11" },
+      { "pseudokod": "KOD-145", "staleId": "D_JM13" },
+      { "pseudokod": "KOD-426", "staleId": "D_JM05" },
+      { "pseudokod": "KOD-863", "staleId": "D_JM04" },
+      { "pseudokod": "KOD-585", "staleId": "D_JM08" },
+      { "pseudokod": "KOD-823", "staleId": "D_JM12" },
+      { "pseudokod": "KOD-931", "staleId": "D_JM07" },
+      { "pseudokod": "KOD-491", "staleId": "D_JM09" },
+      { "pseudokod": "KOD-496", "staleId": "D_JM02" },
+      { "pseudokod": "KOD-780", "staleId": "D_JM10" },
+      { "pseudokod": "KOD-912", "staleId": "D_JM06" },
+      { "pseudokod": "KOD-941", "staleId": "D_JM01" }
     ]
   },
   "D_JM04": {
     "zespol": "Zespół D",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-768",
-        "staleId": "D_JM08"
-      },
-      {
-        "pseudokod": "KOD-256",
-        "staleId": "D_JM11"
-      },
-      {
-        "pseudokod": "KOD-608",
-        "staleId": "D_JM03"
-      },
-      {
-        "pseudokod": "KOD-138",
-        "staleId": "D_JM13"
-      },
-      {
-        "pseudokod": "KOD-230",
-        "staleId": "D_JM10"
-      },
-      {
-        "pseudokod": "KOD-615",
-        "staleId": "D_JM14"
-      },
-      {
-        "pseudokod": "KOD-705",
-        "staleId": "D_JM06"
-      },
-      {
-        "pseudokod": "KOD-440",
-        "staleId": "D_JM07"
-      },
-      {
-        "pseudokod": "KOD-203",
-        "staleId": "D_JM01"
-      },
-      {
-        "pseudokod": "KOD-551",
-        "staleId": "D_JM09"
-      },
-      {
-        "pseudokod": "KOD-951",
-        "staleId": "D_JM05"
-      },
-      {
-        "pseudokod": "KOD-639",
-        "staleId": "D_JM12"
-      },
-      {
-        "pseudokod": "KOD-568",
-        "staleId": "D_JM02"
-      }
+      { "pseudokod": "KOD-768", "staleId": "D_JM08" },
+      { "pseudokod": "KOD-256", "staleId": "D_JM11" },
+      { "pseudokod": "KOD-608", "staleId": "D_JM03" },
+      { "pseudokod": "KOD-138", "staleId": "D_JM13" },
+      { "pseudokod": "KOD-230", "staleId": "D_JM10" },
+      { "pseudokod": "KOD-615", "staleId": "D_JM14" },
+      { "pseudokod": "KOD-705", "staleId": "D_JM06" },
+      { "pseudokod": "KOD-440", "staleId": "D_JM07" },
+      { "pseudokod": "KOD-203", "staleId": "D_JM01" },
+      { "pseudokod": "KOD-551", "staleId": "D_JM09" },
+      { "pseudokod": "KOD-951", "staleId": "D_JM05" },
+      { "pseudokod": "KOD-639", "staleId": "D_JM12" },
+      { "pseudokod": "KOD-568", "staleId": "D_JM02" }
     ]
   },
   "D_JM05": {
     "zespol": "Zespół D",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-116",
-        "staleId": "D_JM14"
-      },
-      {
-        "pseudokod": "KOD-840",
-        "staleId": "D_JM13"
-      },
-      {
-        "pseudokod": "KOD-248",
-        "staleId": "D_JM07"
-      },
-      {
-        "pseudokod": "KOD-520",
-        "staleId": "D_JM06"
-      },
-      {
-        "pseudokod": "KOD-771",
-        "staleId": "D_JM09"
-      },
-      {
-        "pseudokod": "KOD-259",
-        "staleId": "D_JM04"
-      },
-      {
-        "pseudokod": "KOD-177",
-        "staleId": "D_JM11"
-      },
-      {
-        "pseudokod": "KOD-581",
-        "staleId": "D_JM10"
-      },
-      {
-        "pseudokod": "KOD-901",
-        "staleId": "D_JM01"
-      },
-      {
-        "pseudokod": "KOD-372",
-        "staleId": "D_JM03"
-      },
-      {
-        "pseudokod": "KOD-447",
-        "staleId": "D_JM02"
-      },
-      {
-        "pseudokod": "KOD-739",
-        "staleId": "D_JM08"
-      },
-      {
-        "pseudokod": "KOD-810",
-        "staleId": "D_JM12"
-      }
+      { "pseudokod": "KOD-116", "staleId": "D_JM14" },
+      { "pseudokod": "KOD-840", "staleId": "D_JM13" },
+      { "pseudokod": "KOD-248", "staleId": "D_JM07" },
+      { "pseudokod": "KOD-520", "staleId": "D_JM06" },
+      { "pseudokod": "KOD-771", "staleId": "D_JM09" },
+      { "pseudokod": "KOD-259", "staleId": "D_JM04" },
+      { "pseudokod": "KOD-177", "staleId": "D_JM11" },
+      { "pseudokod": "KOD-581", "staleId": "D_JM10" },
+      { "pseudokod": "KOD-901", "staleId": "D_JM01" },
+      { "pseudokod": "KOD-372", "staleId": "D_JM03" },
+      { "pseudokod": "KOD-447", "staleId": "D_JM02" },
+      { "pseudokod": "KOD-739", "staleId": "D_JM08" },
+      { "pseudokod": "KOD-810", "staleId": "D_JM12" }
     ]
   },
   "D_JM06": {
     "zespol": "Zespół D",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-508",
-        "staleId": "D_JM05"
-      },
-      {
-        "pseudokod": "KOD-766",
-        "staleId": "D_JM02"
-      },
-      {
-        "pseudokod": "KOD-183",
-        "staleId": "D_JM13"
-      },
-      {
-        "pseudokod": "KOD-437",
-        "staleId": "D_JM11"
-      },
-      {
-        "pseudokod": "KOD-791",
-        "staleId": "D_JM01"
-      },
-      {
-        "pseudokod": "KOD-647",
-        "staleId": "D_JM12"
-      },
-      {
-        "pseudokod": "KOD-490",
-        "staleId": "D_JM04"
-      },
-      {
-        "pseudokod": "KOD-425",
-        "staleId": "D_JM03"
-      },
-      {
-        "pseudokod": "KOD-742",
-        "staleId": "D_JM14"
-      },
-      {
-        "pseudokod": "KOD-836",
-        "staleId": "D_JM10"
-      },
-      {
-        "pseudokod": "KOD-878",
-        "staleId": "D_JM07"
-      },
-      {
-        "pseudokod": "KOD-600",
-        "staleId": "D_JM09"
-      },
-      {
-        "pseudokod": "KOD-655",
-        "staleId": "D_JM08"
-      }
+      { "pseudokod": "KOD-508", "staleId": "D_JM05" },
+      { "pseudokod": "KOD-766", "staleId": "D_JM02" },
+      { "pseudokod": "KOD-183", "staleId": "D_JM13" },
+      { "pseudokod": "KOD-437", "staleId": "D_JM11" },
+      { "pseudokod": "KOD-791", "staleId": "D_JM01" },
+      { "pseudokod": "KOD-647", "staleId": "D_JM12" },
+      { "pseudokod": "KOD-490", "staleId": "D_JM04" },
+      { "pseudokod": "KOD-425", "staleId": "D_JM03" },
+      { "pseudokod": "KOD-742", "staleId": "D_JM14" },
+      { "pseudokod": "KOD-836", "staleId": "D_JM10" },
+      { "pseudokod": "KOD-878", "staleId": "D_JM07" },
+      { "pseudokod": "KOD-600", "staleId": "D_JM09" },
+      { "pseudokod": "KOD-655", "staleId": "D_JM08" }
     ]
   },
   "D_JM07": {
     "zespol": "Zespół D",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-137",
-        "staleId": "D_JM14"
-      },
-      {
-        "pseudokod": "KOD-733",
-        "staleId": "D_JM08"
-      },
-      {
-        "pseudokod": "KOD-171",
-        "staleId": "D_JM11"
-      },
-      {
-        "pseudokod": "KOD-341",
-        "staleId": "D_JM12"
-      },
-      {
-        "pseudokod": "KOD-747",
-        "staleId": "D_JM13"
-      },
-      {
-        "pseudokod": "KOD-801",
-        "staleId": "D_JM03"
-      },
-      {
-        "pseudokod": "KOD-395",
-        "staleId": "D_JM02"
-      },
-      {
-        "pseudokod": "KOD-333",
-        "staleId": "D_JM10"
-      },
-      {
-        "pseudokod": "KOD-865",
-        "staleId": "D_JM09"
-      },
-      {
-        "pseudokod": "KOD-193",
-        "staleId": "D_JM04"
-      },
-      {
-        "pseudokod": "KOD-545",
-        "staleId": "D_JM06"
-      },
-      {
-        "pseudokod": "KOD-201",
-        "staleId": "D_JM01"
-      },
-      {
-        "pseudokod": "KOD-879",
-        "staleId": "D_JM05"
-      }
+      { "pseudokod": "KOD-137", "staleId": "D_JM14" },
+      { "pseudokod": "KOD-733", "staleId": "D_JM08" },
+      { "pseudokod": "KOD-171", "staleId": "D_JM11" },
+      { "pseudokod": "KOD-341", "staleId": "D_JM12" },
+      { "pseudokod": "KOD-747", "staleId": "D_JM13" },
+      { "pseudokod": "KOD-801", "staleId": "D_JM03" },
+      { "pseudokod": "KOD-395", "staleId": "D_JM02" },
+      { "pseudokod": "KOD-333", "staleId": "D_JM10" },
+      { "pseudokod": "KOD-865", "staleId": "D_JM09" },
+      { "pseudokod": "KOD-193", "staleId": "D_JM04" },
+      { "pseudokod": "KOD-545", "staleId": "D_JM06" },
+      { "pseudokod": "KOD-201", "staleId": "D_JM01" },
+      { "pseudokod": "KOD-879", "staleId": "D_JM05" }
     ]
   },
   "D_JM08": {
     "zespol": "Zespół D",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-749",
-        "staleId": "D_JM03"
-      },
-      {
-        "pseudokod": "KOD-821",
-        "staleId": "D_JM12"
-      },
-      {
-        "pseudokod": "KOD-949",
-        "staleId": "D_JM11"
-      },
-      {
-        "pseudokod": "KOD-555",
-        "staleId": "D_JM13"
-      },
-      {
-        "pseudokod": "KOD-271",
-        "staleId": "D_JM10"
-      },
-      {
-        "pseudokod": "KOD-811",
-        "staleId": "D_JM06"
-      },
-      {
-        "pseudokod": "KOD-407",
-        "staleId": "D_JM14"
-      },
-      {
-        "pseudokod": "KOD-130",
-        "staleId": "D_JM09"
-      },
-      {
-        "pseudokod": "KOD-148",
-        "staleId": "D_JM02"
-      },
-      {
-        "pseudokod": "KOD-433",
-        "staleId": "D_JM04"
-      },
-      {
-        "pseudokod": "KOD-158",
-        "staleId": "D_JM05"
-      },
-      {
-        "pseudokod": "KOD-401",
-        "staleId": "D_JM07"
-      },
-      {
-        "pseudokod": "KOD-468",
-        "staleId": "D_JM01"
-      }
+      { "pseudokod": "KOD-749", "staleId": "D_JM03" },
+      { "pseudokod": "KOD-821", "staleId": "D_JM12" },
+      { "pseudokod": "KOD-949", "staleId": "D_JM11" },
+      { "pseudokod": "KOD-555", "staleId": "D_JM13" },
+      { "pseudokod": "KOD-271", "staleId": "D_JM10" },
+      { "pseudokod": "KOD-811", "staleId": "D_JM06" },
+      { "pseudokod": "KOD-407", "staleId": "D_JM14" },
+      { "pseudokod": "KOD-130", "staleId": "D_JM09" },
+      { "pseudokod": "KOD-148", "staleId": "D_JM02" },
+      { "pseudokod": "KOD-433", "staleId": "D_JM04" },
+      { "pseudokod": "KOD-158", "staleId": "D_JM05" },
+      { "pseudokod": "KOD-401", "staleId": "D_JM07" },
+      { "pseudokod": "KOD-468", "staleId": "D_JM01" }
     ]
   },
   "D_JM09": {
     "zespol": "Zespół D",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-484",
-        "staleId": "D_JM07"
-      },
-      {
-        "pseudokod": "KOD-542",
-        "staleId": "D_JM08"
-      },
-      {
-        "pseudokod": "KOD-250",
-        "staleId": "D_JM01"
-      },
-      {
-        "pseudokod": "KOD-351",
-        "staleId": "D_JM13"
-      },
-      {
-        "pseudokod": "KOD-644",
-        "staleId": "D_JM06"
-      },
-      {
-        "pseudokod": "KOD-522",
-        "staleId": "D_JM10"
-      },
-      {
-        "pseudokod": "KOD-680",
-        "staleId": "D_JM05"
-      },
-      {
-        "pseudokod": "KOD-799",
-        "staleId": "D_JM12"
-      },
-      {
-        "pseudokod": "KOD-285",
-        "staleId": "D_JM02"
-      },
-      {
-        "pseudokod": "KOD-275",
-        "staleId": "D_JM14"
-      },
-      {
-        "pseudokod": "KOD-280",
-        "staleId": "D_JM11"
-      },
-      {
-        "pseudokod": "KOD-181",
-        "staleId": "D_JM03"
-      },
-      {
-        "pseudokod": "KOD-725",
-        "staleId": "D_JM04"
-      }
+      { "pseudokod": "KOD-484", "staleId": "D_JM07" },
+      { "pseudokod": "KOD-542", "staleId": "D_JM08" },
+      { "pseudokod": "KOD-250", "staleId": "D_JM01" },
+      { "pseudokod": "KOD-351", "staleId": "D_JM13" },
+      { "pseudokod": "KOD-644", "staleId": "D_JM06" },
+      { "pseudokod": "KOD-522", "staleId": "D_JM10" },
+      { "pseudokod": "KOD-680", "staleId": "D_JM05" },
+      { "pseudokod": "KOD-799", "staleId": "D_JM12" },
+      { "pseudokod": "KOD-285", "staleId": "D_JM02" },
+      { "pseudokod": "KOD-275", "staleId": "D_JM14" },
+      { "pseudokod": "KOD-280", "staleId": "D_JM11" },
+      { "pseudokod": "KOD-181", "staleId": "D_JM03" },
+      { "pseudokod": "KOD-725", "staleId": "D_JM04" }
     ]
   },
   "D_JM10": {
     "zespol": "Zespół D",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-492",
-        "staleId": "D_JM08"
-      },
-      {
-        "pseudokod": "KOD-735",
-        "staleId": "D_JM04"
-      },
-      {
-        "pseudokod": "KOD-800",
-        "staleId": "D_JM11"
-      },
-      {
-        "pseudokod": "KOD-347",
-        "staleId": "D_JM02"
-      },
-      {
-        "pseudokod": "KOD-610",
-        "staleId": "D_JM07"
-      },
-      {
-        "pseudokod": "KOD-698",
-        "staleId": "D_JM06"
-      },
-      {
-        "pseudokod": "KOD-247",
-        "staleId": "D_JM01"
-      },
-      {
-        "pseudokod": "KOD-338",
-        "staleId": "D_JM12"
-      },
-      {
-        "pseudokod": "KOD-573",
-        "staleId": "D_JM14"
-      },
-      {
-        "pseudokod": "KOD-754",
-        "staleId": "D_JM09"
-      },
-      {
-        "pseudokod": "KOD-361",
-        "staleId": "D_JM13"
-      },
-      {
-        "pseudokod": "KOD-571",
-        "staleId": "D_JM03"
-      },
-      {
-        "pseudokod": "KOD-362",
-        "staleId": "D_JM05"
-      }
+      { "pseudokod": "KOD-492", "staleId": "D_JM08" },
+      { "pseudokod": "KOD-735", "staleId": "D_JM04" },
+      { "pseudokod": "KOD-800", "staleId": "D_JM11" },
+      { "pseudokod": "KOD-347", "staleId": "D_JM02" },
+      { "pseudokod": "KOD-610", "staleId": "D_JM07" },
+      { "pseudokod": "KOD-698", "staleId": "D_JM06" },
+      { "pseudokod": "KOD-247", "staleId": "D_JM01" },
+      { "pseudokod": "KOD-338", "staleId": "D_JM12" },
+      { "pseudokod": "KOD-573", "staleId": "D_JM14" },
+      { "pseudokod": "KOD-754", "staleId": "D_JM09" },
+      { "pseudokod": "KOD-361", "staleId": "D_JM13" },
+      { "pseudokod": "KOD-571", "staleId": "D_JM03" },
+      { "pseudokod": "KOD-362", "staleId": "D_JM05" }
     ]
   },
   "D_JM11": {
     "zespol": "Zespół D",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-783",
-        "staleId": "D_JM05"
-      },
-      {
-        "pseudokod": "KOD-110",
-        "staleId": "D_JM12"
-      },
-      {
-        "pseudokod": "KOD-577",
-        "staleId": "D_JM07"
-      },
-      {
-        "pseudokod": "KOD-914",
-        "staleId": "D_JM13"
-      },
-      {
-        "pseudokod": "KOD-794",
-        "staleId": "D_JM02"
-      },
-      {
-        "pseudokod": "KOD-660",
-        "staleId": "D_JM09"
-      },
-      {
-        "pseudokod": "KOD-262",
-        "staleId": "D_JM08"
-      },
-      {
-        "pseudokod": "KOD-176",
-        "staleId": "D_JM03"
-      },
-      {
-        "pseudokod": "KOD-553",
-        "staleId": "D_JM01"
-      },
-      {
-        "pseudokod": "KOD-986",
-        "staleId": "D_JM06"
-      },
-      {
-        "pseudokod": "KOD-995",
-        "staleId": "D_JM10"
-      },
-      {
-        "pseudokod": "KOD-938",
-        "staleId": "D_JM04"
-      },
-      {
-        "pseudokod": "KOD-755",
-        "staleId": "D_JM14"
-      }
+      { "pseudokod": "KOD-783", "staleId": "D_JM05" },
+      { "pseudokod": "KOD-110", "staleId": "D_JM12" },
+      { "pseudokod": "KOD-577", "staleId": "D_JM07" },
+      { "pseudokod": "KOD-914", "staleId": "D_JM13" },
+      { "pseudokod": "KOD-794", "staleId": "D_JM02" },
+      { "pseudokod": "KOD-660", "staleId": "D_JM09" },
+      { "pseudokod": "KOD-262", "staleId": "D_JM08" },
+      { "pseudokod": "KOD-176", "staleId": "D_JM03" },
+      { "pseudokod": "KOD-553", "staleId": "D_JM01" },
+      { "pseudokod": "KOD-986", "staleId": "D_JM06" },
+      { "pseudokod": "KOD-995", "staleId": "D_JM10" },
+      { "pseudokod": "KOD-938", "staleId": "D_JM04" },
+      { "pseudokod": "KOD-755", "staleId": "D_JM14" }
     ]
   },
   "D_JM12": {
     "zespol": "Zespół D",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-535",
-        "staleId": "D_JM07"
-      },
-      {
-        "pseudokod": "KOD-807",
-        "staleId": "D_JM09"
-      },
-      {
-        "pseudokod": "KOD-357",
-        "staleId": "D_JM03"
-      },
-      {
-        "pseudokod": "KOD-947",
-        "staleId": "D_JM01"
-      },
-      {
-        "pseudokod": "KOD-410",
-        "staleId": "D_JM10"
-      },
-      {
-        "pseudokod": "KOD-304",
-        "staleId": "D_JM05"
-      },
-      {
-        "pseudokod": "KOD-494",
-        "staleId": "D_JM04"
-      },
-      {
-        "pseudokod": "KOD-595",
-        "staleId": "D_JM14"
-      },
-      {
-        "pseudokod": "KOD-210",
-        "staleId": "D_JM06"
-      },
-      {
-        "pseudokod": "KOD-343",
-        "staleId": "D_JM11"
-      },
-      {
-        "pseudokod": "KOD-964",
-        "staleId": "D_JM08"
-      },
-      {
-        "pseudokod": "KOD-975",
-        "staleId": "D_JM02"
-      },
-      {
-        "pseudokod": "KOD-972",
-        "staleId": "D_JM13"
-      }
+      { "pseudokod": "KOD-535", "staleId": "D_JM07" },
+      { "pseudokod": "KOD-807", "staleId": "D_JM09" },
+      { "pseudokod": "KOD-357", "staleId": "D_JM03" },
+      { "pseudokod": "KOD-947", "staleId": "D_JM01" },
+      { "pseudokod": "KOD-410", "staleId": "D_JM10" },
+      { "pseudokod": "KOD-304", "staleId": "D_JM05" },
+      { "pseudokod": "KOD-494", "staleId": "D_JM04" },
+      { "pseudokod": "KOD-595", "staleId": "D_JM14" },
+      { "pseudokod": "KOD-210", "staleId": "D_JM06" },
+      { "pseudokod": "KOD-343", "staleId": "D_JM11" },
+      { "pseudokod": "KOD-964", "staleId": "D_JM08" },
+      { "pseudokod": "KOD-975", "staleId": "D_JM02" },
+      { "pseudokod": "KOD-972", "staleId": "D_JM13" }
     ]
   },
   "D_JM13": {
     "zespol": "Zespół D",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-689",
-        "staleId": "D_JM05"
-      },
-      {
-        "pseudokod": "KOD-403",
-        "staleId": "D_JM02"
-      },
-      {
-        "pseudokod": "KOD-817",
-        "staleId": "D_JM03"
-      },
-      {
-        "pseudokod": "KOD-841",
-        "staleId": "D_JM09"
-      },
-      {
-        "pseudokod": "KOD-123",
-        "staleId": "D_JM10"
-      },
-      {
-        "pseudokod": "KOD-775",
-        "staleId": "D_JM06"
-      },
-      {
-        "pseudokod": "KOD-506",
-        "staleId": "D_JM04"
-      },
-      {
-        "pseudokod": "KOD-382",
-        "staleId": "D_JM07"
-      },
-      {
-        "pseudokod": "KOD-109",
-        "staleId": "D_JM14"
-      },
-      {
-        "pseudokod": "KOD-888",
-        "staleId": "D_JM12"
-      },
-      {
-        "pseudokod": "KOD-803",
-        "staleId": "D_JM01"
-      },
-      {
-        "pseudokod": "KOD-151",
-        "staleId": "D_JM11"
-      },
-      {
-        "pseudokod": "KOD-721",
-        "staleId": "D_JM08"
-      }
+      { "pseudokod": "KOD-689", "staleId": "D_JM05" },
+      { "pseudokod": "KOD-403", "staleId": "D_JM02" },
+      { "pseudokod": "KOD-817", "staleId": "D_JM03" },
+      { "pseudokod": "KOD-841", "staleId": "D_JM09" },
+      { "pseudokod": "KOD-123", "staleId": "D_JM10" },
+      { "pseudokod": "KOD-775", "staleId": "D_JM06" },
+      { "pseudokod": "KOD-506", "staleId": "D_JM04" },
+      { "pseudokod": "KOD-382", "staleId": "D_JM07" },
+      { "pseudokod": "KOD-109", "staleId": "D_JM14" },
+      { "pseudokod": "KOD-888", "staleId": "D_JM12" },
+      { "pseudokod": "KOD-803", "staleId": "D_JM01" },
+      { "pseudokod": "KOD-151", "staleId": "D_JM11" },
+      { "pseudokod": "KOD-721", "staleId": "D_JM08" }
     ]
   },
   "D_JM14": {
     "zespol": "Zespół D",
     "rola": "zawodnik",
     "lista": [
-      {
-        "pseudokod": "KOD-609",
-        "staleId": "D_JM01"
-      },
-      {
-        "pseudokod": "KOD-394",
-        "staleId": "D_JM04"
-      },
-      {
-        "pseudokod": "KOD-336",
-        "staleId": "D_JM07"
-      },
-      {
-        "pseudokod": "KOD-722",
-        "staleId": "D_JM11"
-      },
-      {
-        "pseudokod": "KOD-461",
-        "staleId": "D_JM05"
-      },
-      {
-        "pseudokod": "KOD-325",
-        "staleId": "D_JM09"
-      },
-      {
-        "pseudokod": "KOD-752",
-        "staleId": "D_JM08"
-      },
-      {
-        "pseudokod": "KOD-295",
-        "staleId": "D_JM12"
-      },
-      {
-        "pseudokod": "KOD-736",
-        "staleId": "D_JM03"
-      },
-      {
-        "pseudokod": "KOD-853",
-        "staleId": "D_JM10"
-      },
-      {
-        "pseudokod": "KOD-795",
-        "staleId": "D_JM06"
-      },
-      {
-        "pseudokod": "KOD-993",
-        "staleId": "D_JM13"
-      },
-      {
-        "pseudokod": "KOD-798",
-        "staleId": "D_JM02"
-      }
+      { "pseudokod": "KOD-609", "staleId": "D_JM01" },
+      { "pseudokod": "KOD-394", "staleId": "D_JM04" },
+      { "pseudokod": "KOD-336", "staleId": "D_JM07" },
+      { "pseudokod": "KOD-722", "staleId": "D_JM11" },
+      { "pseudokod": "KOD-461", "staleId": "D_JM05" },
+      { "pseudokod": "KOD-325", "staleId": "D_JM09" },
+      { "pseudokod": "KOD-752", "staleId": "D_JM08" },
+      { "pseudokod": "KOD-295", "staleId": "D_JM12" },
+      { "pseudokod": "KOD-736", "staleId": "D_JM03" },
+      { "pseudokod": "KOD-853", "staleId": "D_JM10" },
+      { "pseudokod": "KOD-795", "staleId": "D_JM06" },
+      { "pseudokod": "KOD-993", "staleId": "D_JM13" },
+      { "pseudokod": "KOD-798", "staleId": "D_JM02" }
     ]
   },
   "D_TR01": {
     "zespol": "Zespół D",
     "rola": "trener",
     "lista": [
-      {
-        "pseudokod": "KOD-241",
-        "staleId": "D_JM01"
-      },
-      {
-        "pseudokod": "KOD-744",
-        "staleId": "D_JM03"
-      },
-      {
-        "pseudokod": "KOD-200",
-        "staleId": "D_JM05"
-      },
-      {
-        "pseudokod": "KOD-743",
-        "staleId": "D_JM06"
-      },
-      {
-        "pseudokod": "KOD-762",
-        "staleId": "D_JM13"
-      },
-      {
-        "pseudokod": "KOD-141",
-        "staleId": "D_JM11"
-      },
-      {
-        "pseudokod": "KOD-417",
-        "staleId": "D_JM14"
-      },
-      {
-        "pseudokod": "KOD-552",
-        "staleId": "D_JM04"
-      },
-      {
-        "pseudokod": "KOD-135",
-        "staleId": "D_JM12"
-      },
-      {
-        "pseudokod": "KOD-994",
-        "staleId": "D_JM02"
-      },
-      {
-        "pseudokod": "KOD-474",
-        "staleId": "D_JM07"
-      },
-      {
-        "pseudokod": "KOD-235",
-        "staleId": "D_JM10"
-      },
-      {
-        "pseudokod": "KOD-911",
-        "staleId": "D_JM09"
-      },
-      {
-        "pseudokod": "KOD-839",
-        "staleId": "D_JM08"
-      }
+      { "pseudokod": "KOD-241", "staleId": "D_JM01" },
+      { "pseudokod": "KOD-744", "staleId": "D_JM03" },
+      { "pseudokod": "KOD-200", "staleId": "D_JM05" },
+      { "pseudokod": "KOD-743", "staleId": "D_JM06" },
+      { "pseudokod": "KOD-762", "staleId": "D_JM13" },
+      { "pseudokod": "KOD-141", "staleId": "D_JM11" },
+      { "pseudokod": "KOD-417", "staleId": "D_JM14" },
+      { "pseudokod": "KOD-552", "staleId": "D_JM04" },
+      { "pseudokod": "KOD-135", "staleId": "D_JM12" },
+      { "pseudokod": "KOD-994", "staleId": "D_JM02" },
+      { "pseudokod": "KOD-474", "staleId": "D_JM07" },
+      { "pseudokod": "KOD-235", "staleId": "D_JM10" },
+      { "pseudokod": "KOD-911", "staleId": "D_JM09" },
+      { "pseudokod": "KOD-839", "staleId": "D_JM08" }
     ]
   }
 };
@@ -3712,18 +1352,16 @@
     // 4. STAN APLIKACJI I LOGIKA
     // =========================================================================
     let state = {
-      termin: "T1",
       kod: "",
       profil: null,
       samoocena: { P1: null, P2: null, P3: null, P4: null },
       samoocenaZatwierdzona: false,
-      ocenyZespolu: {}, // klucz: staleId -> { P1, P2, P3, P4 }
+      ocenyZespolu: {},
       aktualnePytanieIdx: 0
     };
 
     function zaloguj() {
       const kodInput = document.getElementById("input-kod").value.trim().toUpperCase();
-      const terminInput = document.getElementById("input-termin").value;
       const errEl = document.getElementById("login-error");
 
       if (!BAZA_BADANIA[kodInput]) {
@@ -3734,7 +1372,6 @@
 
       errEl.classList.add("hidden");
       state.kod = kodInput;
-      state.termin = terminInput;
       state.profil = BAZA_BADANIA[kodInput];
       state.ocenyZespolu = {};
 
@@ -3743,7 +1380,7 @@
       });
 
       const badge = document.getElementById("header-badge");
-      badge.textContent = `${state.termin} • ${state.kod}`;
+      badge.textContent = `${state.profil.zespol} • ${state.kod}`;
       badge.classList.remove("hidden");
 
       document.getElementById("screen-login").classList.add("hidden");
@@ -3920,7 +1557,6 @@
       if (state.profil.rola === "zawodnik") {
         rows.push({
           timestamp,
-          termin_pomiaru: state.termin,
           kod_oceniajacego: state.kod,
           rola_oceniajacego: "zawodnik",
           typ_oceny: "samoocena",
@@ -3939,7 +1575,6 @@
         const oc = state.ocenyZespolu[item.staleId];
         rows.push({
           timestamp,
-          termin_pomiaru: state.termin,
           kod_oceniajacego: state.kod,
           rola_oceniajacego: state.profil.rola,
           typ_oceny: state.profil.rola === "trener" ? "ocena_trenera" : "ocena_kolezenska",
